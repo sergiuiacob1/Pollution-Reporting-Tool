@@ -3,7 +3,7 @@
     display: inline-block;
     text-align: center;
     left: 80%;
-    top: 70%;
+    top: 60%;
 }
 
 #add-report-items ul{
@@ -14,8 +14,12 @@
 }
 
 #add-report-items li{
-    padding: 5px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding:8px 16px;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0px;
+    font-size: 20px;
 }
 
 #add-report-items li:hover{
@@ -23,6 +27,7 @@
 }
 
 #add-report-button{
+    position: fixed;
     border: 0px;
     background: transparent;
     outline: none;
@@ -49,12 +54,21 @@
 
 .top-navigation input{
     font-size: 30px;
+    border-style: none;
     border-radius: 50px;
     outline: none;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-    width: 25%;
+    width: 30%;
     padding: 10px;
+    margin-top: 1%;
+    background-color: limegreen;
+    color: white;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
 }
 
 .top-navigation input:focus{
@@ -68,6 +82,12 @@
 }
 
 #top-navigation-toggle img{
-    width: 50%;
-    height: 50%;
+    width: 10%;
+    height: 10%;
+}
+
+@media only screen and (min-width: 800px) {
+    #top-navigation-toggle img {
+        display: none;
+    }
 }
