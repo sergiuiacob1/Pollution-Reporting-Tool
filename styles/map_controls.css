@@ -6,8 +6,21 @@
     background: transparent;
 }
 
+.top-navigation{
+    justify-content: center;
+    position: absolute;
+    align-items: center;
+    align-self: center;
+    display: inline-block;
+}
+
 #top-navigation-toggle{
-    position: fixed;
-    left: 50%;
-    background-image: url("./../res/img/toggle.png");
+    border: 0px;
+    background: transparent;
+    align-content: center;
+}
+
+#top-navigation-toggle img{
+    width: 50%;
+    height: 50%;
 }
