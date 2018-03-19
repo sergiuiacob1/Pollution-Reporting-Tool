@@ -10,14 +10,21 @@
     <script src="main.js"></script>
 </head>
 <body>
-        <iframe class = "map" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=28.1744384765625%2C30.496017831341284%2C31.239624023437504%2C31.956823015897207&amp;layer=mapnik"></iframe>
+    <iframe class = "map" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=28.1744384765625%2C30.496017831341284%2C31.239624023437504%2C31.956823015897207&amp;layer=mapnik"></iframe>
     <nav class = "top-navigation">
-        <button id = "top-navigation-toggle">
-            <img src = "./res/img/toggle.png"/>
-        </button>
+        <div>
+            <input type = "search" placeholder="Search locations...">
+        </div>
+        <div>
+            <button id = "top-navigation-toggle">
+                <img src = "./res/img/toggle.png"/>
+            </button>
+        </div>
     </nav>
-    <button id = "add-report-button" >
-        <img src = "./res/img/plus.png"/>
-    </button>
+    <div class = "add-report">
+        <button id = "add-report-button" >
+            <img src = "./res/img/plus.png"/>
+        </button>
+    </div>
 </body>
 </html>

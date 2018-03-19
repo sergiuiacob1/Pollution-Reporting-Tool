@@ -4,20 +4,41 @@
     top: 85%;
     border: 0px;
     background: transparent;
+    outline: none;
+    -webkit-transition: -webkit-transform .25s ease-in-out;
+    transition: transform .25s ease-in-out;
+}
+
+#add-report-button:hover{
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .top-navigation{
-    justify-content: center;
     position: absolute;
-    align-items: center;
-    align-self: center;
     display: inline-block;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.top-navigation input{
+    font-size: 30px;
+    border-radius: 50px;
+    outline: none;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    width: 25%;
+}
+
+.top-navigation input:focus{
+    width: 50%;
 }
 
 #top-navigation-toggle{
     border: 0px;
     background: transparent;
-    align-content: center;
+    outline: none;
 }
 
 #top-navigation-toggle img{
