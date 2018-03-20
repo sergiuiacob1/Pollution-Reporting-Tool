@@ -24,6 +24,7 @@ header:hover{
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
     width: 100%;
+    border-radius: 25px;
 }
 
 ::placeholder {
@@ -127,6 +128,7 @@ header:hover{
     height: 25px;
     transition: height 0.5s ease-in-out;
     -webkit-transition: height 0.5s ease-in-out;
+    border-radius: 10px;
 }
 
 .form-item input:focus{
@@ -140,4 +142,50 @@ header:hover{
     border: 0px;
     background-size: 100%;
     opacity: 1;
+}
+
+.pulse:focus {
+  -webkit-animation: pulse 1s;
+          animation: pulse 1s;
+  -webkit-box-shadow: 0 0 0 3em rgba(255, 255, 255, 0);
+          box-shadow: 0 0 0 3em rgba(255, 255, 255, 0);
+}
+
+.pulse:after {
+    color:black;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 var(--hover);
+            box-shadow: 0 0 0 0 var(--hover);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 var(--hover);
+            box-shadow: 0 0 0 0 var(--hover);
+  }
+}
+
+.pulse {
+  --color: black;
+  --hover: #ef8f6e;
+  color: var(--color);
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+
+  background: limegreen;
+  line-height: 1;
+  padding: 1em 2em;
+  outline: none;
+  font-size: 20px;
+  border-radius: 25px;
+  border: 0px;
+}
+
+.pulse:hover, .pulse:focus {
+  border-color: var(--hover);
+  color: #ffffff;
 }
