@@ -1,52 +1,3 @@
-header{
-    position: absolute;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: limegreen;
-    opacity: 0.75;
-}
-
-header:hover{
-    opacity: 1;
-}
-
-.top-navigation input{
-    font-size: 25px;
-    border-style: none;
-    outline: none;
-    padding: 10px;
-    background-color: limegreen;
-    border: 2px solid white;
-    color: black;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    width: 100%;
-    border-radius: 25px;
-}
-
-::placeholder {
-    color: white;
-}
-
-.top-navigation input:focus{
-    width: 150%;
-}
-
-#top-navigation-toggle{
-    border: 0px;
-    background: transparent;
-    outline: none;
-    background-size: 100%;
-}
-
-#top-navigation-toggle img{
-    width: 10%;
-    height: 10%;
-    margin: auto;
-}
 
 .add-issue{
     position: absolute;
@@ -110,7 +61,7 @@ header:hover{
 }
 
 .add-issue-form form{
-    background-color: limegreen;
+    background-color: var(--main-color);
     color: black;
     width: 80%;
     height: 80%;
@@ -183,7 +134,7 @@ header:hover{
   -webkit-transition: 0.25s;
   transition: 0.25s;
 
-  background: limegreen;
+  background: var(--main-color);
   line-height: 1;
   padding: 1em 2em;
   outline: none;
@@ -260,7 +211,7 @@ header:hover{
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: var(--main-color);
     color: white;
 }
 
@@ -268,7 +219,7 @@ header:hover{
 
 .modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: var(--main-color);
     color: white;
 }
 
