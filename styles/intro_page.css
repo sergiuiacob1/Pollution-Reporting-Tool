@@ -21,6 +21,17 @@
   flex-direction: row;
 }
 
+.presentation_block_right{
+  margin-top:200px;
+  width:90%;
+  height:400px;
+  position: relative;
+  display:flex;
+  flex-direction: row;
+  right:0;
+}
+
+
 img {
   border-radius: 10px;
 }
