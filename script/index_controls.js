@@ -14,12 +14,13 @@ function SubmitForm(){
 
 function ToggleIssueForm(){
     var issueForm = document.getElementsByClassName("add-issue")[0];
-    if (issueForm.classList.contains("--show-bottom")){
-        issueForm.classList.remove("--show-bottom");
-        issueForm.classList.add("--hide-bottom");
+
+    if (issueForm.classList.contains("issue-bottom-hidden")){
+        issueForm.classList.add("issue-bottom-shown");
+        issueForm.classList.remove("issue-bottom-hidden");
     }
     else{
-        issueForm.classList.add("--show-bottom");
-        issueForm.classList.remove("--hide-bottom");
+        issueForm.classList.remove("issue-bottom-shown");
+        issueForm.classList.add("issue-bottom-hidden");
     }
 }
