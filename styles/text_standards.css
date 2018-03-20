@@ -45,3 +45,27 @@ input[type=submit]{
   border:none;
   cursor:pointer;
 }
+
+input[value=Facebook]{
+  width:80%;
+  margin-left:10%;
+  margin-top:10px;
+  background-color: #3b5998;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border:none;
+  cursor:pointer;
+}
+
+input[value="Google+"]{
+  width:80%;
+  margin-left:10%;
+  margin-top:10px;
+  background-color: #d34836;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border:none;
+  cursor:pointer;
+}
