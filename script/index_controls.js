@@ -1,6 +1,15 @@
+window.onclick = function(event) {
+    var modal = document.getElementById("feedback-modal");
+    var span = document.getElementsByClassName("close")[0];
+    if (event.target == modal || event.target == span) {
+        modal.style.display = "none";
+    }
+}
+
 function SubmitForm(){
     var formDiv = document.getElementsByClassName("add-issue-form")[0];
     var forms = formDiv.getElementsByTagName("form");
+    var modal = document.getElementById("feedback-modal");
     var style;
 
     for (var i = 0; i < forms.length; ++i){
@@ -10,6 +19,9 @@ function SubmitForm(){
             forms[i].style.display = "none";
             if (i != forms.length - 1){
                 forms[i + 1].style.display = "block";
+            }
+            else{
+                modal.style.display = "block";
             }
             break;
         }
