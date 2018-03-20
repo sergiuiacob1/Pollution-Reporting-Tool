@@ -13,6 +13,8 @@
     <!-- My Styles -->
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map.css" />
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map_controls.css" />
+    <link rel = "stylesheet" type = "text/css" media="screen" href="styles/user_menu.css" />
+    <link rel = "stylesheet" type = "text/css" media="screen" href="styles/text_standards.css" />
     <!-- My Styles -->
 </head>
 <body>
@@ -70,9 +72,29 @@
             </div>
         </div>
     </section>
+    <section class="user_menu" id="user_slider">
+      <img src="./res/img/base_logo.png" class="user_menu_logo"/>
+      <p class = "title_text" style="margin-left:35%;" >Log in</p>
+      <form>
+        <input type="text" name="username" id = "input_form" placeholder="Username">
+        <input type="text" name="password" id = "input_form" placeholder="Password">
+        <a class="text" href="#"style="margin-left:15%">New?Sign up!</a>
+        <a class="text" href="#">Forgot password?</a>
+        <input type="submit" value = "Log In"/>
+        <div class="otherLogins">
+          <input class="Fbutton" type="submit" value = "Facebook"/>
+          <input class="Gbutton" type="submit" value = "Google+"/>
+        </div>
+        <footer class="footer_info">
+        <a class="text" href="#">Help</a>
+        </footer>
+      </form>
+    </section>
+    <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
     <!-- My Scripts -->
     <!-- <script type = "text/javascript" src = "./script/map.js"></script> -->
     <script src = "./script/index_controls.js"></script>
+    <script src = "./script/user_menu.js"></script>
     <!-- My Scripts -->
 </body>
 </html>
