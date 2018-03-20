@@ -18,3 +18,21 @@
   overflow-x: hidden;
   border-radius: 10px;
 }
+
+.user_menu_logo {
+  width: 90%;
+  height: auto;
+  padding-top: 10px;
+  padding-left:10px;
+}
+
+input[type=text], select {
+    width: 80%;
+    margin: 8px 0;
+    padding: 10px;
+    display: inline-block;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left:10%;
+}
