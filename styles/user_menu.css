@@ -10,6 +10,7 @@
 .user_menu {
   background-color: #94cea1;
   height:100%;
+  display: inline-block;
   width:250px;
   position:fixed;
   top:0;
@@ -24,15 +25,4 @@
   height: auto;
   padding-top: 10px;
   padding-left:10px;
-}
-
-input[type=text], select {
-    width: 80%;
-    margin: 8px 0;
-    padding: 10px;
-    display: inline-block;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-left:10%;
 }
