@@ -13,6 +13,7 @@
     <!-- My Styles -->
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map.css" />
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map_controls.css" />
+    <link rel = "stylesheet" type = "text/css" media="screen" href="styles/user_menu.css" />
     <!-- My Styles -->
 </head>
 <body>
@@ -61,9 +62,17 @@
             </div>
         </div>
     </section>
+    <section class="user_menu" id="user_slider">
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </section>
+    <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
     <!-- My Scripts -->
     <!-- <script type = "text/javascript" src = "./script/map.js"></script> -->
     <script src = "./script/index_controls.js"></script>
+    <script src = "./script/user_menu.js"></script>
     <!-- My Scripts -->
 </body>
 </html>

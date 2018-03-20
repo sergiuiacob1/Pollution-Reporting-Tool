@@ -1,0 +1,19 @@
+.user_icon {
+  position:absolute;
+  display: inline-block;
+  margin-top:2%;
+  margin-left:2%;
+  position:relative;
+  transition:0.5s;
+}
+
+.user_menu {
+  background-color: gray;
+  height:100%;
+  width:0;
+  position:fixed;
+  top:0;
+  left:0;
+  transition:0.5s;
+  overflow-x: hidden;
+}
