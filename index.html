@@ -55,9 +55,9 @@
                 <form id = "stage2-form">
                     <label>Adauga imagini</label>
                     <div class = "stage2-form-images">
-                        <img class = "stage2-form-image"/>
-                        <button class = "button" id = "stage2-form-add-image" onclick = "AddFormImage()">
-                            <img src = "./res/img/plus.png"/>
+                        <img src = "http://via.placeholder.com/64x64" alt = "Image1" class = "stage2-form-image"/>
+                        <button type = "button" class = "button" id = "stage2-form-add-image" onclick = "AddFormImage()">
+                            <img alt = "Add Image" src = "./res/img/plus.png"/>
                         </button>
                     </div>
                 </form>
@@ -89,12 +89,12 @@
           </div>
 
     <section class="user_menu" id="user_slider">
-      <img src="./res/img/base_logo.png" class="user_menu_logo"/>
+      <img alt = "Logo" src="./res/img/base_logo.png" class="user_menu_logo"/>
       <p class = "title_text" style="margin-left:37%;" >Log in</p>
       <form>
         <input type="text" name="username" id = "input_form" placeholder="Username" required>
         <input type="password" name="password" id = "input_form" placeholder="Password" required>
-        <a class="text" href="#"style="margin-left:15%">New?Sign up!</a>
+        <a class="text" href="#" style="margin-left:15%">New? Sign up!</a>
         <a class="text" href="#">Forgot password?</a>
         <input type="submit" value = "Log In"/>
         <div class="otherLogins">
@@ -109,7 +109,7 @@
         </div>
       </form>
     </section>
-    <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
+    <img alt = "User Icon" src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
 
     <!-- My Scripts -->
     <!-- <script type = "text/javascript" src = "./script/map.js"></script> -->
