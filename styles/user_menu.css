@@ -8,7 +8,7 @@
 }
 
 .user_menu {
-  background-color: gray;
+  background-color: #94cea1;
   height:100%;
   width:250px;
   position:fixed;
@@ -16,4 +16,5 @@
   left:-250px;
   transition:0.5s;
   overflow-x: hidden;
+  border-radius: 10px;
 }

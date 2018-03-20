@@ -14,6 +14,7 @@
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map.css" />
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/map_controls.css" />
     <link rel = "stylesheet" type = "text/css" media="screen" href="styles/user_menu.css" />
+    <link rel = "stylesheet" type = "text/css" media="screen" href="styles/text_standards.css" />
     <!-- My Styles -->
 </head>
 <body>
@@ -63,10 +64,13 @@
         </div>
     </section>
     <section class="user_menu" id="user_slider">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <p class = "title_text" >Log in</p> <br>
+      <form>
+        <p class = "subtitle_text"> User </p>
+        <input type="text" name="username" id = "input_form">
+        <p class = "subtitle_text"> Password </p>
+        <input type="text" name="password" id = "input_form">
+      </form>
     </section>
     <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
     <!-- My Scripts -->
