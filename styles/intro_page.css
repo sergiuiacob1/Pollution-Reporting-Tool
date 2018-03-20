@@ -1,0 +1,26 @@
+.PRT_Logo{
+  position:relative;
+  left:50%;
+  margin-left:-188px;
+}
+.summary
+{
+  position:relative;
+  width: 400px;
+  height: auto;
+  left: 37%;
+  margin-top:30px;
+}
+
+.presentation_block_left{
+  margin-top:200px;
+  width:90%;
+  height:400px;
+  position: relative;
+  display:flex;
+  flex-direction: row;
+}
+
+img {
+  border-radius: 10px;
+}
