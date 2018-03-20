@@ -33,12 +33,12 @@
         </button>
     </header>
 
-    <section class = "add-issue issue-bottom-hidden">
+    <section class = "add-issue">
         <div class = "add-issue-top">
             <button class = "pulse" id = "btn-show-add-issue-form" onclick = "ToggleIssueForm()">Raporteaza o problema</button>
         </div>
 
-        <div class = "add-issue-bottom">
+        <div class = "add-issue-bottom issue-bottom-hidden">
             <div class = "add-issue-form">
                 <form id = "stage1-form">
                         <div class = "form-item">
@@ -58,15 +58,16 @@
                 <form id = "stage2-form">
                     <label>Adauga imagini</label>
                     <div class = "stage2-form-images">
-                        <button id = "stage2-form-add-image">
+                        <img class = "stage2-form-image"/>
+                        <button class = "button" id = "stage2-form-add-image" onclick = "AddFormImage()">
                             <img src = "./res/img/plus.png"/>
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
 
             <div>
-                <button id = "btn-submit-issue" type="submit" onclick = "SubmitForm()">
+                <button class = "button" id = "btn-submit-issue" type="submit" onclick = "SubmitForm()">
                     <img alt = "Continua" src = "./res/img/next.png"/>
                 </button>
             </div>
@@ -91,6 +92,7 @@
       </form>
     </section>
     <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
+
     <!-- My Scripts -->
     <!-- <script type = "text/javascript" src = "./script/map.js"></script> -->
     <script src = "./script/index_controls.js"></script>

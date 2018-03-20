@@ -70,11 +70,11 @@ header:hover{
 }
 
 .issue-bottom-hidden{
-    bottom: -35%;
+    display: none;
 }
 
 .issue-bottom-shown{
-    bottom: 0%;
+    display: block;
 }
 
 .add-issue-top{
@@ -134,12 +134,16 @@ header:hover{
     height: 50px;
 }
 
-#btn-submit-issue{
+.button{
     background: transparent;
     outline: none;
     border: 0px;
     background-size: 100%;
     opacity: 1;
+}
+
+#stage2-form{
+    display: none;
 }
 
 .pulse:focus {
@@ -186,4 +190,20 @@ header:hover{
 .pulse:hover, .pulse:focus {
   border-color: var(--hover);
   color: #ffffff;
+}
+
+#stage2-form-add-image{
+    background: transparent;
+}
+
+.stage2-form-images{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.stage2-form-image{
+    content: url("http://via.placeholder.com/64x64");
 }
