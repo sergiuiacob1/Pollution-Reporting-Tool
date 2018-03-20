@@ -25,17 +25,20 @@
                 </div>
             </nav>
         </div>
-        <div>
-            <button id = "top-navigation-toggle">
-                <img src = "./res/img/toggle.png"/>
-            </button>
-        </div>
+
+        <button id = "top-navigation-toggle">
+            <img alt = "Toggle navigation" src = "./res/img/toggle.png"/>
+        </button>
     </header>
 
-    <section class = "add-report">
-            <div class = "add-report-form">
-                <form class = "stage1-form">
-                    <div class = "stage1-form-items">
+    <section class = "add-issue issue-bottom-hidden">
+        <div class = "add-issue-top">
+            <button id = "btn-show-add-issue-form" onclick = "ToggleIssueForm()">Raporteaza o problema</button>
+        </div>
+
+        <div class = "add-issue-bottom">
+            <div class = "add-issue-form">
+                <form id = "stage1-form">
                         <div class = "form-item">
                             <label for = "stage1-location">Locatie</label>
                             <input id = "stage1-location" type="text" placeholder = "Centreaza harta in locatia corespunzatoare">
@@ -43,24 +46,24 @@
                         <div class = "form-item">
                             <label for = "stage1-title">Titlu</label>
                             <input id = "stage1-title" type="text" placeholder = "Titlu problema">
-                    </div>
-                    <div class = "form-item">
-                        <label for = "stage1-description">Descriere</label>
-                        <input id = "stage1-description" type="text" placeholder = "Descrie problema">
-                    </div>
-                </div>
-            </form>
-        <div>
+                        </div>
+                        <div class = "form-item">
+                            <label for = "stage1-description">Descriere</label>
+                            <input id = "stage1-description" type="text" placeholder = "Descrie problema">
+                        </div>
+                </form>
+            </div>
 
-        <div class = "add-report-button">
-            <button id = "btn-submit-report" type="submit">
-                <img alt = "Continua" src = "./res/img/next.png"/>
-            </button>
+            <div>
+                <button id = "btn-submit-issue" type="submit" onclick = "SubmitForm()">
+                    <img alt = "Continua" src = "./res/img/next.png"/>
+                </button>
+            </div>
         </div>
     </section>
     <!-- My Scripts -->
     <!-- <script type = "text/javascript" src = "./script/map.js"></script> -->
-    <script src = "./script/map_controls.js"></script>
+    <script src = "./script/index_controls.js"></script>
     <!-- My Scripts -->
 </body>
 </html>

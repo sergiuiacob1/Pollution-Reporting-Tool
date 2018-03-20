@@ -1,8 +1,16 @@
-.header{
+header{
     position: absolute;
     width: 100%;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: limegreen;
+    opacity: 0.75;
+}
+
+header:hover{
+    opacity: 1;
 }
 
 .top-navigation input{
@@ -10,51 +18,70 @@
     border-style: none;
     outline: none;
     padding: 10px;
-    background-color: rgba(63, 191, 63, 128);
-    color: white;
-    opacity: 0.75;
+    background-color: limegreen;
+    border: 2px solid white;
+    color: black;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+    width: 100%;
 }
 
 ::placeholder {
     color: white;
-    opacity: 1; /* Firefox */
-}
-
-.top-navigation input:hover{
-    opacity: 1;
 }
 
 .top-navigation input:focus{
-    width: 50%;
-    opacity: 1;
+    width: 150%;
 }
 
 #top-navigation-toggle{
     border: 0px;
     background: transparent;
     outline: none;
+    background-size: 100%;
 }
 
 #top-navigation-toggle img{
     width: 10%;
     height: 10%;
+    margin: auto;
 }
 
 @media only screen and (min-width: 800px) {
     #top-navigation-toggle img {
-        display: block;
+        display: none;
     }
 }
 
-.add-report{
+.add-issue{
     position: absolute;
-    background-color: white;
-    padding: 5%;
+    background-color: transparent;
+    background-clip: padding-box;
+    text-align: center;
     width: 50%;
     bottom: 0%;
-    left: 20%;
+    left: 25%;
+    opacity: 0.75;
+    display: flex;
+    flex-direction: column;
+    transition: bottom 0.5s ease-in-out;
+    -webkit-transition: bottom 0.5s ease-in-out;
+}
+
+.issue-bottom-hidden{
+    bottom: -25%;
+}
+
+.issue-bottom-shown{
+    bottom: 0%;
+}
+
+.add-issue-top{
+    font-size: 50px;
+}
+
+.add-issue-bottom{
+    background-color: white;
 }
 
 @media only screen and (max-width: 800px) {
@@ -62,13 +89,13 @@
         display: block;
     }
 
-    .add-report {
+    .add-issue {
         width: 100%;
         left: 0%;
     }
 }
 
-.add-report .add-report-form{
+.add-issue-form{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -76,26 +103,41 @@
     align-items: center;
 }
 
-.add-report .stage1-form{
+.add-issue-form form{
     background-color: limegreen;
     color: black;
     width: 80%;
     height: 80%;
+    display: block;
+    transition: display 0.5s ease-in-out;
+    -webkit-transition: display 0.5s ease-in-out;
 }
 
-.add-report .form-item{
+.form-item{
     display: flex;
     flex-direction: column;
+    text-align: center;
+    font-size: 20px;
+    height: 100%;
 }
 
-#btn-submit-report{
+.form-item input{
+    position: relative;
+    font-size: 20px;
+    height: 25px;
+    transition: height 0.5s ease-in-out;
+    -webkit-transition: height 0.5s ease-in-out;
+}
+
+.form-item input:focus{
+    position: relative;
+    height: 50px;
+}
+
+#btn-submit-issue{
     background: transparent;
     outline: none;
     border: 0px;
     background-size: 100%;
-}
-
-#btn-submit-report img:hover{
-    width: 110%;
-    height: 110%;
+    opacity: 1;
 }
