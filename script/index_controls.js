@@ -49,4 +49,7 @@ function AddFormImage(){
     var addImageButton = document.getElementById("stage2-form-add-image");
     newImage.classList.add("stage2-form-image");
     addImageButton.insertAdjacentElement("beforebegin", newImage);
+
+    var inputFile = document.getElementById("stage2-form-add-image-input");
+    inputFile.click();
 }
