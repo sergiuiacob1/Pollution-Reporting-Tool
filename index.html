@@ -75,10 +75,10 @@
     </section>
     <section class="user_menu" id="user_slider">
       <img src="./res/img/base_logo.png" class="user_menu_logo"/>
-      <p class = "title_text" style="margin-left:35%;" >Log in</p>
+      <p class = "title_text" style="margin-left:37%;" >Log in</p>
       <form>
-        <input type="text" name="username" id = "input_form" placeholder="Username">
-        <input type="text" name="password" id = "input_form" placeholder="Password">
+        <input type="text" name="username" id = "input_form" placeholder="Username" required>
+        <input type="password" name="password" id = "input_form" placeholder="Password" required>
         <a class="text" href="#"style="margin-left:15%">New?Sign up!</a>
         <a class="text" href="#">Forgot password?</a>
         <input type="submit" value = "Log In"/>
@@ -86,9 +86,12 @@
           <input class="Fbutton" type="submit" value = "Facebook"/>
           <input class="Gbutton" type="submit" value = "Google+"/>
         </div>
-        <footer class="footer_info">
+        <div class="footer_info">
         <a class="text" href="#">Help</a>
-        </footer>
+        <a class="text" href="#">About</a>
+        <a class="text" href="#">Homepage</a>
+        <a class="text" href="#">Authorization</a>
+        </div>
       </form>
     </section>
     <img src="./res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
