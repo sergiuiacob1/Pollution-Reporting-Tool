@@ -96,14 +96,6 @@
     height: 50px;
 }
 
-.button{
-    background: transparent;
-    outline: none;
-    border: 0px;
-    background-size: 100%;
-    opacity: 1;
-}
-
 #stage2-form{
     display: none;
 }

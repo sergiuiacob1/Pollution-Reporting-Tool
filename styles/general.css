@@ -9,3 +9,11 @@
 ::placeholder{
     color: black;
 }
+
+.button{
+    background: transparent;
+    outline: none;
+    border: 0px;
+    background-size: 100%;
+    opacity: 1;
+}
