@@ -144,7 +144,6 @@
 
 .pulse:hover, .pulse:focus {
   border-color: var(--hover);
-  color: #ffffff;
 }
 
 #stage2-form-add-image{
