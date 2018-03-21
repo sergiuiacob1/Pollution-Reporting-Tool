@@ -1,5 +1,10 @@
 @import url("./text_standards.css");
 
 :root{
-    --main-color: #94cea1;
+    --main-color: #7bc043;
+    --accent-color: #fdf498;
+}
+
+::placeholder{
+    color: black;
 }

@@ -14,20 +14,20 @@
     -webkit-transition: bottom 0.5s ease-in-out;
 }
 
+.add-issue-bottom{
+    background-color: var(--main-color);
+    padding: 0px;
+}
+
 .issue-bottom-hidden{
     display: none;
 }
 
 .issue-bottom-shown{
-    display: block;
-}
-
-.add-issue-top{
-    font-size: 50px;
-}
-
-.add-issue-bottom{
-    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
 }
 
 @media only screen and (max-width: 800px) {
@@ -54,10 +54,9 @@
 
 .add-issue-form{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    flex: 1 1 auto;
+    background-size: 100%;
 }
 
 .add-issue-form form{
@@ -83,6 +82,9 @@
     transition: height 0.5s ease-in-out;
     -webkit-transition: height 0.5s ease-in-out;
     border-radius: 10px;
+    border: none;
+    background-color: var(--accent-color);
+    outline: none;
 }
 
 .form-item input:focus{
