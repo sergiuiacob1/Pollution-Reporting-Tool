@@ -1,8 +1,9 @@
 @import url("./text_standards.css");
 
 :root{
-    --main-color: #7bc043;
+    --main-color: #94cea1;
     --accent-color: #fdf498;
+    --button-color: #5ec49b;
 }
 
 ::placeholder{
