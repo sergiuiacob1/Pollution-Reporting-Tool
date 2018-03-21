@@ -57,6 +57,10 @@
     }
 }
 
+.add-issue-bottom{
+    
+}
+
 .add-issue-form{
     display: flex;
     justify-content: center;
@@ -144,6 +148,10 @@
 
 .pulse:hover, .pulse:focus {
   border-color: var(--hover);
+}
+
+#stage1-form{
+    margin-left: 60px;
 }
 
 #stage2-form-add-image{
