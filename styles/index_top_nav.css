@@ -18,20 +18,18 @@ header:hover{
     outline: none;
     padding: 10px;
     background-color: var(--main-color);
-    border: 2px solid white;
     color: black;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+    -webkit-transition: left 0.5s ease-in-out;
+    transition: left 0.4s ease-in-out;
     width: 100%;
     border-radius: 25px;
-}
-
-::placeholder {
-    color: white;
+    text-align: center;
 }
 
 .top-navigation input:focus{
-    width: 150%;
+    size: 150%;
 }
 
 #top-navigation-toggle{
