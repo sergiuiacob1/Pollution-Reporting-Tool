@@ -1,25 +1,45 @@
-var mymap = L.map('map').setView([51.505, -0.09], 13);
+let searchBox = document.querySelector(".top-navigation .search input");
+searchBox.setAttribute("placeholder", "lui dragos ii place pla");
 
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    maxZoom: 18,
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    id: 'mapbox.streets'
-}).addTo(mymap);
+var Client = require('mysql').Client;
+var client = new Client(); 
+client.host ='91.92.128.27';
+client.user = 'remotePRT';
+client.password = 'makeplacesbetter';
+console.log("connecting...");
+client.connect(function(err, results) {
+    if (err) {
+        console.log("ERROR: " + err.message);
+        throw err;
+    }
+    console.log("connected.");
+    clientConnected(client);
+});
 
-L.circle([51.508, -0.11], 500, {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5
-}).addTo(mymap).bindPopup("Probleme in aceasta zona");
+clientConnected = function(client)
+{
+	tableHasData(client);
+}           
 
-var popup = L.popup();
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("Nicio problema in aceasta zona momentan")
-        .openOn(mymap);
-}
 
-mymap.on('click', onMapClick);
+tableHasData = function(client)
+{
+    client.query(
+        'show databases',
+        function selectCb(err, results, fields) {
+            if (err) {
+                console.log("ERROR: " + err.message);
+                throw err;
+            }
+            console.log("Got "+results.length+" Rows:");
+            for(var i in results){
+			 
+				console.log(results[i]); 
+				console.log('\n');
+				
+            //console.log("The meta data about the columns:");
+            //console.log(fields);     
+			}
+            client.end();
+        });
+};
