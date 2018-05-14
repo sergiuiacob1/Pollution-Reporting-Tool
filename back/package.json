@@ -1,0 +1,22 @@
+{
+  "name": "pollution-reporting-tool",
+  "version": "1.0.0",
+  "description": "Pollution Reporting Tool is a web-application thought for those who wish to improve their way of life inside the society. The website allows any registered user to report community issues, upvote existing ones and observe their progress. # About the project This project started as a homework for the \"Web Technologies\" discipline. It is taught at Faculty of Computer Science, Iasi. # Team Cojocaru Dragos Iacob Sergiu",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiuiacob1/Pollution-Reporting-Tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergiuiacob1/Pollution-Reporting-Tool/issues"
+  },
+  "homepage": "https://github.com/sergiuiacob1/Pollution-Reporting-Tool#readme"
+}
