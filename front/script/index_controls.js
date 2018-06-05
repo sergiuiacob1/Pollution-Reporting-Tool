@@ -1,55 +1,53 @@
 window.onclick = function(event) {
-    var modal = document.getElementById("feedback-modal");
-    var span = document.getElementsByClassName("close")[0];
-    if (event.target == modal || event.target == span) {
-        modal.style.display = "none";
+  var modal = document.getElementById("feedback-modal");
+  var span = document.getElementsByClassName("close")[0];
+  if (event.target == modal || event.target == span) {
+    modal.style.display = "none";
+  }
+};
+
+function SubmitForm() {
+  var formDiv = document.getElementsByClassName("add-issue-form")[0];
+  var forms = formDiv.getElementsByTagName("form");
+  var modal = document.getElementById("feedback-modal");
+  var style;
+
+  for (var i = 0; i < forms.length; ++i) {
+    style = getComputedStyle(forms[i]);
+
+    if (style.display == "block") {
+      forms[i].style.display = "none";
+      if (i != forms.length - 1) {
+        forms[i + 1].style.display = "block";
+      } else {
+        modal.style.display = "block";
+      }
+      break;
     }
+  }
 }
 
-function SubmitForm(){
-    var formDiv = document.getElementsByClassName("add-issue-form")[0];
-    var forms = formDiv.getElementsByTagName("form");
-    var modal = document.getElementById("feedback-modal");
-    var style;
+function ToggleIssueForm() {
+  var button = document.getElementById("btn-show-add-issue-form");
+  var issueForm = document.getElementsByClassName("add-issue-bottom")[0];
 
-    for (var i = 0; i < forms.length; ++i){
-        style = getComputedStyle(forms[i]);
-
-        if (style.display == "block"){  
-            forms[i].style.display = "none";
-            if (i != forms.length - 1){
-                forms[i + 1].style.display = "block";
-            }
-            else{
-                modal.style.display = "block";
-            }
-            break;
-        }
-    }
+  if (issueForm.classList.contains("issue-bottom-hidden")) {
+    issueForm.classList.add("issue-bottom-shown");
+    issueForm.classList.remove("issue-bottom-hidden");
+    button.innerHTML = "Anuleaza";
+  } else {
+    issueForm.classList.remove("issue-bottom-shown");
+    issueForm.classList.add("issue-bottom-hidden");
+    button.innerHTML = "Raporteaza o problema";
+  }
 }
 
-function ToggleIssueForm(){
-    var button = document.getElementById("btn-show-add-issue-form");
-    var issueForm = document.getElementsByClassName("add-issue-bottom")[0];
+function AddFormImage() {
+  var newImage = document.createElement("img");
+  var addImageButton = document.getElementById("stage2-form-add-image");
+  newImage.classList.add("stage2-form-image");
+  addImageButton.insertAdjacentElement("beforebegin", newImage);
 
-    if (issueForm.classList.contains("issue-bottom-hidden")){
-        issueForm.classList.add("issue-bottom-shown");
-        issueForm.classList.remove("issue-bottom-hidden");
-        button.innerHTML = "Anuleaza";
-    }
-    else{
-        issueForm.classList.remove("issue-bottom-shown");
-        issueForm.classList.add("issue-bottom-hidden");
-        button.innerHTML = "Raporteaza o problema";
-    }
-}
-
-function AddFormImage(){
-    var newImage = document.createElement("img");
-    var addImageButton = document.getElementById("stage2-form-add-image");
-    newImage.classList.add("stage2-form-image");
-    addImageButton.insertAdjacentElement("beforebegin", newImage);
-
-    var inputFile = document.getElementById("stage2-form-add-image-input");
-    inputFile.click();
+  var inputFile = document.getElementById("stage2-form-add-image-input");
+  inputFile.click();
 }

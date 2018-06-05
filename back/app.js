@@ -3,11 +3,12 @@ var fs = require('fs');
 var path = require('path');
 
 http.createServer(function (request, response) {
+    console.log(require('path').dirname(require.main.filename));
     console.log('request ', request.url);
 
     var filePath = '.' + request.url;
     if (filePath == './') {
-        filePath = './index.html';
+        filePath = './../front/index.html';
     }
 
     var extname = String(path.extname(filePath)).toLowerCase();
