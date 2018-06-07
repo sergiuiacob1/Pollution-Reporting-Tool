@@ -1,0 +1,40 @@
+.user_icon {
+  position:absolute;
+  display: inline-block;
+  margin-top:5%;
+  margin-left:3%;
+  position:relative;
+  transition:0.5s;
+}
+
+.user_menu {
+  background-color: #94cea1;
+  height:100%;
+  display: inline-block;
+  width:250px;
+  position:absolute;
+  top:0;
+  left:-250px;
+  transition:0.5s;
+  overflow-x: hidden;
+  border-radius: 10px;
+}
+
+.user_menu_logo {
+  width: 90%;
+  height: auto;
+  padding-top: 10px;
+  padding-left:10px;
+}
+
+.otherLogins
+{
+  margin-top:30%;
+}
+
+.footer_info
+{
+  position:absolute;
+  bottom:0;
+  left:5%;
+}

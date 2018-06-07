@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pollution Reporting Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Leaflet Utilities -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script> -->
+    <!-- Leaflet Utilities -->
+
+    <!-- My Styles -->
+    <link rel = "stylesheet" type = "text/css" media="screen" href="styles/index_style.css" />
+    <!-- My Styles -->
+</head>
+<body>
+    <iframe class = "map" src="https://www.openstreetmap.org/export/embed.html?bbox=-360.83496093750006%2C33.94335994657882%2C-311.79199218750006%2C53.4357192066942&amp;layer=mapnik"></iframe>
+    <header>
+        <div>
+            <nav class = "top-navigation">
+                <div class = "search">
+                    <input type = "search" placeholder="Search locations...">
+                </div>
+            </nav>
+        </div>
+
+        <button id = "top-navigation-toggle">
+            <img alt = "Toggle navigation" src = "res/img/toggle.png"/>
+        </button>
+    </header>
+
+    <section class = "add-issue">
+        <div class = "add-issue-top">
+            <button class = "pulse" id = "btn-show-add-issue-form" onclick = "ToggleIssueForm()">Raporteaza o problema</button>
+        </div>
+
+        <div class = "add-issue-bottom issue-bottom-hidden">
+            <div class = "add-issue-form">
+                <form id = "stage1-form">
+                        <div>
+                            <label for = "stage1-location" class="subtitle_text">Locatie</label>
+                            <input id = "stage1-location" type="text" placeholder = "Centreaza harta in locatia corespunzatoare">
+                        </div>
+                        <div>
+                            <label for = "stage1-title"class="subtitle_text">Titlu</label>
+                            <input id = "stage1-title" type="text" placeholder = "Titlu problema">
+                        </div>
+                        <div>
+                            <label for = "stage1-description"class="subtitle_text">Descriere</label>
+                            <input id = "stage1-description" type="text" placeholder = "Descrie problema">
+                        </div>
+                </form>
+
+                <form id = "stage2-form">
+                    <label class = "text">Adauga imagini</label>
+                    <div class = "stage2-form-images">
+                        <img src = "http://via.placeholder.com/64x64" alt = "Image1" class = "stage2-form-image"/>
+                        <input style = "display: none;" type = "file" accept = "image/*" id = "stage2-form-add-image-input"/>
+                        <button type = "button" class = "button" id = "stage2-form-add-image" onclick = "AddFormImage()">
+                            <img alt = "Add Image" src = "res/img/plus.png"/>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <button class = "button" id = "btn-submit-issue" type="submit" onclick = "SubmitForm()">
+                    <img alt = "Continua" src = "res/img/next.png"/>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="feedback-modal" class="modal">
+            <div class = "modal-content">
+              <div class = "modal-header">
+                <span class = "close">&times;</span>
+                <h2>Success!</h2>
+              </div>
+              <div class = "modal-body">
+                <p>Felicitari! Raportul tau a fost adaugat cu success!</p>
+                <a href = "map.html">Click aici pentru a-l vizualiza.</a>
+              </div>
+              <div class = "modal-footer">
+                <h3>Numar de rapoarte adaugate de tine: 1</h3>
+              </div>
+            </div>
+
+          </div>
+
+    <section class="user_menu" id="user_slider">
+      <img alt = "Logo" src="res/img/base_logo.png" class="user_menu_logo"/>
+      <p class = "title_text" style="margin-left:37%;" >Log in</p>
+      <form>
+        <input type="text" name="username" id = "input_form" placeholder="Username" required>
+        <input type="password" name="password" id = "input_form" placeholder="Password" required>
+        <a class="text" href="#" style="margin-left:15%">New? Sign up!</a>
+        <a class="text" href="#">Forgot password?</a>
+        <input type="submit" value = "Log In"/>
+        <div class="otherLogins">
+          <input class="Fbutton" type="submit" value = "Facebook"/>
+          <input class="Gbutton" type="submit" value = "Google+"/>
+        </div>
+        <div class="footer_info">
+        <a class="text" href="#">Help</a>
+        <a class="text" href="#">About</a>
+        <a class="text" href="index.html">Homepage</a>
+        <a class="text" href="#">Authorization</a>
+        </div>
+      </form>
+    </section>
+    <img alt = "User Icon" src="res/img/guest_icon.png" class="user_icon" onclick="openUserMenu()" id="icon_slider"/>
+
+    <!-- My Scripts -->
+    <script type = "text/javascript" src = "script/map.js"></script>
+    <script src = "script/index_controls.js"></script>
+    <script src = "script/user_menu.js"></script>
+    <!-- My Scripts -->
+</body>
+</html>
