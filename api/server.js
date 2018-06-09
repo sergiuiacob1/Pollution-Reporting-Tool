@@ -1,18 +1,27 @@
 const http = require('http');
 const server = http.createServer().listen(3000);
-const db_comms = require('./db_comms/db_comms.js');
+const getController = require('./controllers/get_controller.js');
+const postController = require('./controllers/post_controller.js');
+const requestValidator = require('./controllers/request_validator.js');
 
 server.on('request', (req, res) => {
     filterRequest(req, res);
 });
 
 function filterRequest(req, res) {
+    if (requestValidator.validate(req) === false) {
+        res.writeHead(400, {
+            "Content-Type": "text/plain"
+        });
+        res.write("Your request is bad baddity badytoo!");
+        res.end();
+    }
     switch (req.method) {
         case "GET":
-            processGetRequest(req, res);
+            getController.handleRequest(req, res);
             break;
         case "POST":
-            processPostRequest(req, res);
+            postController.handleRequest(req, res);
             break;
     }
 };
@@ -27,37 +36,9 @@ function processGetRequest(req, res) {
     }
 }
 
-function getReportsFromDB(res) {
-    var reports = ["report1", "report2"];
-    let getResponse = {
-        "success": "true",
-        "reports": reports
-    }
-
-    res.writeHead(200, {
-        "Content-Type": "application/json"
-    });
-    res.write(JSON.stringify(getResponse));
-    res.end();
-}
-
-function getUsersFromDB(res) {
-    var users = db_comms.get_users().then (rows => {
-        res.writeHead(200, {
-            "Content-Type": "application/json"
-        });
-        console.log(rows);
-        res.write(JSON.stringify(rows));
-        res.end();
-    },
-    err => {
-        console.log (err);
-    });
-}
-
 function processPostRequest(req, res) {
     res.writeHead(200, {
         "Content-Type": "application/json"
     });
-    res.write('primit get');
+    res.write('primit post');
 }
