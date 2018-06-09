@@ -1,5 +1,5 @@
-GET '/reports'
-
+## GET /api/reports
+```
 response{
   success: 'true',
   reports: [
@@ -13,3 +13,4 @@ response{
     }
   ]
 }
+```
