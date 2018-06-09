@@ -15,10 +15,11 @@ function filterRequest(req, res) {
 };
 
 function processGetRequest(req, res) {
-    res.write('primit get');
-    req.pipe(res);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.write ('primit get');
 }
 
 function processPostRequest(req, res) {
-    res.write('Post la ' + req.url);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.write ('primit post');
 }
