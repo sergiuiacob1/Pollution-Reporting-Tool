@@ -5,34 +5,13 @@ const {con} = require('./connection')
 module.exports = (() => {
     'use strict';
 
-    const get_users = () => {
-        return new Promise((resolve, reject) => {
-
-            con.connect(function (err) {
-                if (err)
-                    reject(err);
-            });
-
-            con.query("SELECT * FROM users", function (err, result, fields) {
-                if (err)
-                    reject(err);
-
-                resolve(result);
-            });
-        });
-    };
-
     const get  = (table,tuple) => {
         return new Promise((resolve,reject) => {
-            con.connect(function (err) {
-                if (err)
-                    reject(err);
-            });
             switch (table) {
                 case tables.user :
-                    let whereClause = ""
+                    let whereClause = "";
                     let conditions = [];
-
+                    if(!tuple) tuple = {};
                     tuple.name ? conditions.push(" name = " + tuple.name) : null;
                     tuple.surname ? conditions.push(" surname = " + tuple.surname) : null;
                     tuple.email ? conditions.push(" email = " + tuple.email) : null;
@@ -45,8 +24,9 @@ module.exports = (() => {
                     });
 
                     whereClause = whereClause.slice(2,whereClause.length);
-                    whereClause = " where " + whereClause;
-
+                    if(whereClause.length > 5)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
                     console.log("Querry: select * from " + tables.user + whereClause );
                     con.query("select * from " + tables.user + whereClause, function (err, result, fields) {
                         if (err)

@@ -11,7 +11,7 @@ module.exports = (() => {
             this.email = tuple.email ? tuple.email : this.email;
             this.password = tuple.password ? tuple.password : this.password;
             this.avatar_link = tuple.avatar_link ? tuple.avatar_link : this.avatar_link;
-            this.id = tuple.id ? tuple.id : -1 ;
+            this.id = tuple.id ? tuple.id : this.id ;
 
         }
 
@@ -28,23 +28,18 @@ module.exports = (() => {
 
         delete(){
 
-            con.connect(function (err) {
-                if (err)
-                    throw err;
-            });
-
-            if(this.email)
+            if(this.id)
             {
-                con.query("delete from users where email = " + this.email,function(err,result,fields){
+                con.query("delete from users where id = " + this.id,function(err,result,fields){
                     if(err)
                         throw err;
-                    console.log('User deleted.');
+                    console.log('User deleted: ' + result );
                     delete this;
                 })
             }
             else
             {
-                console.log('User doesn\'t have email set. Object is invalid untill updated');
+                console.log('User doesn\'t have id set. This instance has been created, not requested. It needs to be stored before it can be deleted.');
             }
 
 
@@ -53,25 +48,69 @@ module.exports = (() => {
 
         save() {
 
-            if(this.name && this.surname && this.email && this.password && this.avatar_link) {
-                con.query("inert into users(name,surname,email,password,avatar_link) values (" + this.name + "," + this.surname + "," + this.email + "," + this.password + "," + this.avatar_link + ")", function (err, result, fields) {
-                    if (err)
+            if(!(this.email && this.name && this.surname && this.password))
+            {
+                console.log('Object has null fields. Update before storing!');
+            }
+            else {
+
+                let valueNames = [];
+                let values = [];
+
+                if (this.name) {
+                    valueNames.push("name");
+                    values.push("'" +this.name + "'");
+                }
+                if (this.surname) {
+                    valueNames.push("surname");
+                    values.push("'" + this.surname + "'");
+                }
+                if (this.avatar_link) {
+                    valueNames.push("avatar_link");
+                    values.push("'" + this.avatar_link + "'");
+                }
+                if (this.password) {
+                    valueNames.push("password");
+                    values.push("'" + this.password + "'");
+                }
+                if (this.email) {
+                    valueNames.push("email");
+                    values.push("'" + this.email + "'"
+                    );
+                }
+
+                let nameClause = "(";
+                let valueClause = "(";
+
+                valueNames.forEach(function (name) {
+                    nameClause += name + ",";
+                })
+                values.forEach(function (value) {
+                    valueClause += value + ",";
+                })
+
+                nameClause = nameClause.substr(0,nameClause.length-1) + ")";
+                valueClause = valueClause.substr(0,valueClause.length-1) + ")";
+                console.log(nameClause + valueClause);
+                con.query("insert into users" + nameClause + " values" + valueClause,function(err,result,fields){
+                    if(err)
                         throw err;
 
-                    console.log('User saved : ' + result);
-
+                    console.log('User inserted: ' + JSON.stringify(result));
+                    this.id = result.insertId;
+                    console.log('Instance is now valid.');
                 });
+
             }
-            else
-            {
-                console.log("User object has null fields. Update them before storing");
-            }
+
         }
 
         assertUser() {
             if(this.password )
-                if (this.password.length < 6)
+                if (this.password.length < 6) {
                     this.password = null;
+                    console.log('Password is too short. Setting null password to invalidate object.');
+                }
 
 
         }
