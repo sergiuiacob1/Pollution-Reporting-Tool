@@ -1,5 +1,5 @@
 const db_comms = require('./../db_comms/db_comms.js');
-
+const tables = require('../models/tables')
 module.exports = (() => {
 
     function handleRequest(req, res) {
@@ -38,11 +38,11 @@ module.exports = (() => {
     }
 
     function getUsersFromDB(res) {
-        var users = db_comms.get_users().then(rows => {
+        var users = db_comms.get(tables.user,{id:1}).then(rows => {
                 res.writeHead(200, {
                     "Content-Type": "application/json"
                 });
-                console.log(rows);
+                console.log('Got: ' + rows);
                 res.write(JSON.stringify(rows));
                 res.end();
             },
