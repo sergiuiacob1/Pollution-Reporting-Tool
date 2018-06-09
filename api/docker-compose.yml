@@ -1,0 +1,26 @@
+version: "2"
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/application
+      - /application/node_modules
+    links:
+      - db:db
+    environment:
+      - DB_HOST=91.92.128.27
+      - DB_DATABASE=prt_db
+      - DB_USER=remotePRT
+      - DB_PASSWORD=makeplacesbetter
+  db:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=prt_db
+      - MYSQL_USER=remotePRT
+      - MYSQL_PASSWORD=makeplacesbetter
+    volumes:
+      - ./data:/var/lib/mysql
