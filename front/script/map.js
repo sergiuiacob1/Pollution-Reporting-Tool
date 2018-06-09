@@ -30,8 +30,7 @@ function getReports() {
 	$.ajax({
 		url: getURL,
 		type: 'GET',
-		crossDomain: true,
-		dataType: 'jsonp'
+		dataType: 'json'
 	}).done(function (result) {
 		console.log('a mers');
 		addReportsToMap(result);

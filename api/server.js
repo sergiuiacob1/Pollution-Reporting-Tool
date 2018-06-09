@@ -5,12 +5,7 @@ const postController = require('./controllers/post_controller.js');
 const requestValidator = require('./controllers/request_validator.js');
 
 server.on('request', (req, res) => {
-    // res.writeHead(200, {
-    //     "Content-Type": "text/plain"
-    // });
-    // res.write (JSON.stringify('salut'));
-    // res.end();
-    // return;
+    res.setHeader("Access-Control-Allow-Origin", "*");
     filterRequest(req, res);
 });
 

@@ -24,11 +24,12 @@ module.exports = (() => {
             report_type: "5",
             report_date: '2018-06-15'
         };
-        var reports = [JSON.stringify(report1)];
+        var reports = [];
+        reports.push(report1);
 
         let getResponse = new Object();
         getResponse.success = "true";
-        //getResponse.reports = reports;
+        getResponse.reports = reports;
 
         res.writeHead(200, {
             "Content-Type": "application/json"
