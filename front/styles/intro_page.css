@@ -1,0 +1,116 @@
+footer {
+  margin-top:100px;
+}
+
+a{
+  margin-left:5%;
+}
+
+.map_background{
+  position: fixed;
+  z-index: auto;
+  width: 100%;
+  height: 100%;
+  border: 0px;
+  filter:blur(20px);
+  z-index:-2;
+}
+
+.PRT_Logo{
+}
+
+.summary
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+  left: 25%;
+  position:relative;
+}
+
+.presentation_block_left{
+  margin-top:200px;
+  width: 90%;
+  margin-left: 15px;
+  display:flex;
+  flex-direction: row;
+}
+
+.presentation_block_right{
+  margin-top:200px;
+  width:90%;
+  display:flex;
+  margin-right: 15px;
+  flex-direction: row;
+  float:right;  
+  margin-bottom:200px;
+}
+
+.presentation_block_left, .presentation_block_right{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation_block_right{
+  flex-direction: row-reverse;
+}
+
+@media only screen and (max-width: 1000px){
+  .presentation_block_left, .presentation_block_right{
+    flex-direction: column;
+  }
+}
+
+.presentations{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation_block_text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: 25px;
+  padding: 25px;
+}
+
+.present_images {
+  border-radius: 10px;
+  border-style: groove;
+  transition: all 0.5s ease-out;
+  transform-origin:center;
+}
+
+.present_images:hover {
+  transform:scale(1.1);
+}
+
+.btn-go-to-map{
+  text-align: center;
+  margin: auto;
+  margin-top: 10%;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.btn-go-to-map button{
+  background: transparent;
+  outline: none;
+  border: 0;
+  background-color: var(--main-color);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
