@@ -1,6 +1,6 @@
 const mysql = require('mysql');
     
-exports.connect = function (req) {
+exports.connect = function () {
 	var con = mysql.createConnection({
 	    host: "91.92.128.27",
 	    user: "remotePRT",
@@ -10,6 +10,15 @@ exports.connect = function (req) {
 	con.connect(function(err) {
 	    if (err) throw err;
 	    console.log("Connected!")
-	    return {success:true, message:'Connected to database.'}
+	    return con;
 	});
+};
+
+exports.get_users = function () {
+    con = connect();
+    con.query("SELECT * FROM customers", function (err, result, fields) {
+	if (err) throw err;
+	console.log(result);
+	return result;
+    });
 };
