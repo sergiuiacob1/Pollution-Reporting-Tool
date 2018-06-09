@@ -4,11 +4,13 @@ module.exports = (() => {
 
     function handleRequest(req, res) {
         console.log('GET at url: ' + req.url);
-        switch (req.url) {
+        switch (String(req.url)) {
             case "/api/reports":
                 getReportsFromDB(res);
+                break;
             case "/api/users":
                 getUsersFromDB(res);
+                break;
         }
     }
 
@@ -22,19 +24,19 @@ module.exports = (() => {
             report_date: '2018-06-15'
         };
         var reports = [report1];
-    
+
         let getResponse = {
             "success": "true",
             "reports": reports
         };
-    
+
         res.writeHead(200, {
             "Content-Type": "application/json"
         });
         res.write(JSON.stringify(getResponse));
         res.end();
     }
-    
+
     function getUsersFromDB(res) {
         var users = db_comms.get_users().then(rows => {
                 res.writeHead(200, {
