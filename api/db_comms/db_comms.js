@@ -22,7 +22,7 @@ module.exports = (() => {
         });
     };
 
-    const get  = (table,tuple) =>{
+    const get  = (table,tuple) => {
         return new Promise((resolve,reject) => {
             con.connect(function (err) {
                 if (err)
@@ -30,13 +30,39 @@ module.exports = (() => {
             });
             switch (table) {
                 case tables.user :
-                    console.log('Querry : ' + "select * from " + tables.user);
-                    con.query("select * from " + tables.user, function (err, result, fields) {
+                    let whereClause = ""
+                    let conditions = [];
+
+                    tuple.name ? conditions.push(" name = " + tuple.name) : null;
+                    tuple.surname ? conditions.push(" surname = " + tuple.surname) : null;
+                    tuple.email ? conditions.push(" email = " + tuple.email) : null;
+                    tuple.password ? conditions.push(" password = " + tuple.password) : null;
+                    tuple.avatar_link ? conditions.push(" avatar_link = " + tuple.avatar_link) : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
+
+                    conditions.forEach(function(condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2,whereClause.length);
+                    whereClause = " where " + whereClause;
+
+                    console.log("Querry: select * from " + tables.user + whereClause );
+                    con.query("select * from " + tables.user + whereClause, function (err, result, fields) {
                         if (err)
                            reject(err);
-                        let gicu = new User(result);
-                        console.log(gicu);
-                        resolve(result);
+                        console.log('Querry executed successfully.');
+                        console.log(result);
+
+                        if(result.size == 1)
+                            resolve(new User(result));
+                        else {
+                            let userList = [];
+                            result.forEach(function (row) {
+                                userList.push(new User(row));
+                            });
+                            resolve(userList);
+                        }
                     });
 
             }
