@@ -5,6 +5,7 @@ const postController = require('./controllers/post_controller.js');
 const requestValidator = require('./controllers/request_validator.js');
 
 server.on('request', (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     filterRequest(req, res);
 });
 
@@ -25,20 +26,3 @@ function filterRequest(req, res) {
             break;
     }
 };
-
-function processGetRequest(req, res) {
-    console.log('GET at url: ' + req.url);
-    switch (req.url) {
-        case "/api/reports":
-            getReportsFromDB(res);
-        case "/api/users":
-            getUsersFromDB(res);
-    }
-}
-
-function processPostRequest(req, res) {
-    res.writeHead(200, {
-        "Content-Type": "application/json"
-    });
-    res.write('primit post');
-}

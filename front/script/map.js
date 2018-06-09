@@ -1,4 +1,4 @@
-var hostname = "localhost:3000";
+var hostname = "http://localhost:3000";
 var map;
 
 window.onload = init();
@@ -22,13 +22,24 @@ function initMap() {
 	});
 }
 
-function getReports(){
+function getReports() {
 	var getURL = hostname + "/api/reports";
-	$.get(getURL).done(function (result) {
+
+	console.log ('getting');
+
+	$.ajax({
+		url: getURL,
+		type: 'GET',
+		dataType: 'json'
+	}).done(function (result) {
+		console.log('a mers');
 		addReportsToMap(result);
+	}).fail(function () {
+		console.log('ceva nu a mers bine');
 	});
 }
 
 function addReportsToMap(reports) {
-	console.log(result);
+	console.log(reports);
+	console.log('sadasda');
 }
