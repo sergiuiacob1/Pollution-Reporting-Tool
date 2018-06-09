@@ -15,7 +15,7 @@ module.exports = (() => {
 
     function validateGetRequest(req) {
         if (allowedUrl.some(function (value) {
-                if (value === req.url) {
+                if (value === String(req.url).split('?')[0]) {
                     return true;
                 }
             })) {
