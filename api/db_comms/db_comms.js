@@ -1,15 +1,15 @@
 const mysql = require('mysql');
 
-function connect () {
+function connect() {
     var con = mysql.createConnection({
         host: "91.92.128.27",
         user: "remotePRT",
         password: "makeplacesbetter"
     });
 
-    con.connect(function(err) {
+    con.connect(function (err) {
         if (err) throw err;
-        console.log("Connected!")
+        console.log("Connected to DB!")
         return con;
     });
 }
@@ -17,29 +17,28 @@ function connect () {
 module.exports = (() => {
     'use strict';
 
-	const get_users = () => {
-        var con = mysql.createConnection({
-            host: "91.92.128.27",
-            user: "remotePRT",
-            password: "makeplacesbetter",
-            database: "prt_db"
-        });
+    const get_users = () => {
+        return new Promise((resolve, reject) => {
+            var con = mysql.createConnection({
+                host: "91.92.128.27",
+                user: "remotePRT",
+                password: "makeplacesbetter",
+                database: "prt_db"
+            });
 
-        con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!")
-            return con;
-        });
+            con.connect(function (err) {
+                if (err)
+                    reject(err);
+            });
 
-        con.query("SELECT * FROM users", function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-            return result;
+            con.query("SELECT * FROM users", function (err, result, fields) {
+                if (err) reject(err);
+                resolve(result);
+            });
         });
     };
 
-	return {
-		get_users
-	}
+    return {
+        get_users
+    }
 })();
-

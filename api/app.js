@@ -21,9 +21,9 @@ function processGetRequest(req, res) {
     console.log('GET at url: ' + req.url);
     switch (req.url) {
         case "/api/reports":
-        getReportsFromDB(res);
-    case "/api/users":
-	getUsersFromDB(res);
+            getReportsFromDB(res);
+        case "/api/users":
+            getUsersFromDB(res);
     }
 }
 
@@ -42,13 +42,17 @@ function getReportsFromDB(res) {
 }
 
 function getUsersFromDB(res) {
-    var users = db_comms.get_users();
-    res.writeHead(200, {
-	"Content-Type":"application/json"
+    var users = db_comms.get_users().then (rows => {
+        res.writeHead(200, {
+            "Content-Type": "application/json"
+        });
+        console.log(rows);
+        res.write(JSON.stringify(rows));
+        res.end();
+    },
+    err => {
+        console.log (err);
     });
-    console.log(users);
-    res.write(JSON.stringify(users));
-    res.end();
 }
 
 function processPostRequest(req, res) {
