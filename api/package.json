@@ -1,11 +1,22 @@
 {
-  "name": "back",
+  "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "api for Pollution-Reporting-Tool",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergiuiacob1/Pollution-Reporting-Tool.git"
+  },
+  "keywords": [
+    "pollution"
+  ],
+  "author": "Cojo, Jacob",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergiuiacob1/Pollution-Reporting-Tool/issues"
+  },
+  "homepage": "https://github.com/sergiuiacob1/Pollution-Reporting-Tool#readme"
 }
