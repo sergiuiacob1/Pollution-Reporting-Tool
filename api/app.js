@@ -6,20 +6,41 @@ server.on('request', (req, res) => {
 });
 
 function filterRequest(req, res) {
-    if (req.method == "GET") {
-        processGetRequest(req, res);
-    }
-    if (req.method == "POST") {
-        processPostRequest(req, res);
+    switch (req.method) {
+        case "GET":
+            processGetRequest(req, res);
+            break;
+        case "POST":
+            processPostRequest(req, res);
+            break;
     }
 };
 
 function processGetRequest(req, res) {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.write ('primit get');
+    console.log('GET at url: ' + req.url);
+    switch (req.url) {
+        case "/api/reports":
+            getReportsFromDB(res);
+    }
+}
+
+function getReportsFromDB(res) {
+    var reports = ["report1", "report2"];
+    let getResponse = {
+        "success": "true",
+        "reports": reports
+    }
+
+    res.writeHead(200, {
+        "Content-Type": "application/json"
+    });
+    res.write(JSON.stringify(getResponse));
+    res.end();
 }
 
 function processPostRequest(req, res) {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.write ('primit post');
+    res.writeHead(200, {
+        "Content-Type": "application/json"
+    });
+    res.write('primit get');
 }
