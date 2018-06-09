@@ -1,6 +1,7 @@
 const mysql = require('mysql');
-    
-exports.connect = function () {
+
+module.exports = {
+    connect: function () {
 	var con = mysql.createConnection({
 	    host: "91.92.128.27",
 	    user: "remotePRT",
@@ -12,13 +13,14 @@ exports.connect = function () {
 	    console.log("Connected!")
 	    return con;
 	});
-};
+    }
 
-exports.get_users = function () {
-    con = connect();
+    get_users: function () {
+    var con = module.exports.connect();
     con.query("SELECT * FROM customers", function (err, result, fields) {
-	if (err) throw err;
-	console.log(result);
-	return result;
-    });
-};
+	    if (err) throw err;
+	    console.log(result);
+	    return result;
+        });
+    }
+}
