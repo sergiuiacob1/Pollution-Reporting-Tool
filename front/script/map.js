@@ -1,3 +1,4 @@
+var hostname = "localhost:3000";
 var map;
 
 window.onload = init();
@@ -8,7 +9,7 @@ function init() {
 		"https://maps.googleapis.com/maps/api/js?key=AIzaSyDamjhWg7wcyotS8tgBoI69RFOx9onVpDs&callback=initMap";
 	document.head.appendChild(script);
 
-	addPopupsToMap();
+	getReports();
 }
 
 function initMap() {
@@ -21,9 +22,13 @@ function initMap() {
 	});
 }
 
-function addPopupsToMap() {
-	popup = new Popup(
-		new google.maps.LatLng(-33.866, 151.196),
-		document.getElementById('popups'));
-	popup.setMap(map);
+function getReports(){
+	var getURL = hostname + "/api/reports";
+	$.get(getURL).done(function (result) {
+		addReportsToMap(result);
+	});
+}
+
+function addReportsToMap(reports) {
+	console.log(result);
 }
