@@ -1,5 +1,6 @@
 const http = require('http');
 const server = http.createServer().listen(3000);
+const db_comms = require ('./db_comms/db_comms.js');
 
 server.on('request', (req, res) => {
     filterRequest(req, res);
