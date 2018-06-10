@@ -81,7 +81,7 @@ module.exports = (() => {
 
                 let insertClause = getUpdateClause(valueNames,values);
 
-                if(this.id) {
+                if(!this.id) {
                     con.query("insert into users " + insertClause, function (err, result, fields) {
                         if (err) {
                             return false;

@@ -85,8 +85,8 @@ module.exports = (() => {
                 }
 
                 let insertClause = getInsertClause(valuetitles,values);
-
-                if(this.id) {
+                console.log('Querry : insert into reports ' + insertClause);
+                if(!this.id) {
                     con.query("insert into reports " + insertClause, function (err, result, fields) {
                         if (err) {
                             return false;
