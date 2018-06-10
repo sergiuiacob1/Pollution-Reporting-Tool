@@ -1,6 +1,8 @@
 const tables = require('../models/tables');
 const {User} = require ('../models/user');
 const {Report} = require('../models/report');
+const {Comment} = require('../models/comment');
+const {Location} = require('../models/location');
 const {con} = require('./connection')
 
 module.exports = (() => {
@@ -82,6 +84,74 @@ module.exports = (() => {
                                 reportList.push(new Report(row));
                             });
                             resolve(reportList);
+                        }
+                    });
+                case tables.comment :
+                    whereClause = "";
+                    conditions = [];
+                    if(!tuple) tuple = {};
+                    tuple.comment_text ? conditions.push(" comment_text = " + tuple.comment_text) : null;
+                    tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
+                    tuple.id_report ? conditions.push(" id_report = " + tuple.report) : null;
+                    tuple.comment_date ? conditions.push(" comment_date = " + tuple.comment_date) : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
+
+                    conditions.forEach(function(condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2,whereClause.length);
+                    if(whereClause.length > 3)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
+                    console.log("Querry: select * from " + tables.comment + whereClause );
+                    con.query("select * from " + tables.comment + whereClause, function (err, result, fields) {
+                        if (err)
+                            reject(err);
+                        console.log('Querry executed successfully.');
+                        console.log(result);
+
+                        if(result.size == 1)
+                            resolve(new Comment(result));
+                        else {
+                            let commentList = [];
+                            result.forEach(function (row) {
+                                commentList.push(new Comment(row));
+                            });
+                            resolve(commentList);
+                        }
+                    });
+                case tables.location :
+                    whereClause = "";
+                    conditions = [];
+                    if(!tuple) tuple = {};
+                    tuple.lat_coord ? conditions.push(" lat_coord = " + tuple.lat_coord) : null;
+                    tuple.long_coord ? conditions.push(" long_coord = " + tuple.long_coord) : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
+
+                    conditions.forEach(function(condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2,whereClause.length);
+                    if(whereClause.length > 3)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
+                    console.log("Querry: select * from " + tables.location + whereClause );
+                    con.query("select * from " + tables.location + whereClause, function (err, result, fields) {
+                        if (err)
+                            reject(err);
+                        console.log('Querry executed successfully.');
+                        console.log(result);
+
+                        if(result.size == 1)
+                            resolve(new Location(result));
+                        else {
+                            let locationList = [];
+                            result.forEach(function (row) {
+                                locationList.push(new Location(row));
+                            });
+                            resolve(locationList);
                         }
                     });
             }
