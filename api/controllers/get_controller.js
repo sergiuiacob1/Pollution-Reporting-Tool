@@ -26,6 +26,7 @@ module.exports = (() => {
         };
         var reports = [];
         reports.push(report1);
+        reports.push(report1);
 
         let getResponse = new Object();
         getResponse.success = "true";
