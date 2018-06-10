@@ -46,60 +46,61 @@ module.exports = (() => {
         }
 
         save() {
-            if (!(this.id_user && this.token)) {
-                console.log('Object has null fields. Update before storing!');
-            } else {
+            return new Promise((resolve, reject) => {
+                if (!(this.id_user && this.token)) {
+                    console.log('Object has null fields. Update before storing!');
+                } else {
 
-                let valueNames = [];
-                let values = [];
+                    let valueNames = [];
+                    let values = [];
 
-                if (this.token) {
-                    valueNames.push("token");
-                    values.push("'" + this.token + "'");
+                    if (this.token) {
+                        valueNames.push("token");
+                        values.push("'" + this.token + "'");
 
-                    if (this.id_user) {
-                        valueNames.push("id_user");
-                        values.push("'" + this.id_user + "'");
-                    }
-                    if (this.expire) {
-                        valueNames.push("expire");
-                        values.push("DATE_FORMAT('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
-                    }
+                        if (this.id_user) {
+                            valueNames.push("id_user");
+                            values.push("'" + this.id_user + "'");
+                        }
+                        if (this.expire) {
+                            valueNames.push("expire");
+                            values.push("DATE_FORMAT('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
+                        }
 
-                    let insertClause = getInsertClause(valueNames, values);
-                    console.log('Querry : insert into session_tokens ' + insertClause);
-                    if (!this.id) {
-                        con.query("insert into session_tokens " + insertClause, function (err, result, fields) {
-                            if (err) {
-                                throw err;
-                                return false;
-                            }
-
-
-                            console.log('Token inserted: ' + JSON.stringify(result));
-                            this.id = result.insertId;
-                            console.log('Instance is now valid.');
-                            return true;
-                        });
-                    } else {
-                        let updateClause = getUpdateClause(valueNames, values);
-
-                        con.query("update session_tokens set " + updateClause + "where id = " + this.id, function (err, result, fields) {
-                            if (err) {
-                                return false;
-                            }
+                        let insertClause = getInsertClause(valueNames, values);
+                        console.log('Querry : insert into session_tokens ' + insertClause);
+                        if (!this.id) {
+                            con.query("insert into session_tokens " + insertClause, (err, result, fields) => {
+                                if (err) {
+                                    reject(err);
+                                }
 
 
-                            console.log('Token updated ' + JSON.stringify(result));
-                            this.id = result.insertId;
-                            console.log('Instance is valid.');
-                            return true;
-                        });
+                                console.log('Token inserted: ' + JSON.stringify(result));
+                                this.id = result.insertId;
+                                console.log('Instance is now valid.');
+                                resolve(this);
+                            });
+                        } else {
+                            let updateClause = getUpdateClause(valueNames, values);
+
+                            con.query("update session_tokens set " + updateClause + "where id = " + this.id, (err, result, fields) => {
+                                if (err) {
+                                    reject(err);
+                                }
+
+
+                                console.log('Token updated ' + JSON.stringify(result));
+                                this.id = result.insertId;
+                                console.log('Instance is valid.');
+                                resolve(this);
+                            });
+                        }
+
                     }
 
                 }
-
-            }
+            });
         }
 
         assertToken() {

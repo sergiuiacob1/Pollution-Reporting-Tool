@@ -51,6 +51,7 @@ module.exports = (() => {
                             resolve(userList);
                         }
                     });
+                    break;
                 case tables.report :
                     whereClause = "";
                     conditions = [];
@@ -88,7 +89,9 @@ module.exports = (() => {
                             resolve(reportList);
                         }
                     });
+                    break;
                 case tables.comment :
+                    console.log("Comment list required");
                     whereClause = "";
                     conditions = [];
                     if(!tuple) tuple = {};
@@ -156,6 +159,7 @@ module.exports = (() => {
                             resolve(locationList);
                         }
                     });
+                    break;
             }
         })
     };

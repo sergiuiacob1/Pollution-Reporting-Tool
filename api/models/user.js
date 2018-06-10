@@ -48,70 +48,70 @@ module.exports = (() => {
         }
 
         save() {
-            if(!(this.email && this.name && this.surname && this.password))
-            {
-                console.log('Object has null fields. Update before storing!');
-            }
-            else {
-
-                let valueNames = [];
-                let values = [];
-
-                if (this.name) {
-                    valueNames.push("name");
-                    values.push("'" +this.name + "'");
+            return new Promise((resolve, reject) => {
+                if (!(this.email && this.name && this.surname && this.password)) {
+                    console.log('Object has null fields. Update before storing!');
                 }
-                if (this.surname) {
-                    valueNames.push("surname");
-                    values.push("'" + this.surname + "'");
+                else {
+
+                    let valueNames = [];
+                    let values = [];
+
+                    if (this.name) {
+                        valueNames.push("name");
+                        values.push("'" + this.name + "'");
+                    }
+                    if (this.surname) {
+                        valueNames.push("surname");
+                        values.push("'" + this.surname + "'");
+                    }
+                    if (this.avatar_link) {
+                        valueNames.push("avatar_link");
+                        values.push("'" + this.avatar_link + "'");
+                    }
+                    if (this.password) {
+                        valueNames.push("password");
+                        values.push("'" + this.password + "'");
+                    }
+                    if (this.email) {
+                        valueNames.push("email");
+                        values.push("'" + this.email + "'"
+                        );
+                    }
+
+                    let insertClause = getUpdateClause(valueNames, values);
+
+                    if (!this.id) {
+                        con.query("insert into users " + insertClause, function (err, result, fields) {
+                            if (err) {
+                                reject(err);
+                            }
+
+
+                            console.log('User inserted: ' + JSON.stringify(result));
+                            this.id = result.insertId;
+                            console.log('Instance is now valid.');
+                            resolve(this);
+                        });
+                    }
+                    else {
+                        let updateClause = getInsertClause(valueNames, values);
+
+                        con.query("update users set " + updateClause + "where id = " + this.id,(err, result, fields) => {
+                            if (err) {
+                                reject(err);
+                            }
+
+
+                            console.log('User updated ' + JSON.stringify(result));
+                            this.id = result.insertId;
+                            console.log('Instance is valid.');
+                            resolve(this);
+                        });
+                    }
+
                 }
-                if (this.avatar_link) {
-                    valueNames.push("avatar_link");
-                    values.push("'" + this.avatar_link + "'");
-                }
-                if (this.password) {
-                    valueNames.push("password");
-                    values.push("'" + this.password + "'");
-                }
-                if (this.email) {
-                    valueNames.push("email");
-                    values.push("'" + this.email + "'"
-                    );
-                }
-
-                let insertClause = getUpdateClause(valueNames,values);
-
-                if(!this.id) {
-                    con.query("insert into users " + insertClause, function (err, result, fields) {
-                        if (err) {
-                            return false;
-                        }
-
-
-                        console.log('User inserted: ' + JSON.stringify(result));
-                        this.id = result.insertId;
-                        console.log('Instance is now valid.');
-                        return true;
-                    });
-                }
-                else
-                {
-                    let updateClause = getInsertClause(valueNames,values);
-
-                    con.query("update users set " + updateClause + "where id = " + this.id , function (err, result, fields) {
-                        if (err) {
-                            return false;
-                        }
-
-
-                        console.log('User updated ' + JSON.stringify(result));
-                        this.id = result.insertId;
-                        console.log('Instance is valid.');
-                        return true;
-                    });
-                }
-
-            }
+            });
 
         }
 
