@@ -61,6 +61,10 @@ module.exports = (() => {
                     valueNames.push("id_user");
                     values.push("'" + this.id_user + "'");
                 }
+                if(this.expire) {
+                    valueNames.push("expire");
+                    values.push("TO_DATE('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
+                }
 
                 let insertClause = getInsertClause(valueNames,values);
                 console.log('Querry : insert into session_tokens ' + insertClause);

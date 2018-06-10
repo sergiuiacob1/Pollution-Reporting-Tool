@@ -40,20 +40,10 @@ module.exports = (() => {
         return moment.add(30,'minutes').calendar().format('YYYY-MM-DD HH:mm:ss');
     };
 
-    const htsTime = (time) => {
-
-    };
-
-    const sthTime = (time) => {
-
-    };
-
     return {
         getUpdateClause,
         getInsertClause,
         getNowTime,
-        createExpireTime,
-        htsTime,
-        sthTime
+        createExpireTime
     }
 })();
