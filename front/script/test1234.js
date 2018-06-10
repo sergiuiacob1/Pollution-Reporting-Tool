@@ -1,4 +1,16 @@
-window.onclick = function(event) {
+//var hostname = "http://91.92.128.27:3000";
+var hostname = "http://localhost:3000";
+
+$(document).ready(function () {
+  let btnShowAdd = document.getElementById("btn-show-add-issue-form");
+  btnShowAdd.onclick = ToggleIssueForm;
+  let btnAddImg = document.getElementById("stage2-form-add-image");
+  btnAddImg.onclick = AddFormImage;
+  let btnAddReport = document.getElementById("btn-submit-issue");
+  btnAddReport.onclick = SubmitForm;
+});
+
+window.onclick = function (event) {
   var modal = document.getElementById("feedback-modal");
   var span = document.getElementsByClassName("close")[0];
   if (event.target == modal || event.target == span) {
@@ -21,10 +33,27 @@ function SubmitForm() {
         forms[i + 1].style.display = "block";
       } else {
         modal.style.display = "block";
+        postReport();
       }
       break;
     }
   }
+}
+
+function postReport() {
+  var report = new Object();
+  report.location = document.getElementById("stage1-location").value;
+  report.title = document.getElementById("stage1-title").value;
+  report.description = document.getElementById("stage1-description").value;
+
+  $.ajax({
+    url: hostname + '/api/reports',
+    method: 'POST',
+    contentType: 'application/json',
+    body: JSON.stringify(report)
+  }).done(function (res) {
+    console.log(res);
+  });
 }
 
 function ToggleIssueForm() {
@@ -33,7 +62,7 @@ function ToggleIssueForm() {
 
   if (issueForm.classList.contains("issue-bottom-hidden")) {
     issueForm.classList.add("issue-bottom-shown");
-    issueForm.classList.remove("issue-bottom-hidden");
+    issueForm.classList.remove("imap.panTo(uluru);ssue-bottom-hidden");
     button.innerHTML = "Anuleaza";
   } else {
     issueForm.classList.remove("issue-bottom-shown");

@@ -33,7 +33,8 @@ module.exports = (() => {
         getResponse.reports = reports;
 
         res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
         });
         res.write(JSON.stringify(getResponse));
         res.end();
@@ -43,7 +44,8 @@ module.exports = (() => {
     function getUsersFromDB(res) {
         var users = db_comms.get(tables.user,{id:1}).then(rows => {
                 res.writeHead(200, {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 });
                 console.log('Got: ' + rows);
                 res.write(JSON.stringify(rows));

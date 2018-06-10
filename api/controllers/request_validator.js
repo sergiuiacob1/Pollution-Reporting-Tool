@@ -25,7 +25,14 @@ module.exports = (() => {
     }
 
     function validatePostRequest(req) {
-        return false;
+        if (allowedUrl.some(function (value) {
+                if (value === String(req.url).split('?')[0]) {
+                    return true;
+                }
+            })) {
+            return true;
+        } else
+            return false;
     }
 
     return {

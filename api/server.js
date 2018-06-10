@@ -5,17 +5,18 @@ const postController = require('./controllers/post_controller.js');
 const requestValidator = require('./controllers/request_validator.js');
 
 server.on('request', (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
     filterRequest(req, res);
 });
 
 function filterRequest(req, res) {
     if (requestValidator.validate(req) === false) {
         res.writeHead(400, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
+            "Access-Control-Allow-Origin": "*"
         });
         res.write("Your request is bad baddity badytoo!");
         res.end();
+        return;
     }
     switch (req.method) {
         case "GET":
