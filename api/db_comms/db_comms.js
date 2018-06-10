@@ -1,9 +1,11 @@
 const tables = require('../models/tables');
 const {User} = require ('../models/user');
 const {Report} = require('../models/report');
+const {Token} = require('../models/token');
 const {Comment} = require('../models/comment');
 const {Location} = require('../models/location');
 const {con} = require('./connection')
+const {getNowTime,createExpireTime} = require ('./db_utils');
 
 module.exports = (() => {
     'use strict';

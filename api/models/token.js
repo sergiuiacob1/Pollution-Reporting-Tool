@@ -56,14 +56,14 @@ module.exports = (() => {
                 if (this.token) {
                     valueNames.push("token");
                     values.push("'" + this.token + "'");
-                }
+
                 if (this.id_user) {
                     valueNames.push("id_user");
                     values.push("'" + this.id_user + "'");
                 }
                 if(this.expire) {
                     valueNames.push("expire");
-                    values.push("TO_DATE('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
+                    values.push("DATE_FORMAT('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
                 }
 
                 let insertClause = getInsertClause(valueNames,values);
@@ -71,6 +71,7 @@ module.exports = (() => {
                 if(!this.id) {
                     con.query("insert into session_tokens " + insertClause, function (err, result, fields) {
                         if (err) {
+                            throw err;
                             return false;
                         }
 
@@ -91,7 +92,7 @@ module.exports = (() => {
                         }
 
 
-                        console.log('report updated ' + JSON.stringify(result));
+                        console.log('Token updated ' + JSON.stringify(result));
                         this.id = result.insertId;
                         console.log('Instance is valid.');
                         return true;

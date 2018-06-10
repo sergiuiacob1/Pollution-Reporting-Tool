@@ -33,11 +33,11 @@ module.exports = (() => {
     };
 
     const getNowTime = () => {
-        return moment.format('YYYY-MM-DD HH:mm:ss');
+        return moment().format('YYYY-MM-DD HH:mm:ss');
     };
 
     const createExpireTime = () => {
-        return moment.add(30,'minutes').calendar().format('YYYY-MM-DD HH:mm:ss');
+        return moment().add(30,'minutes').format('YYYY-MM-DD HH:mm:ss');
     };
 
     return {
