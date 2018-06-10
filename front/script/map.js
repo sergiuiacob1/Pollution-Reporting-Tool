@@ -18,9 +18,11 @@ function initMap() {
 		},
 		zoom: 8
 	});
+	map.setOptions({
+		minZoom: 5
+	});
 
 	centerMapToUserLocation();
-
 	getReports();
 }
 
@@ -31,12 +33,10 @@ function centerMapToUserLocation() {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
-
 			map.panTo(pos);
 		});
 	}
 }
-
 
 function placeMarker(position, map) {
 	var marker = new google.maps.Marker({
@@ -54,32 +54,65 @@ function getReports() {
 		type: 'GET',
 		dataType: 'json'
 	}).done(function (result) {
-		console.log('am luat reports');
 		addReportsToMap(result);
 	}).fail(function () {
-		console.log('get reports a esuat');
+		console.log('GET /api/reports failed');
 	});
 }
 
-function addReportsToMap(reports) {
-
-	var uluru = {
+function addReportsToMap(result) {
+	let uluru = {
 		lat: -25.363,
 		lng: 131.044
 	};
 
-	var infowindow = new google.maps.InfoWindow({
-		content: 'SALUT'
+
+	result.reports.forEach(report => {
+		let contentPopup = createPopupContent(report);
+
+		let infowindow = new google.maps.InfoWindow({
+			content: contentPopup,
+			maxWidth: 350
+		});
+
+		let marker = new google.maps.Marker({
+			position: uluru,
+			map: map,
+			title: 'Uluru (Ayers Rock)'
+		});
+		marker.opened = 0;
+
+		marker.addListener('click', function () {
+			if (!marker.opened)
+				infowindow.open(map, marker);
+			else
+				infowindow.close(map, marker);
+			marker.opened = 1 - marker.opened;
+		});
+		google.maps.event.addListener(map, 'click', function () {
+			infowindow.close(map, marker);
+		});
+
+		map.panTo(uluru);
+		uluru.lat += 1;
+		uluru.lng += 1;
 	});
 
-	var marker = new google.maps.Marker({
-		position: uluru,
-		map: map,
-		title: 'Uluru (Ayers Rock)'
-	});
-	marker.addListener('click', function () {
-		infowindow.open(map, marker);
-	});
+}
 
-	map.panTo(uluru);
+function createPopupContent(report) {
+	let content = document.createElement('div');
+	let pTitle = document.createElement('div');
+	let pDesc = document.createElement('div');
+
+	content.setAttribute("id", "popup-info");
+	pTitle.className = "popup-info-title";
+	pTitle.innerHTML = report.title;
+	pDesc.className = "popup-info-description";
+	pDesc.innerHTML = report.description;
+
+	content.appendChild(pTitle);
+	content.appendChild(pDesc);
+
+	return content;
 }
