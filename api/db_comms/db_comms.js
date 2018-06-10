@@ -1,5 +1,6 @@
 const tables = require('../models/tables');
 const {User} = require ('../models/user');
+const {Report} = require('../models/report');
 const {con} = require('./connection')
 
 module.exports = (() => {
@@ -7,10 +8,12 @@ module.exports = (() => {
 
     const get  = (table,tuple) => {
         return new Promise((resolve,reject) => {
+            let whereClause = "";
+            let conditions = [];
             switch (table) {
                 case tables.user :
-                    let whereClause = "";
-                    let conditions = [];
+                    whereClause = "";
+                    conditions = [];
                     if(!tuple) tuple = {};
                     tuple.name ? conditions.push(" name = " + tuple.name) : null;
                     tuple.surname ? conditions.push(" surname = " + tuple.surname) : null;
@@ -44,7 +47,43 @@ module.exports = (() => {
                             resolve(userList);
                         }
                     });
+                case tables.report :
+                    whereClause = "";
+                    conditions = [];
+                    if(!tuple) tuple = {};
+                    tuple.title ? conditions.push(" title = " + tuple.title) : null;
+                    tuple.description ? conditions.push(" description = " + tuple.description) : null;
+                    tuple.id_location ? conditions.push(" id_location = " + tuple.id_location) : null;
+                    tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
+                    tuple.report_type ? conditions.push(" report_type = " + tuple.report_type) : null;
+                    tuple.report_date ? conditions.push(" report_date = " + tuple.report_date) : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
+                    conditions.forEach(function(condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2,whereClause.length);
+                    if(whereClause.length > 3)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
+                    console.log("Querry: select * from " + tables.report + whereClause );
+                    con.query("select * from " + tables.report + whereClause, function (err, result, fields) {
+                        if (err)
+                            reject(err);
+                        console.log('Querry executed successfully.');
+                        console.log(result);
+
+                        if(result.size == 1)
+                            resolve(new Report(result));
+                        else {
+                            let reportList = [];
+                            result.forEach(function (row) {
+                                reportList.push(new Report(row));
+                            });
+                            resolve(reportList);
+                        }
+                    });
             }
         })
     };
