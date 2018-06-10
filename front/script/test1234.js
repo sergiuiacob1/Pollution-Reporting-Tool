@@ -57,13 +57,21 @@ function postReport() {
   }).done(function (res) {
     report.id_location = res.id;
     console.log(report);
+
+    if (res.status !== 200)
+    alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
+
     $.ajax({
       url: hostname + "/api/reports",
       method: 'POST',
       contentType: 'text/plain',
       data: JSON.stringify(report)
     }).done(function (res) {
-      console.log(res);
+      console.log (res);
+      if (res.status !== 200)
+        alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
+      else
+        alert('Report adaugat cu succes!');
     });
   });
 }

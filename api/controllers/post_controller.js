@@ -27,7 +27,7 @@ module.exports = (() => {
     }
 
     function saveLocationToDB(req, res) {
-        console.log ('saving location');
+        console.log('saving location');
         getBodyFromRequest(req).then(function (body) {
             let location = new Location(body);
             location.save().then(function (newLocation) {
@@ -37,6 +37,7 @@ module.exports = (() => {
                 });
 
                 let postResponse = {
+                    "success": true,
                     "id": newLocation.id,
                     "lat_coord": newLocation.lat_coord,
                     "long_coord": newLocation.long_coord
@@ -51,7 +52,10 @@ module.exports = (() => {
                     "Content-Type": "text/plain]",
                     "Access-Control-Allow-Origin": "*"
                 });
-                res.write('Nu s-a putut adauga locatia');
+                let postResponse = {
+                    "success": false
+                }
+                res.write(JSON.stringify(postResponse));
                 res.end();
                 return;
             });
@@ -64,22 +68,41 @@ module.exports = (() => {
             report.report_date = getNowTime();
             report.id_user = 1;
             console.log(report);
-            report.save();
+            report.save().then(newReport => {
+                res.writeHead(200, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                let postResponse = {
+                    "success": true,
+                }
 
-            res.writeHead(200, {
-                "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "*"
+                res.write(JSON.stringify(postResponse));
+                res.end();
+            }).catch(err => {
+                console.log(err);
+                res.writeHead(400, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                // let postResponse = {
+                //     "success": false
+                // }
+    
+                // res.write(JSON.stringify(postResponse));
+                res.end();
             });
-            res.write("ok");
-            res.end();
         }).catch(function (err) {
             console.log(err);
-
             res.writeHead(500, {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*"
             });
-            res.write("something went wrong");
+            let postResponse = {
+                "success": false
+            }
+
+            res.write(JSON.stringify(postResponse));
             res.end();
         });
     }
