@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.22.2",
     "mysql": "^2.15.0",
     "npm": "^6.1.0",
     "squel": "^5.12.1",
