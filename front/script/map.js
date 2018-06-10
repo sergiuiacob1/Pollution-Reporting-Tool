@@ -22,6 +22,7 @@ function initMap() {
 	centerMapToUserLocation();
 	getReports();
 	addEventListeners();
+	updateCenterLocation();
 }
 
 function addEventListeners(){

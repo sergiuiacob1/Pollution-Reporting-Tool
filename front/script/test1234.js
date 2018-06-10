@@ -42,17 +42,27 @@ function SubmitForm() {
 
 function postReport() {
   var report = new Object();
-  report.location = document.getElementById("stage1-location").value;
+  report.location = new Object();
+  report.location.lat_coord = map.getCenter().lat();
+  report.location.long_coord = map.getCenter().lng();
   report.title = document.getElementById("stage1-title").value;
   report.description = document.getElementById("stage1-description").value;
 
   $.ajax({
-    url: hostname + '/api/reports',
+    url: hostname + '/api/locations',
     method: 'POST',
     contentType: 'application/json',
-    body: JSON.stringify(report)
+    body: JSON.stringify(report.location)
   }).done(function (res) {
     console.log(res);
+    // $.ajax({
+    //   url: hostname + '/api/reports',
+    //   method: 'POST',
+    //   contentType: 'application/json',
+    //   body: JSON.stringify(report)
+    // }).done(function (res) {
+    //   console.log(res);
+    // });
   });
 }
 
