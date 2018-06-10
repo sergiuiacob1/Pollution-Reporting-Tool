@@ -47,7 +47,6 @@ module.exports = (() => {
         }
 
         save() {
-
             if(!(this.email && this.name && this.surname && this.password))
             {
                 console.log('Object has null fields. Update before storing!');
@@ -92,14 +91,41 @@ module.exports = (() => {
                 nameClause = nameClause.substr(0,nameClause.length-1) + ")";
                 valueClause = valueClause.substr(0,valueClause.length-1) + ")";
                 console.log(nameClause + valueClause);
-                con.query("insert into users" + nameClause + " values" + valueClause,function(err,result,fields){
-                    if(err)
-                        throw err;
+                if(this.id) {
+                    con.query("insert into users" + nameClause + " values" + valueClause, function (err, result, fields) {
+                        if (err) {
+                            return false;
+                        }
 
-                    console.log('User inserted: ' + JSON.stringify(result));
-                    this.id = result.insertId;
-                    console.log('Instance is now valid.');
-                });
+
+                        console.log('User inserted: ' + JSON.stringify(result));
+                        this.id = result.insertId;
+                        console.log('Instance is now valid.');
+                        return true;
+                    });
+                }
+                else
+                {
+                    let updateClause = "";
+                    let i=0;
+                    for(i=0;i<valueNames.length;i++)
+                    {
+                        updateClause += valueNames[i] + "=" + values[i] + ",";
+                    }
+                    updateClause = updateClause.substr(0,updateClause.length-1);
+
+                    con.query("update users set " + updateClause + "where id = " + this.id , function (err, result, fields) {
+                        if (err) {
+                            return false;
+                        }
+
+
+                        console.log('User updated ' + JSON.stringify(result));
+                        this.id = result.insertId;
+                        console.log('Instance is valid.');
+                        return true;
+                    });
+                }
 
             }
 
