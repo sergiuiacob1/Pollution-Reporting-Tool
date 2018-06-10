@@ -126,6 +126,7 @@ module.exports = (() => {
                             resolve(commentList);
                         }
                     });
+                    break;
                 case tables.location :
                     whereClause = "";
                     conditions = [];
@@ -159,7 +160,6 @@ module.exports = (() => {
                             resolve(locationList);
                         }
                     });
-                    break;
             }
         })
     };
