@@ -1,16 +1,18 @@
-var isOpen=false;
+var isOpen = false;
+
+$(document).ready(function () {
+  let slider = document.getElementById("icon_slider");
+  slider.onclick = openUserMenu;
+});
 
 function openUserMenu() {
-  if(!isOpen)
-  {
+  if (!isOpen) {
     document.getElementById("user_slider").style.transform = "translateX(250px)";
     document.getElementById("icon_slider").style.transform = "translateX(250px)";
-    isOpen=true;
-  }
-  else {
+    isOpen = true;
+  } else {
     document.getElementById("user_slider").style.transform = "translateX(-1px)";
     document.getElementById("icon_slider").style.transform = "translateX(-1px)";
-    isOpen=false;
+    isOpen = false;
   }
-
 }

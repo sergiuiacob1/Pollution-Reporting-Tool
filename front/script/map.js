@@ -1,14 +1,14 @@
-var hostname = "http://91.92.128.27:3000";
+//var hostname = "http://91.92.128.27:3000";
+var hostname = "http://localhost:3000";
+
 var map;
 
-window.onload = init();
-
-function init() {
+$(document).ready(function () {
 	var script = document.createElement("script");
 	script.src =
 		"https://maps.googleapis.com/maps/api/js?key=AIzaSyDamjhWg7wcyotS8tgBoI69RFOx9onVpDs&callback=initMap";
 	document.head.appendChild(script);
-}
+});
 
 function initMap() {
 	map = new google.maps.Map(document.getElementById("map"), {
@@ -21,6 +21,15 @@ function initMap() {
 
 	centerMapToUserLocation();
 	getReports();
+	addEventListeners();
+}
+
+function addEventListeners(){
+	google.maps.event.addListener(map, 'dragend', updateCenterLocation);
+}
+
+function updateCenterLocation(){
+	document.getElementById("stage1-location").value = map.getCenter();
 }
 
 function centerMapToUserLocation() {
@@ -58,44 +67,42 @@ function getReports() {
 }
 
 function addReportsToMap(result) {
+	result.reports.forEach(report => addReportToMap(report));
+}
+
+function addReportToMap(report) {
 	let uluru = {
 		lat: -25.363,
 		lng: 131.044
 	};
+	let contentPopup = createPopupContent(report);
 
-
-	result.reports.forEach(report => {
-		let contentPopup = createPopupContent(report);
-
-		let infowindow = new google.maps.InfoWindow({
-			content: contentPopup,
-			maxWidth: 350
-		});
-
-		let marker = new google.maps.Marker({
-			position: uluru,
-			map: map,
-			title: 'Uluru (Ayers Rock)'
-		});
-		marker.opened = 0;
-
-		marker.addListener('click', function () {
-			if (!marker.opened)
-				infowindow.open(map, marker);
-			else
-				infowindow.close(map, marker);
-			marker.opened = 1 - marker.opened;
-		});
-		google.maps.event.addListener(map, 'click', function () {
-			infowindow.close(map, marker);
-		});
-
-		map.panTo(uluru);
-		uluru.lat += 1;
-		uluru.lng += 1;
+	let infowindow = new google.maps.InfoWindow({
+		content: contentPopup,
+		maxWidth: 350
 	});
 
+	let marker = new google.maps.Marker({
+		position: uluru,
+		map: map,
+		title: 'Uluru (Ayers Rock)'
+	});
+	marker.opened = 0;
+
+	marker.addListener('click', function () {
+		if (!marker.opened)
+			infowindow.open(map, marker);
+		else
+			infowindow.close(map, marker);
+		marker.opened = 1 - marker.opened;
+	});
+	google.maps.event.addListener(map, 'click', function () {
+		infowindow.close(map, marker);
+	});
+
+	map.panTo(uluru);
 }
+
 
 function createPopupContent(report) {
 	let content = document.createElement('div');

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "mysql": "^2.15.0",
     "npm": "^6.1.0",
     "squel": "^5.12.1",
