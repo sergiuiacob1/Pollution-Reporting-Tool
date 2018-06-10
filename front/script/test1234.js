@@ -54,7 +54,9 @@ function postReport() {
     contentType: 'application/json',
     body: JSON.stringify(report.location)
   }).done(function (res) {
+    res = JSON.parse (res);
     console.log(res);
+    report.location = res;
     // $.ajax({
     //   url: hostname + '/api/reports',
     //   method: 'POST',
