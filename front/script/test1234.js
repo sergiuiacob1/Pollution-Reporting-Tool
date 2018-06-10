@@ -1,5 +1,5 @@
-var hostname = "http://91.92.128.27:3000";
-//var hostname = "http://localhost:3000";
+//var hostname = "http://91.92.128.27:3000";
+var hostname = "http://localhost:3000";
 
 $(document).ready(function () {
   let btnShowAdd = document.getElementById("btn-show-add-issue-form");
@@ -41,8 +41,8 @@ function SubmitForm() {
 }
 
 function postReport() {
-  var location = new Object;
-  var report = new Object();
+  let location = new Object;
+  let report = new Object();
   location.lat_coord = map.getCenter().lat();
   location.long_coord = map.getCenter().lng();
 
@@ -50,20 +50,18 @@ function postReport() {
   report.description = document.getElementById("stage1-description").value;
 
   $.ajax({
-    url: hostname + '/api/locations',
+    url: hostname + "/api/locations",
     method: 'POST',
-    contentType: 'application/json',
-    body: JSON.stringify(location)
+    contentType: 'text/plain',
+    data: JSON.stringify(location)
   }).done(function (res) {
-    console.log('aici');
-    res = JSON.parse(res);
-    console.log(res);
     report.id_location = res.id;
+    console.log(report);
     $.ajax({
-      url: hostname + '/api/reports',
+      url: hostname + "/api/reports",
       method: 'POST',
-      contentType: 'application/json',
-      body: JSON.stringify(report)
+      contentType: 'text/plain',
+      data: JSON.stringify(report)
     }).done(function (res) {
       console.log(res);
     });

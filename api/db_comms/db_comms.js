@@ -39,7 +39,6 @@ module.exports = (() => {
                         if (err)
                            reject(err);
                         console.log('Querry executed successfully.');
-                        console.log(result);
 
                         if(result.size == 1)
                             resolve(new User(result));
@@ -77,7 +76,6 @@ module.exports = (() => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
-                        console.log(result);
 
                         if(result.size == 1)
                             resolve(new Report(result));
@@ -114,7 +112,6 @@ module.exports = (() => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
-                        console.log(result);
 
                         if(result.size == 1)
                             resolve(new Comment(result));
@@ -147,7 +144,6 @@ module.exports = (() => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
-                        console.log(result);
 
                         if(result.size == 1)
                             resolve(new Location(result));

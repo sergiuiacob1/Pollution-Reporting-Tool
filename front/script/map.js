@@ -72,9 +72,9 @@ function addReportsToMap(result) {
 }
 
 function addReportToMap(report) {
-	let uluru = {
-		lat: -25.363,
-		lng: 131.044
+	let pos = {
+		lat: report.location.lat_coord,
+		lng: report.location.lat_coord
 	};
 	let contentPopup = createPopupContent(report);
 
@@ -84,7 +84,7 @@ function addReportToMap(report) {
 	});
 
 	let marker = new google.maps.Marker({
-		position: uluru,
+		position: pos,
 		map: map,
 		title: 'Uluru (Ayers Rock)'
 	});
@@ -101,7 +101,7 @@ function addReportToMap(report) {
 		infowindow.close(map, marker);
 	});
 
-	map.panTo(uluru);
+	map.panTo(pos);
 }
 
 

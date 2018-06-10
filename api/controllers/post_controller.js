@@ -29,7 +29,6 @@ module.exports = (() => {
     function saveLocationToDB(req, res) {
         console.log ('saving location');
         getBodyFromRequest(req).then(function (body) {
-            console.log (body);
             let location = new Location(body);
             location.save().then(function (newLocation) {
                 res.writeHead(200, {
@@ -42,8 +41,6 @@ module.exports = (() => {
                     "lat_coord": newLocation.lat_coord,
                     "long_coord": newLocation.long_coord
                 }
-
-                console.log(postResponse);
 
                 res.write(JSON.stringify(postResponse));
                 res.end();
@@ -64,9 +61,9 @@ module.exports = (() => {
     function saveReportToDB(req, res) {
         getBodyFromRequest(req).then(function (body) {
             let report = new Report(body);
-            console.log(report);
             report.report_date = getNowTime();
             report.id_user = 1;
+            console.log(report);
             report.save();
 
             res.writeHead(200, {
