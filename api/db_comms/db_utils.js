@@ -1,5 +1,7 @@
 module.exports = (() => {
 
+    const moment = require('moment');
+
     const getUpdateClause = (names,values)  => {
         let updateClause = "";
         let i=0;
@@ -28,10 +30,20 @@ module.exports = (() => {
         valueClause = valueClause.substr(0,valueClause.length-1) + ") ";
 
         return (nameClause + " values " + valueClause);
-    }
+    };
+
+    const getNowTime = () => {
+        return moment.format('YYYY-MM-DD HH:mm:ss');
+    };
+
+    const createExpireTime = () => {
+        return moment.add(30,'minutes').calendar().format('YYYY-MM-DD HH:mm:ss');
+    };
 
     return {
         getUpdateClause,
-        getInsertClause
+        getInsertClause,
+        getNowTime,
+        createExpireTime
     }
 })();
