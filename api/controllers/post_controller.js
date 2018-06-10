@@ -1,5 +1,8 @@
 const db_comms = require('./../db_comms/db_comms.js');
 const {
+    getNowTime
+} = require('./../db_comms/db_utils.js');
+const {
     Report
 } = require('./../models/report.js');
 const {
@@ -24,23 +27,25 @@ module.exports = (() => {
     }
 
     function saveLocationToDB(req, res) {
+        console.log ('saving location');
         getBodyFromRequest(req).then(function (body) {
+            console.log (body);
             let location = new Location(body);
             location.save().then(function (newLocation) {
                 res.writeHead(200, {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 });
-    
+
                 let postResponse = {
                     "id": newLocation.id,
                     "lat_coord": newLocation.lat_coord,
                     "long_coord": newLocation.long_coord
                 }
-    
-                console.log (postResponse);
-    
-                res.write (JSON.stringify(postResponse));
+
+                console.log(postResponse);
+
+                res.write(JSON.stringify(postResponse));
                 res.end();
             }).catch(function (err) {
                 console.log(err);
@@ -60,6 +65,8 @@ module.exports = (() => {
         getBodyFromRequest(req).then(function (body) {
             let report = new Report(body);
             console.log(report);
+            report.report_date = getNowTime();
+            report.id_user = 1;
             report.save();
 
             res.writeHead(200, {

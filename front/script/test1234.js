@@ -1,5 +1,5 @@
-//var hostname = "http://91.92.128.27:3000";
-var hostname = "http://localhost:3000";
+var hostname = "http://91.92.128.27:3000";
+//var hostname = "http://localhost:3000";
 
 $(document).ready(function () {
   let btnShowAdd = document.getElementById("btn-show-add-issue-form");
@@ -41,10 +41,11 @@ function SubmitForm() {
 }
 
 function postReport() {
+  var location = new Object;
   var report = new Object();
-  report.location = new Object();
-  report.location.lat_coord = map.getCenter().lat();
-  report.location.long_coord = map.getCenter().lng();
+  location.lat_coord = map.getCenter().lat();
+  location.long_coord = map.getCenter().lng();
+
   report.title = document.getElementById("stage1-title").value;
   report.description = document.getElementById("stage1-description").value;
 
@@ -52,19 +53,20 @@ function postReport() {
     url: hostname + '/api/locations',
     method: 'POST',
     contentType: 'application/json',
-    body: JSON.stringify(report.location)
+    body: JSON.stringify(location)
   }).done(function (res) {
-    res = JSON.parse (res);
+    console.log('aici');
+    res = JSON.parse(res);
     console.log(res);
-    report.location = res;
-    // $.ajax({
-    //   url: hostname + '/api/reports',
-    //   method: 'POST',
-    //   contentType: 'application/json',
-    //   body: JSON.stringify(report)
-    // }).done(function (res) {
-    //   console.log(res);
-    // });
+    report.id_location = res.id;
+    $.ajax({
+      url: hostname + '/api/reports',
+      method: 'POST',
+      contentType: 'application/json',
+      body: JSON.stringify(report)
+    }).done(function (res) {
+      console.log(res);
+    });
   });
 }
 
