@@ -2,6 +2,7 @@ module.exports = (() => {
     'use strict';
 
     const {con} = require('../db_comms/connection');
+    const {getUpdateClause,getInsertClause} = require('../db_comms/db_utils');
     class Report {
 
         constructor(tuple) {
@@ -83,21 +84,10 @@ module.exports = (() => {
                     values.push("'" + this.report_date + "'");
                 }
 
-                let titleClause = "(";
-                let valueClause = "(";
+                let insertClause = getInsertClause(valuetitles,values);
 
-                valuetitles.forEach(function (title) {
-                    titleClause += title + ",";
-                })
-                values.forEach(function (value) {
-                    valueClause += value + ",";
-                })
-
-                titleClause = titleClause.substr(0,titleClause.length-1) + ")";
-                valueClause = valueClause.substr(0,valueClause.length-1) + ")";
-                console.log(titleClause + valueClause);
                 if(this.id) {
-                    con.query("insert into reports" + titleClause + " values" + valueClause, function (err, result, fields) {
+                    con.query("insert into reports " + insertClause, function (err, result, fields) {
                         if (err) {
                             return false;
                         }
@@ -111,13 +101,7 @@ module.exports = (() => {
                 }
                 else
                 {
-                    let updateClause = "";
-                    let i=0;
-                    for(i=0;i<valuetitles.length;i++)
-                    {
-                        updateClause += valuetitles[i] + "=" + values[i] + ",";
-                    }
-                    updateClause = updateClause.substr(0,updateClause.length-1);
+                    let updateClause = getUpdateClause(valuetitles,values);
 
                     con.query("update reports set " + updateClause + "where id = " + this.id , function (err, result, fields) {
                         if (err) {
