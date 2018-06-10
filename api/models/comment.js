@@ -46,66 +46,65 @@ module.exports = (() => {
         }
 
         save() {
-            if(!(this.id_user && this.comment_text && this.id_report && this.comment_date))
-            {
-                console.log('Object has null fields. Update before storing!');
-            }
-            else {
-
-                let valueNames = [];
-                let values = [];
-
-                if (this.comment_text) {
-                    valueNames.push("comment_text");
-                    values.push("'" +this.comment_text + "'");
+            return new Promise((resolve, reject) => {
+                if (!(this.id_user && this.comment_text && this.id_report && this.comment_date)) {
+                    console.log('Object has null fields. Update before storing!');
                 }
-                if (this.id_report) {
-                    valueNames.push("id_report");
-                    values.push("'" + this.id_report + "'");
+                else {
+
+                    let valueNames = [];
+                    let values = [];
+
+                    if (this.comment_text) {
+                        valueNames.push("comment_text");
+                        values.push("'" + this.comment_text + "'");
+                    }
+                    if (this.id_report) {
+                        valueNames.push("id_report");
+                        values.push("'" + this.id_report + "'");
+                    }
+                    if (this.id_user) {
+                        valueNames.push("id_user");
+                        values.push("'" + this.id_user + "'");
+                    }
+                    if (this.comment_date) {
+                        valueNames.push("comment_date");
+                        values.push("'" + this.comment_date + "'");
+                    }
+
+                    let insertClause = getInsertClause(valueNames, values);
+                    console.log('Querry : insert into comments ' + insertClause);
+                    if (!this.id) {
+                        con.query("insert into comments " + insertClause, function (err, result, fields) {
+                            if (err) {
+                                reject(err);
+                            }
+
+
+                            console.log('Comment inserted: ' + JSON.stringify(result));
+                            this.id = result.insertId;
+                            console.log('Instance is now valid.');
+                            resolve(this);
+                        });
+                    }
+                    else {
+                        let updateClause = getUpdateClause(valueNames, values);
+
+                        con.query("update comments set " + updateClause + "where id = " + this.id, (err, result, fields) => {
+                            if (err) {
+                               reject(err);
+                            }
+
+
+                            console.log('report updated ' + JSON.stringify(result));
+                            this.id = result.insertId;
+                            console.log('Instance is valid.');
+                            resolve(this);
+                        });
+                    }
+
                 }
-                if (this.id_user) {
-                    valueNames.push("id_user");
-                    values.push("'" + this.id_user + "'");
-                }
-                if(this.comment_date){
-                    valueNames.push("comment_date");
-                    values.push("'" + this.comment_date + "'");
-                }
-
-                let insertClause = getInsertClause(valueNames,values);
-                console.log('Querry : insert into comments ' + insertClause);
-                if(!this.id) {
-                    con.query("insert into comments " + insertClause, function (err, result, fields) {
-                        if (err) {
-                            return false;
-                        }
-
-
-                        console.log('Comment inserted: ' + JSON.stringify(result));
-                        this.id = result.insertId;
-                        console.log('Instance is now valid.');
-                        return true;
-                    });
-                }
-                else
-                {
-                    let updateClause = getUpdateClause(valueNames,values);
-
-                    con.query("update comments set " + updateClause + "where id = " + this.id , function (err, result, fields) {
-                        if (err) {
-                            return false;
-                        }
-
-
-                        console.log('report updated ' + JSON.stringify(result));
-                        this.id = result.insertId;
-                        console.log('Instance is valid.');
-                        return true;
-                    });
-                }
-
-            }
-
+            });
         }
 
         assertComment() {
