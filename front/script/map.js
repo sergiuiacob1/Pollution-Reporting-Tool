@@ -1,4 +1,4 @@
-var hostname = "http://localhost:3000";
+var hostname = "http://91.92.128.27:3000";
 var map;
 
 window.onload = init();
@@ -17,9 +17,6 @@ function initMap() {
 			lng: 151.196
 		},
 		zoom: 8
-	});
-	map.setOptions({
-		minZoom: 5
 	});
 
 	centerMapToUserLocation();
