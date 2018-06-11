@@ -10,6 +10,7 @@ $(document).ready(function () {
   btnAddReport.onclick = SubmitForm;
   let btnLogIn = document.getElementById("log-in-button");
   btnLogIn.onclick = LogIn;
+
 });
 
 window.onclick = function (event) {
@@ -143,7 +144,15 @@ function LogIn() {
   $.post(hostname + '/authenticate', JSON.stringify(object))
     .done(function (res, status) {
       console.log(res);
-      localStorage.setItem("token",res.token);
+      if(res.success === true) {
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("self", JSON.stringify(res.self));
+          location.reload();
+      }
+      else
+      {
+        alert("Username/password combination not found");
+      }
     });
 
 }

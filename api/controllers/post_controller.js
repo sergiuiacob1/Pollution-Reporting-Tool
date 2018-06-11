@@ -239,7 +239,8 @@ module.exports = (() => {
                     });
                     let postResponse = {
                         "success": true,
-                        "token": token.token
+                        "token": token.token,
+                        "self": result[0]
                     };
                     res.write(JSON.stringify(postResponse));
                     res.end();
@@ -289,7 +290,8 @@ module.exports = (() => {
                     });
                     let postResponse = {
                         "success": true,
-                        "token": token.token
+                        "token": token.token,
+                        "self": user
                     };
                     res.write(JSON.stringify(postResponse));
                     res.end();
