@@ -55,9 +55,9 @@ module.exports = (() => {
 
                     db_comms.get(tables.reportpics, {
                         "id": reports[i].id
-                    }).then( (rows) => {
+                    }).then( (pics) => {
                         console.log ('images: ');
-                        console.log (rows);
+                        console.log (pics);
                     });
 
                     if (i == rows.length - 1)
