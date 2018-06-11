@@ -22,6 +22,7 @@ function register () {
 
             if(res.success)
             {
+                localStorage.setItem("token",res.token);
                 window.location.replace("http://91.92.128.27/front/pages/map.html");
             }
             else {

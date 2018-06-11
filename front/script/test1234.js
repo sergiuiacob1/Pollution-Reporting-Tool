@@ -143,6 +143,7 @@ function LogIn() {
   $.post(hostname + '/authenticate', JSON.stringify(object))
     .done(function (res, status) {
       console.log(res);
+      localStorage.setItem("token",res.token);
     });
 
 }
