@@ -8,6 +8,8 @@ $(document).ready(function () {
   btnAddImg.onclick = AddFormImage;
   let btnAddReport = document.getElementById("btn-submit-issue");
   btnAddReport.onclick = SubmitForm;
+  let btnLogIn = document.getElementById("log-in-button");
+  btnLogIn.onclick = LogIn;
 });
 
 window.onclick = function (event) {
@@ -100,4 +102,20 @@ function AddFormImage() {
 
   var inputFile = document.getElementById("stage2-form-add-image-input");
   inputFile.click();
+}
+
+function LogIn() {
+  let email = document.getElementById("input_form_email");
+  let password = document.getElementById("input_form_password");
+
+  let object = {"email": email.value,"password":password.value};
+  console.log('Sending request from front : ');
+  console.log(object);
+
+
+    $.post(hostname + '/authenticate', JSON.stringify(object))
+        .done(function (res,status) {
+          console.log(res);
+        });
+
 }

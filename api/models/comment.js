@@ -6,7 +6,6 @@ module.exports = (() => {
     class Comment {
 
         constructor(tuple) {
-            console.log('Comment');
             this.comment_text = tuple.comment_text ? tuple.comment_text : this.comment_text;
             this.id_user = tuple.id_user ? tuple.id_user : this.id_user;
             this.id_report = tuple.id_report ? tuple.id_report : this.id_report;

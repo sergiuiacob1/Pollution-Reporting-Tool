@@ -1,15 +1,17 @@
 const db_comms = require('./../db_comms/db_comms.js');
 const {
-    getNowTime
+    getNowTime,
+    createExpireTime
 } = require('./../db_comms/db_utils.js');
 const {
     Report
 } = require('./../models/report.js');
+const {Token} = require('../models/token');
 const {
     Location
 } = require('./../models/location.js');
 var bodyParser = require('body-parser');
-
+var tables = require('../models/tables');
 module.exports = (() => {
     function handleRequest(req, res) {
         console.log('POST at url: ' + req.url);
@@ -22,6 +24,9 @@ module.exports = (() => {
                 break;
             case "/api/locations":
                 saveLocationToDB(req, res);
+                break;
+            case "/authenticate":
+                authenticate(req,res);
                 break;
         }
     }
@@ -124,6 +129,47 @@ module.exports = (() => {
     }
 
     function saveUserToDB(req, res) {
+
+    }
+
+    function authenticate (req,res) {
+        console.log('Trying to authenticate :');
+        getBodyFromRequest(req).then((body) => {
+            console.log(body);
+            db_comms.get(tables.user,{email:body.email,password:body.password}).then((result) => {
+                console.log('User:' + result);
+                if (result[0] != null)
+                {
+                    let token = new Token({id_user:result[0].id,expire:createExpireTime()});
+                    token.save();
+                    res.writeHead(200, {
+                        "Content-Type": "text/plain",
+                        "Access-Control-Allow-Origin": "*"
+                    });
+                    let postResponse = {
+                        "success": true,
+                        "token": token.token
+                    }
+                    res.write(JSON.stringify(postResponse));
+                    res.end();
+                }
+                else {
+                    res.writeHead(400, {
+                        "Content-Type": "text/plain",
+                        "Access-Control-Allow-Origin": "*"
+                    });
+                    let postResponse = {
+                        "success": false,
+                        "token": null
+                    }
+                    res.write(JSON.stringify(postResponse));
+                    res.end();
+                }
+            })
+
+
+
+        });
 
     }
 

@@ -19,28 +19,31 @@ module.exports = (() => {
                     whereClause = "";
                     conditions = [];
                     if(!tuple) tuple = {};
-                    tuple.name ? conditions.push(" name = " + tuple.name) : null;
-                    tuple.surname ? conditions.push(" surname = " + tuple.surname) : null;
-                    tuple.email ? conditions.push(" email = " + tuple.email) : null;
-                    tuple.password ? conditions.push(" password = " + tuple.password) : null;
-                    tuple.avatar_link ? conditions.push(" avatar_link = " + tuple.avatar_link) : null;
+                    tuple.name ? conditions.push(" name = '" + tuple.name + "'") : null;
+                    tuple.surname ? conditions.push(" surname = '" + tuple.surname + "'") : null;
+                    tuple.email ? conditions.push(" email = '" + tuple.email + "'") : null;
+                    tuple.password ? conditions.push(" password = '" + tuple.password + "'") : null;
+                    tuple.avatar_link ? conditions.push(" avatar_link = '" + tuple.avatar_link + "'") : null;
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
                     conditions.forEach(function(condition) {
-                        whereClause += ", " + condition;
+                        whereClause += " AND " + condition ;
                     });
 
-                    whereClause = whereClause.slice(2,whereClause.length);
-                    if(whereClause.length > 5)
+                    if(whereClause.length > 5) {
+                        whereClause = whereClause.slice(5, whereClause.length);
                         whereClause = " where " + whereClause;
+                    }
                     else whereClause = "";
                     console.log("Querry: select * from " + tables.user + whereClause );
                     con.query("select * from " + tables.user + whereClause, function (err, result, fields) {
                         if (err)
-                           reject(err);
+                           reject(null);
                         console.log('Querry executed successfully.');
+                        console.log(result);
 
-                        if(result.size == 1)
+                        if(result)
+                        if(result.size === 1)
                             resolve(new User(result));
                         else {
                             let userList = [];
@@ -49,6 +52,7 @@ module.exports = (() => {
                             });
                             resolve(userList);
                         }
+                        else resolve(null);
                     });
                     break;
                 case tables.report :
@@ -64,12 +68,13 @@ module.exports = (() => {
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
                     conditions.forEach(function(condition) {
-                        whereClause += ", " + condition;
+                        whereClause += " AND " + condition;
                     });
 
-                    whereClause = whereClause.slice(2,whereClause.length);
-                    if(whereClause.length > 3)
+                    if(whereClause.length > 5) {
+                        whereClause = whereClause.slice(5, whereClause.length);
                         whereClause = " where " + whereClause;
+                    }
                     else whereClause = "";
                     console.log("Querry: select * from " + tables.report + whereClause );
                     con.query("select * from " + tables.report + whereClause, function (err, result, fields) {

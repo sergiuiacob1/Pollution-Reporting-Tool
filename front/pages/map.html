@@ -19,7 +19,6 @@
 <body>
     <div id="map" class = "map"></div>
     <div id ="popups"></div>
-    </iframe>
 
     <header>
         <div>
@@ -102,11 +101,7 @@
             <input type="password" name="password" id="input_form_password" placeholder="Password" required>
             <a class="text" href="#" style="margin-left:15%">New? Sign up!</a>
             <a class="text" href="#">Forgot password?</a>
-            <input type="submit" value="Log In" />
-            <div class="otherLogins">
-                <input class="Fbutton" type="submit" value="Facebook" />
-                <input class="Gbutton" type="submit" value="Google+" />
-            </div>
+            <input type="button" value="Log In" id = "log-in-button"/>
             <div class="footer_info">
                 <a class="text" href="#">Help</a>
                 <a class="text" href="#">About</a>
@@ -114,6 +109,10 @@
                 <a class="text" href="#">Authorization</a>
             </div>
         </form>
+        <div class="otherLogins">
+            <input class="Fbutton" type="submit" value="Facebook" />
+            <input class="Gbutton" type="submit" value="Google+" />
+        </div>
     </section>
     <img alt="User Icon" src="./../res/img/guest_icon.png" class="user_icon" id="icon_slider" />
 
