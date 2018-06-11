@@ -13,7 +13,7 @@ $(document).ready(function () {
   let btnLogOut = document.getElementById("log-out-button");
   btnLogOut.onclick = LogOut;
   let btnDownloadCSV = document.getElementById("csv-download-button");
-  btnDownloadCSV.onclick = downloadCSV();
+  btnDownloadCSV.onclick = downloadCSV;
 
 });
 
