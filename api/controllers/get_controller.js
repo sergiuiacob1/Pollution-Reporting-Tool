@@ -130,7 +130,7 @@ module.exports = (() => {
     }
 
     function getCSVReports(req, res) {
-        var writer = csvWriter()
+        var writer = csvWriter({headers: ["title","description","id_user","id_location","report_type","report_date","id"]})
         writer.pipe(fs.createWriteStream('report.csv'))
 
         db_comms.get(tables.report).then((reports) => {
@@ -139,7 +139,16 @@ module.exports = (() => {
                 "Access-Control-Allow-Origin": "*"
             });
             console.log('Got for csv: ' + reports);
-            res.write(JSON.stringify(reports));
+
+            let i=0;
+            for(i=0;i<reports.length;i++)
+            {
+                writer.write(reports[i]);
+            }
+            writer.end();
+
+            let retVal = {success:true};
+            res.write(JSON.stringify(retVal));
             res.end();
 
         });
