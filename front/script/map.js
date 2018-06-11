@@ -57,11 +57,11 @@ function getReports() {
 	var getURL = hostname + "/api/reports";
 
 	$.get(getURL)
-	.done(function (result, status) {
-		addReportsToMap(result);
-	}).fail(function () {
-		console.log('GET /api/reports failed');
-	});
+		.done(function (result, status) {
+			addReportsToMap(result);
+		}).fail(function () {
+			console.log('GET /api/reports failed');
+		});
 }
 
 function addReportsToMap(result) {
@@ -116,10 +116,25 @@ function createPopupContent(report) {
 	pDesc.innerHTML = report.description;
 	pDivImages.className = "popup-info-images";
 
-	for (let i = 0; i < 1; ++i){
-		let img = document.createElement('img');
-		img.setAttribute("src", "https://www.business-achievers.com/wp-content/uploads/2016/12/sbc-blog-img-2-1-300x200.jpg");
-		pDivImages.appendChild(img);
+	for (let i = 0; i < report.images.length; ++i) {
+		let getURL = hostname + `/api/image?id=${report.images[i]}`;
+
+		console.log(getURL);
+		$.ajax({
+			url: getURL,
+			type: "GET",
+			processData: false,
+			contentType: false,
+			success: (result) => {
+				let img = document.createElement('img');
+				img.src = 'data:image/*;base64,' + btoa(unescape(encodeURIComponent(result)));
+				pDivImages.append(img);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log('buba');
+				console.log(errorThrown);
+			}
+		});
 	}
 
 	content.appendChild(pTitle);

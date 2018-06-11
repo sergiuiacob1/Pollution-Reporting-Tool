@@ -1,5 +1,11 @@
 const db_comms = require('./../db_comms/db_comms.js');
 const tables = require('../models/tables')
+const {
+    ReportPic
+} = require('./../models/reportpic.js');
+const fs = require('fs');
+const url = require('url');
+
 module.exports = (() => {
 
     function handleRequest(req, res) {
@@ -11,7 +17,29 @@ module.exports = (() => {
             case "/api/users":
                 getUsersFromDB(res);
                 break;
+            case "/api/image":
+                getImageFromDB(req, res);
+                break;
         }
+    }
+
+    function getImageFromDB(req, res) {
+        console.log('IMAGE: ' + req.url);
+        let imgPath = "";
+        let url_parts = url.parse(req.url, true);
+        let query = url_parts.query;
+
+        db_comms.get(tables.reportpics, query).then((rows) => {
+            imgPath = rows[0].pic_link;
+
+            let img = fs.readFileSync(imgPath);
+
+            res.writeHead(200, {
+                "Content-Type": "image/*",
+                "Access-Control-Allow-Origin": "*"
+            });
+            res.end(img, 'binary');
+        });
     }
 
     function getReportsFromDB(res) {
@@ -54,14 +82,16 @@ module.exports = (() => {
                     reports[i].location.long_coord = location[0].long_coord;
 
                     db_comms.get(tables.reportpics, {
-                        "id": reports[i].id
-                    }).then( (pics) => {
-                        console.log ('images: ');
-                        console.log (pics);
-                    });
+                        id_report: reports[i].id
+                    }).then((pics) => {
+                        reports[i].images = [];
+                        for (let j = 0; j < pics.length; ++j) {
+                            reports[i].images.push(pics[j].id);
+                        }
 
-                    if (i == rows.length - 1)
-                        resolve (reports);
+                        if (i == rows.length - 1)
+                            resolve(reports);
+                    });
                 });
             }
 

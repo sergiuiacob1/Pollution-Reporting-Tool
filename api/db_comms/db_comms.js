@@ -195,7 +195,7 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     else whereClause = "";
                     console.log("Querry: select * from " + tables.reportpics + whereClause);
-                    con.query("select * from " + tables.location + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.reportpics + whereClause, function (err, result, fields) {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
