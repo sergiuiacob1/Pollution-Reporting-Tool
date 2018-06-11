@@ -48,12 +48,12 @@ function SubmitForm() {
   }
 }
 
-function resetForm(){
+function resetForm() {
   var formDiv = document.getElementsByClassName("add-issue-form")[0];
   var forms = formDiv.getElementsByTagName("form");
   forms[0].style.display = "block";
-  for (let i = 1; i < forms.length; ++i){
-    forms[0].style.display = "none";
+  for (let i = 1; i < forms.length; ++i) {
+    forms[i].style.display = "none";
   }
 }
 
@@ -124,12 +124,13 @@ function ToggleIssueForm() {
 
   if (issueForm.classList.contains("issue-bottom-hidden")) {
     issueForm.classList.add("issue-bottom-shown");
-    issueForm.classList.remove("imap.panTo(uluru);ssue-bottom-hidden");
+    issueForm.classList.remove("issue-bottom-hidden");
     button.innerHTML = "Anuleaza";
   } else {
     issueForm.classList.remove("issue-bottom-shown");
     issueForm.classList.add("issue-bottom-hidden");
     button.innerHTML = "Raporteaza o problema";
+    resetForm();
   }
 }
 
@@ -158,13 +159,11 @@ function LogIn() {
   $.post(hostname + '/authenticate', JSON.stringify(object))
     .done(function (res, status) {
       console.log(res);
-      if(res.success === true) {
-          localStorage.setItem("token", res.token);
-          localStorage.setItem("self", JSON.stringify(res.self));
-          location.reload();
-      }
-      else
-      {
+      if (res.success === true) {
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("self", JSON.stringify(res.self));
+        location.reload();
+      } else {
         alert("Username/password combination not found");
       }
     });
@@ -177,10 +176,10 @@ function LogOut() {
 }
 
 function downloadCSV() {
-    $.get(hostname + "/api/csvreports")
-        .done(function (result, status) {
-            console.log(result);
-        }).fail(function () {
-        console.log('GET /api/csvreports failed');
+  $.get(hostname + "/api/csvreports")
+    .done(function (result, status) {
+      console.log(result);
+    }).fail(function () {
+      console.log('GET /api/csvreports failed');
     });
 }
