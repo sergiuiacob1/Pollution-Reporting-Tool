@@ -120,21 +120,27 @@ function createPopupContent(report) {
 		let getURL = hostname + `/api/image?id=${report.images[i]}`;
 
 		console.log(getURL);
-		$.ajax({
-			url: getURL,
-			type: "GET",
-			processData: false,
-			contentType: false,
-			success: (result) => {
+		$.get(getURL)
+			.done((result) => {
 				let img = document.createElement('img');
-				img.src = 'data:image/*;base64,' + btoa(unescape(encodeURIComponent(result)));
+				img.src = 'data:image/jpeg;base64,' + result;
 				pDivImages.append(img);
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log('buba');
-				console.log(errorThrown);
-			}
-		});
+			});
+		// $.ajax({
+		// 	url: getURL,
+		// 	type: "GET",
+		// 	processData: false,
+		// 	success: (result) => {
+		// 		console.log(result);
+		// 		let img = document.createElement('img');
+		// 		img.src = 'data:image/jpeg;base64,' + btoa(unescape(encodeURIComponent(result)));
+		// 		pDivImages.append(img);
+		// 	},
+		// 	error: function (jqXHR, textStatus, errorThrown) {
+		// 		console.log('buba');
+		// 		console.log(errorThrown);
+		// 	}
+		// });
 	}
 
 	content.appendChild(pTitle);

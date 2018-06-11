@@ -30,15 +30,24 @@ module.exports = (() => {
         let query = url_parts.query;
 
         db_comms.get(tables.reportpics, query).then((rows) => {
-            imgPath = rows[0].pic_link;
-
-            let img = fs.readFileSync(imgPath);
-
-            res.writeHead(200, {
-                "Content-Type": "image/*",
-                "Access-Control-Allow-Origin": "*"
-            });
-            res.end(img, 'binary');
+            if (rows.length > 0) {
+                imgPath = rows[0].pic_link;
+                let img = fs.readFileSync(imgPath);
+                res.writeHead(200, {
+                    "Content-Type": "image/jpeg",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                res.write (new Buffer(img, 'binary').toString('base64'));
+                //res.write(img, 'binary');
+                res.end();
+            } else {
+                res.writeHead(404, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                res.write('image does not exist');
+                res.end();
+            }
         });
     }
 
