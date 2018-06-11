@@ -22,7 +22,7 @@ module.exports = (() => {
                 getImageFromDB(req, res);
                 break;
             case "/api/csvreports":
-                getCSVReports(req,res);
+                getCSVReports(req, res);
         }
     }
 
@@ -54,11 +54,8 @@ module.exports = (() => {
     }
 
     function getReportsFromDB(res) {
-        console.log('GEEEEEEEEEEEETTTTTTTTTTING');
-
         db_comms.get(tables.report).then(rows => {
                 buildReportsResponse(rows).then((reports) => {
-                    console.log('built: ' + reports);
                     let getResponse = new Object();
                     getResponse.success = "true";
                     getResponse.reports = reports;
@@ -88,8 +85,6 @@ module.exports = (() => {
         return new Promise((resolve, reject) => {
             if (rows.length === 0 || (typeof rows === "undefined"))
                 resolve();
-
-            console.log (rows);
 
             for (let i = 0; i < rows.length; ++i) {
                 reports.push(rows[i]);
@@ -126,7 +121,6 @@ module.exports = (() => {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 });
-                console.log('Got: ' + rows);
                 res.write(JSON.stringify(rows));
                 res.end();
             },
@@ -135,7 +129,7 @@ module.exports = (() => {
             });
     }
 
-    function getCSVReports(req,res){
+    function getCSVReports(req, res) {
         var writer = csvWriter()
         writer.pipe(fs.createWriteStream('report.csv'))
 

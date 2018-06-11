@@ -86,55 +86,25 @@ module.exports = (() => {
     function processPostReport(req, res) {
         let images = [];
         let info = new Object();
-        // let url_parts = url.parse(req.url, true);
-        // let query = url_parts.query;
+        let url_parts = url.parse(req.url, true);
+        let query = url_parts.query;
+
+        console.log('token: ' + query.token);
 
         console.log('processing: ' + req.url);
 
-        // db_comms.get(tables.token, {
-        //         token: query.token,
-        //     }).then((rows) => {
-        //console.log('dupa token am luat:' + rows);;
-        new formidable.IncomingForm().parse(req)
-            .on('file', (name, file) => {
-                console.log('file: ' + name);
-                images.push(file);
-            })
-            .on('field', (name, field) => {
-                console.log(name + ' ' + field);
-                info[name] = field;
-            })
-            .on('error', (err) => {
-                console.log('AAAAAAAAAAAAAAAAAAAAAAAAA');
-                res.writeHead(500, {
-                    "Content-Type": "text/plain",
-                    "Access-Control-Allow-Origin": "*"
-                });
-                let postResponse = {
-                    "success": false
-                }
-
-                res.write(JSON.stringify(postResponse));
-                res.end();
-                return;
-            })
-            .on('end', () => {
-                console.log('end parse');
-                console.log('info este: ' + JSON.stringify(info));
-                saveReportToDB(images, info).then(() => {
-                        res.writeHead(200, {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        });
-                        let postResponse = {
-                            "success": true
-                        }
-
-                        res.write(JSON.stringify(postResponse));
-                        res.end();
+        db_comms.get(tables.token, {
+                token: query.token,
+            }).then((rows) => {
+                info['id_user'] = String(rows[0].id_user);
+                new formidable.IncomingForm().parse(req)
+                    .on('file', (name, file) => {
+                        images.push(file);
                     })
-                    .catch((err) => {
-                        console.log('BBBBBBBBBBBBBBBBB');
+                    .on('field', (name, field) => {
+                        info[name] = field;
+                    })
+                    .on('error', (err) => {
                         res.writeHead(500, {
                             "Content-Type": "text/plain",
                             "Access-Control-Allow-Origin": "*"
@@ -145,29 +115,53 @@ module.exports = (() => {
 
                         res.write(JSON.stringify(postResponse));
                         res.end();
-                    });
-            });
-        // })
-        // .catch(() => {
-        //     console.log ('AAAAAAAAAAAAAAAAAAAAAAAACCCCCCCCCCC');
-        //     res.writeHead(500, {
-        //         "Content-Type": "text/plain",
-        //         "Access-Control-Allow-Origin": "*"
-        //     });
-        //     let postResponse = {
-        //         "success": false
-        //     }
+                        return;
+                    })
+                    .on('end', () => {
+                        saveReportToDB(images, info).then(() => {
+                                res.writeHead(200, {
+                                    "Content-Type": "application/json",
+                                    "Access-Control-Allow-Origin": "*"
+                                });
+                                let postResponse = {
+                                    "success": true
+                                }
 
-        //     res.write(JSON.stringify(postResponse));
-        //     res.end();
-        // });
+                                res.write(JSON.stringify(postResponse));
+                                res.end();
+                            })
+                            .catch((err) => {
+                                res.writeHead(500, {
+                                    "Content-Type": "text/plain",
+                                    "Access-Control-Allow-Origin": "*"
+                                });
+                                let postResponse = {
+                                    "success": false
+                                }
+
+                                res.write(JSON.stringify(postResponse));
+                                res.end();
+                            });
+                    });
+            })
+            .catch(() => {
+                res.writeHead(500, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                let postResponse = {
+                    "success": false
+                }
+
+                res.write(JSON.stringify(postResponse));
+                res.end();
+            });
     }
 
     function saveReportToDB(images, info) {
         return new Promise((resolve, reject) => {
             let report = new Report(info);
             report.report_date = getNowTime();
-            report.id_user = 43;
 
             report.save().then((newReport) => {
                     console.log(newReport);

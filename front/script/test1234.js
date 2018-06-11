@@ -39,11 +39,21 @@ function SubmitForm() {
       if (i != forms.length - 1) {
         forms[i + 1].style.display = "block";
       } else {
-        modal.style.display = "block";
+        //modal.style.display = "block";
+        resetForm();
         postReport();
       }
       break;
     }
+  }
+}
+
+function resetForm(){
+  var formDiv = document.getElementsByClassName("add-issue-form")[0];
+  var forms = formDiv.getElementsByTagName("form");
+  forms[0].style.display = "block";
+  for (let i = 1; i < forms.length; ++i){
+    forms[0].style.display = "none";
   }
 }
 

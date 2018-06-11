@@ -53,7 +53,7 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     } else whereClause = "";
                     console.log("Querry: select * from " + tables.user + whereClause);
-                    con.query("select * from " + tables.user + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.user + whereClause, (err, result, fields) => {
                         if (err)
                             reject(null);
                         console.log('Querry executed successfully.');
@@ -64,12 +64,11 @@ module.exports = (() => {
 
                             let i;
                             for (i = 0; i < result.length; i++) {
-                                userList.push(new Report(result[i]));
+                                userList.push(new User(result[i]));
                             }
 
                             resolve(userList);
-                        }
-                        else resolve(null);
+                        } else resolve(null);
                     });
                     break;
                 case tables.report:
@@ -93,18 +92,15 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     } else whereClause = "";
                     console.log("Querry: select * from " + tables.report + whereClause);
-                    con.query("select * from " + tables.report + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.report + whereClause, (err, result, fields) => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
 
-
-
                         let reportList = [];
 
                         let i;
-                        for(i=0;i<result.length;i++)
-                        {
+                        for (i = 0; i < result.length; i++) {
                             reportList.push(new Report(result[i]));
                         }
 
@@ -132,7 +128,7 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     else whereClause = "";
                     console.log("Querry: select * from " + tables.comment + whereClause);
-                    con.query("select * from " + tables.comment + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.comment + whereClause, (err, result, fields) => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
@@ -165,7 +161,7 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     } else whereClause = "";
                     console.log("Querry: select * from " + tables.location + whereClause);
-                    con.query("select * from " + tables.location + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.location + whereClause, (err, result, fields) => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
@@ -174,9 +170,8 @@ module.exports = (() => {
                         let locationList = [];
 
                         let i;
-                        for(i=0;i<result.length;i++)
-                        {
-                            locationList.push(new Report(result[i]));
+                        for (i = 0; i < result.length; i++) {
+                            locationList.push(new Location(result[i]));
                         }
 
 
@@ -201,7 +196,7 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     } else whereClause = "";
                     console.log("Querry: select * from " + tables.reportpics + whereClause);
-                    con.query("select * from " + tables.reportpics + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.reportpics + whereClause, (err, result, fields) => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
@@ -209,11 +204,10 @@ module.exports = (() => {
                         let picList = [];
 
                         let i;
-                        for(i=0;i<result.length;i++)
-                        {
-                            picList.push(new Report(result[i]));
+                        for (i = 0; i < result.length; i++) {
+                            picList.push(new ReportPic(result[i]));
                         }
-                            resolve(picList);
+                        resolve(picList);
 
                     });
                     break;
@@ -243,11 +237,10 @@ module.exports = (() => {
                         let tokenList = [];
 
                         let i;
-                        for(i=0;i<result.length;i++)
-                        {
-                            tokenList.push(new Report(result[i]));
+                        for (i = 0; i < result.length; i++) {
+                            tokenList.push(new Token(result[i]));
                         }
-                            resolve(tokenList);
+                        resolve(tokenList);
 
                     });
             }
