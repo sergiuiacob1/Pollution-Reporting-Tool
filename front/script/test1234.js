@@ -49,7 +49,7 @@ function postReport() {
   buildReport().then((res) => {
     let report = res[0];
     let location = res[1];
-    $.post(hostname + '/api/locations', JSON.stringify(location))
+    $.post(hostname + '/api/locations' + `?token=${localStorage.getItem("token")}`, JSON.stringify(location))
       .done((res, status) => {
         report.append("id_location", res.id);
 
@@ -59,7 +59,7 @@ function postReport() {
         }
 
         $.ajax({
-          url: hostname + '/api/reports',
+          url: hostname + '/api/reports' + `?token=${localStorage.getItem("token")}`,
           data: report,
           processData: false,
           contentType: false,

@@ -1,19 +1,18 @@
-html{
-    overflow-y: hidden;
+html {
+	overflow-y: hidden;
 }
 
-body{
-    margin: 0px;
+body {
+	margin: 0px;
 }
 
-.map{
-    position: absolute;
-    z-index: auto;
-    width: 100%;
-    height: 100%;
-    border: 0px;
+.map {
+	position: absolute;
+	z-index: auto;
+	width: 100%;
+	height: 100%;
+	border: 0px;
 }
-
 
 #popup-info {
 	margin-bottom: 10px;
@@ -29,13 +28,19 @@ body{
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+
 .popup-info-images img {
 	float: right;
-	margin: 0 5px 5px 10px;	
+	margin: 0 5px 5px 10px;
 }
 
 .popup-info-description {
 	font-size: 16px;
 	font-weight: 700;
 	padding: 5px 0;
+}
+
+.popup-info-images img {
+	width: 100%;
+	height: 100%;
 }
