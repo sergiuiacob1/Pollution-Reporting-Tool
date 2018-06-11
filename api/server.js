@@ -19,12 +19,12 @@ function filterRequest(req, res) {
                     break;
             }
         })
-        .catch(() => {
-            res.writeHead(400, {
+        .catch((validateRes) => {
+            res.writeHead(validateRes[1], {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*"
             });
-            res.write("Your request is bad baddity badytoo!");
+            res.write(validateRes[0]);
             res.end();
             return;
         });

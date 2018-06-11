@@ -165,6 +165,9 @@ module.exports = (() => {
 
         console.log(saveDir);
         return new Promise((resolve, reject) => {
+            if (images.length === 0)
+                resolve();
+
             let solved = 0;
 
             images.forEach((image, index, array) => {
@@ -187,7 +190,7 @@ module.exports = (() => {
                 };
                 let bdImage = new ReportPic(picInfo);
                 bdImage.save().then((newImage) => {
-                    console.log (bdImage);
+                    console.log(bdImage);
                 });
 
                 // rd.destroy();

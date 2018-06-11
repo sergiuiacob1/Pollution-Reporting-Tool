@@ -19,15 +19,15 @@ module.exports = (() => {
                             resolve();
                         })
                         .catch(() => {
-                            reject();
+                            reject(['Bad GET request', 400]);
                         });
                     break;
                 case "POST":
                     validatePostRequest(req).then(() => {
                             resolve();
                         })
-                        .catch(() => {
-                            reject();
+                        .catch((err) => {
+                            reject(err);
                         });
                     break;
             }
@@ -41,7 +41,7 @@ module.exports = (() => {
                 if (allowedUrl[i] === String(req.url).split('?')[0])
                     break;
 
-            if (i == allowedUrl.length)
+            if (i === allowedUrl.length)
                 reject();
             else
                 resolve();
@@ -56,7 +56,7 @@ module.exports = (() => {
                     break;
 
             if (i == allowedUrl.length)
-                reject();
+                reject(['Bad POST request', 400]);
 
             let url_parts = url.parse(req.url, true);
             let query = url_parts.query;
@@ -67,7 +67,7 @@ module.exports = (() => {
                 token: query.token
             }).then((rows) => {
                 if (rows.length === 0)
-                    reject();
+                    reject(['Please log in!', 403]);
                 else
                     resolve();
             });
