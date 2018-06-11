@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "csv-write-stream": "^2.0.0",
     "formidable": "^1.2.1",
     "moment": "^2.22.2",
     "mysql": "^2.15.0",

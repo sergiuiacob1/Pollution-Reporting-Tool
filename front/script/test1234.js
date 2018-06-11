@@ -12,6 +12,8 @@ $(document).ready(function () {
   btnLogIn.onclick = LogIn;
   let btnLogOut = document.getElementById("log-out-button");
   btnLogOut.onclick = LogOut;
+  let btnDownloadCSV = document.getElementById("csv-download-button");
+  btnDownloadCSV.onclick = downloadCSV();
 
 });
 
@@ -162,4 +164,13 @@ function LogOut() {
   localStorage.removeItem("self");
   localStorage.removeItem("token");
   location.reload();
+}
+
+function downloadCSV() {
+    $.get(hostname + "/api/csvreports")
+        .done(function (result, status) {
+            console.log(result);
+        }).fail(function () {
+        console.log('GET /api/csvreports failed');
+    });
 }

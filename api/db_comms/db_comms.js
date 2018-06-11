@@ -59,16 +59,16 @@ module.exports = (() => {
                         console.log('Querry executed successfully.');
                         console.log(result);
 
-                        if (result)
-                            if (result.length === 1)
-                                resolve(new User(result));
-                            else {
-                                let userList = [];
-                                result.forEach(function (row) {
-                                    userList.push(new User(row));
-                                });
-                                resolve(userList);
+                        if (result) {
+                            let userList = [];
+
+                            let i;
+                            for (i = 0; i < result.length; i++) {
+                                userList.push(new Report(result[i]));
                             }
+
+                            resolve(userList);
+                        }
                         else resolve(null);
                     });
                     break;
@@ -98,15 +98,18 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.length == 1)
-                            resolve(new Report(result));
-                        else {
-                            let reportList = [];
-                            result.forEach(function (row) {
-                                reportList.push(new Report(row));
-                            });
-                            resolve(reportList);
+
+
+                        let reportList = [];
+
+                        let i;
+                        for(i=0;i<result.length;i++)
+                        {
+                            reportList.push(new Report(result[i]));
                         }
+
+                        resolve(reportList);
+
                     });
                     break;
                 case tables.comment:
@@ -167,15 +170,18 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.length == 1)
-                            resolve(new Location(result));
-                        else {
-                            let locationList = [];
-                            result.forEach(function (row) {
-                                locationList.push(new Location(row));
-                            });
-                            resolve(locationList);
+
+                        let locationList = [];
+
+                        let i;
+                        for(i=0;i<result.length;i++)
+                        {
+                            locationList.push(new Report(result[i]));
                         }
+
+
+                        resolve(locationList);
+
                     });
                     break;
                 case tables.reportpics:
@@ -200,15 +206,15 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.length == 1)
-                            resolve(new ReportPic(result));
-                        else {
-                            let picList = [];
-                            result.forEach(function (row) {
-                                picList.push(new ReportPic(row));
-                            });
-                            resolve(picList);
+                        let picList = [];
+
+                        let i;
+                        for(i=0;i<result.length;i++)
+                        {
+                            picList.push(new Report(result[i]));
                         }
+                            resolve(picList);
+
                     });
                     break;
                 case tables.token:
@@ -234,15 +240,15 @@ module.exports = (() => {
 
                         console.log(result);
 
-                        if (result.length === 1) {
-                            resolve(new Token(result));
-                        } else {
-                            let tokenList = [];
-                            result.forEach(function (row) {
-                                tokenList.push(new Token(row));
-                            });
-                            resolve(tokenList);
+                        let tokenList = [];
+
+                        let i;
+                        for(i=0;i<result.length;i++)
+                        {
+                            tokenList.push(new Report(result[i]));
                         }
+                            resolve(tokenList);
+
                     });
             }
         });

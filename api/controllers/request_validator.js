@@ -9,7 +9,7 @@ const url = require('url');
 
 module.exports = (() => {
 
-    const allowedUrl = ["/api/reports", "/api/users", "/api/locations", "/authenticate", "/register", "/api/image"];
+    const allowedUrl = ["/api/reports", "/api/users", "/api/locations", "/authenticate", "/register", "/api/image","/api/csvreports"];
 
     function validate(req) {
         return new Promise((resolve, reject) => {

@@ -1,5 +1,6 @@
 const db_comms = require('./../db_comms/db_comms.js');
-const tables = require('../models/tables')
+const tables = require('../models/tables');
+var csvWriter = require('csv-write-stream');
 const {
     ReportPic
 } = require('./../models/reportpic.js');
@@ -20,6 +21,8 @@ module.exports = (() => {
             case "/api/image":
                 getImageFromDB(req, res);
                 break;
+            case "/api/csvreports":
+                getCSVReports(req,res);
         }
     }
 
@@ -130,6 +133,22 @@ module.exports = (() => {
             err => {
                 console.log(err);
             });
+    }
+
+    function getCSVReports(req,res){
+        var writer = csvWriter()
+        writer.pipe(fs.createWriteStream('report.csv'))
+
+        db_comms.get(tables.report).then((reports) => {
+            res.writeHead(200, {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            });
+            console.log('Got for csv: ' + reports);
+            res.write(JSON.stringify(reports));
+            res.end();
+
+        });
     }
 
     return {
