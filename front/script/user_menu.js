@@ -1,18 +1,19 @@
 var isOpen = false;
 
+
 $(document).ready(function () {
-  if(localStorage.getItem("token")){
-    console.log('Setting logged mode');
+  if(localStorage.getItem("token") === null){
     console.log(localStorage.getItem("token"));
-      document.getElementById("user_slider_logged").classList.remove("invisible");
-      document.getElementById("user_slider").classList.add("invisible");
+      document.getElementById("user_slider_logged").style.display = "none";
+      document.getElementById("user_slider").style.display = "block";
   }
   else
   {
-    console.log('Setting guest mode');
-      document.getElementById("user_slider").classList.remove("invisible");
-      document.getElementById("user_slider_logged").classList.add("invisible");
+      document.getElementById("user_slider").style.display = "none";
+      document.getElementById("user_slider_logged").style.display = "block";
+      document.getElementById("welcome-message").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("self")).name;
   }
+
   let slider = document.getElementById("icon_slider");
   slider.onclick = openUserMenu;
 });

@@ -93,7 +93,7 @@
 
     </div>
 
-    <section class="user_menu" id="user_slider">
+    <section class="user_menu" class = "invisible" id="user_slider">
         <img alt="Logo" src="./../res/img/base_logo.png" class="user_menu_logo" />
         <p class="title_text" style="margin-left:37%;">Log in</p>
         <form>
@@ -115,12 +115,13 @@
         </div>
     </section>
 
-    <section class="user_menu_logged" id="user_slider_logged">
+    <section class="user_menu_logged" class = "invisible" id="user_slider_logged">
         <img alt="Logo" src="./../res/img/base_logo.png" class="user_menu_logo" />
-        <p class="title_text" style="margin-left:37%;">Log in</p>
+        <p class="title_text" id = "welcome-message" style="margin-left:37%;"></p>
         <div class="otherLogins">
-            <input class="Fbutton" type="button" value="Facebook" />
-            <input class="Gbutton" type="button" value="Google+" />
+            <input class="Fbutton" id = "my-reports-button" type="button" value="My reports" />
+            <a href ="#"><input class="Fbutton" id = "statistics-button" type="button" value="Statistics" /></a>
+            <input class="Fbutton" id = "log-out-button" type="button" value="Log Out" />
         </div>
     </section>
 
@@ -128,8 +129,8 @@
 
     <!-- My Scripts -->
     <script src="./../script/map.js"></script>
-    <script src="./../script/user_menu.js"></script>
     <script src="./../script/test1234.js"></script>
+    <script src="./../script/user_menu.js"></script>
     <!-- My Scripts -->
 </body>
 
