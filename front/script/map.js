@@ -119,7 +119,6 @@ function createPopupContent(report) {
 	for (let i = 0; i < report.images.length; ++i) {
 		let getURL = hostname + `/api/image?id=${report.images[i]}`;
 
-		console.log(getURL);
 		$.get(getURL)
 			.done((result) => {
 				let img = document.createElement('img');

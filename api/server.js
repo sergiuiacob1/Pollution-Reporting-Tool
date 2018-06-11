@@ -9,21 +9,24 @@ server.on('request', (req, res) => {
 });
 
 function filterRequest(req, res) {
-    if (requestValidator.validate(req) === false) {
-        res.writeHead(400, {
-            "Content-Type": "text/plain",
-            "Access-Control-Allow-Origin": "*"
+    requestValidator.validate(req).then(() => {
+            switch (req.method) {
+                case "GET":
+                    getController.handleRequest(req, res);
+                    break;
+                case "POST":
+                    postController.handleRequest(req, res);
+                    break;
+            }
+        })
+        .catch(() => {
+            res.writeHead(400, {
+                "Content-Type": "text/plain",
+                "Access-Control-Allow-Origin": "*"
+            });
+            res.write("Your request is bad baddity badytoo!");
+            res.end();
+            return;
         });
-        res.write("Your request is bad baddity badytoo!");
-        res.end();
-        return;
-    }
-    switch (req.method) {
-        case "GET":
-            getController.handleRequest(req, res);
-            break;
-        case "POST":
-            postController.handleRequest(req, res);
-            break;
-    }
+
 };
