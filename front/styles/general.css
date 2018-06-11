@@ -19,6 +19,16 @@
 }
 
 #report-container {
-    border-style:dot-dash;
-    border-color: forestgreen;
+    border-style: dotted;
+    border-color: mediumseagreen;
+    background-color: var(--main-color);
+    border-radius:5px;
+}
+
+#report-container-inset {
+    z-index:1;
+    border-style: dotted;
+    border-color: mediumseagreen;
+    background-color: var(--main-color);
+    border-radius:5px;
 }
