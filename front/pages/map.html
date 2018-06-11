@@ -17,14 +17,14 @@
 </head>
 
 <body>
-    <div id="map" class = "map"></div>
-    <div id ="popups"></div>
+    <div id="map" class="map"></div>
+    <div id="popups"></div>
 
     <header>
         <div>
             <nav class="top-navigation">
                 <div class="search">
-                    <input type="search" placeholder="Search locations...">
+                    <input type="text" placeholder="Search locations..." id="pac-input" class="controls">
                 </div>
             </nav>
         </div>
@@ -93,7 +93,7 @@
 
     </div>
 
-    <section class="user_menu" class = "invisible" id="user_slider">
+    <section class="user_menu" class="invisible" id="user_slider">
         <img alt="Logo" src="./../res/img/base_logo.png" class="user_menu_logo" />
         <p class="title_text" style="margin-left:37%;">Log in</p>
         <form>
@@ -101,7 +101,7 @@
             <input type="password" name="password" id="input_form_password" placeholder="Password" required>
             <a class="text" href="./register.html" style="margin-left:15%">New? Sign up!</a>
             <a class="text" href="#">Forgot password?</a>
-            <input type="button" value="Log In" id = "log-in-button"/>
+            <input type="button" value="Log In" id="log-in-button" />
             <div class="footer_info">
                 <a class="text" href="#">Help</a>
                 <a class="text" href="#">About</a>
@@ -115,15 +115,17 @@
         </div>
     </section>
 
-    <section class="user_menu_logged" class = "invisible" id="user_slider_logged">
+    <section class="user_menu_logged" class="invisible" id="user_slider_logged">
         <img alt="Logo" src="./../res/img/base_logo.png" class="user_menu_logo" />
-        <p class="title_text" id = "welcome-message" style="margin-left:37%;"></p>
+        <p class="title_text" id="welcome-message" style="margin-left:37%;"></p>
         <div class="otherLogins">
-            <input class="Fbutton" id = "my-reports-button" type="button" value="My reports" />
-            <a href ="./report.html"><input class="Fbutton" id = "statistics-button" type="button" value="Statistics" /></a>
-            <input class="Fbutton" id = "csv-download-button" type="button" value="Download CSV" />
-            <input class="Fbutton" id = "pdf-download-button" type="button" value="Download PDF" />
-            <input class="Fbutton" id = "log-out-button" type="button" value="Log Out" />
+            <input class="Fbutton" id="my-reports-button" type="button" value="My reports" />
+            <a href="./report.html">
+                <input class="Fbutton" id="statistics-button" type="button" value="Statistics" />
+            </a>
+            <input class="Fbutton" id="csv-download-button" type="button" value="Download CSV" />
+            <input class="Fbutton" id="pdf-download-button" type="button" value="Download PDF" />
+            <input class="Fbutton" id="log-out-button" type="button" value="Log Out" />
         </div>
     </section>
 

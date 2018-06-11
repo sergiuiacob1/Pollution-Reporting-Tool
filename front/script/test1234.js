@@ -14,7 +14,6 @@ $(document).ready(function () {
   btnLogOut.onclick = LogOut;
   let btnDownloadCSV = document.getElementById("csv-download-button");
   btnDownloadCSV.onclick = downloadCSV();
-
 });
 
 window.onclick = function (event) {
@@ -115,7 +114,7 @@ function buildReport() {
 }
 
 function failAddReport() {
-  alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
+  alert('Nu s-a putut adauga reportul. Ati completat toate campurile?');
 }
 
 function ToggleIssueForm() {

@@ -6,7 +6,7 @@ var map;
 $(document).ready(function () {
 	var script = document.createElement("script");
 	script.src =
-		"https://maps.googleapis.com/maps/api/js?key=AIzaSyDamjhWg7wcyotS8tgBoI69RFOx9onVpDs&callback=initMap";
+		"https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDamjhWg7wcyotS8tgBoI69RFOx9onVpDs&callback=initMap";
 	document.head.appendChild(script);
 });
 
@@ -23,6 +23,36 @@ function initMap() {
 	getReports();
 	addEventListeners();
 	updateCenterLocation();
+	createSearchBox();
+}
+
+function createSearchBox() {
+	var input = document.getElementById('pac-input');
+	var searchBox = new google.maps.places.SearchBox(input);
+	map.addListener('bounds_changed', function () {
+		searchBox.setBounds(map.getBounds());
+	});
+	searchBox.addListener('places_changed', function () {
+		var places = searchBox.getPlaces();
+		if (places.length == 0) {
+			return;
+		}
+
+		// For each place, get the icon, name and location.
+		var bounds = new google.maps.LatLngBounds();
+		places.forEach(function (place) {
+			if (!place.geometry) {
+				console.log("Returned place contains no geometry");
+				return;
+			}
+			if (place.geometry.viewport) {
+				bounds.union(place.geometry.viewport);
+			} else {
+				bounds.extend(place.geometry.location);
+			}
+		});
+		map.fitBounds(bounds);
+	});
 }
 
 function addEventListeners() {
@@ -41,6 +71,7 @@ function centerMapToUserLocation() {
 				lng: position.coords.longitude
 			};
 			map.panTo(pos);
+			updateCenterLocation();
 		});
 	}
 }
@@ -99,8 +130,6 @@ function addReportToMap(report) {
 	google.maps.event.addListener(map, 'click', function () {
 		infowindow.close(map, marker);
 	});
-
-	map.panTo(pos);
 }
 
 
