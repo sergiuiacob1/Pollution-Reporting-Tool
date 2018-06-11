@@ -9,12 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/general.css" />
     <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/register.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
 </head>
 <body>
 <iframe class = "map_background" src="https://www.openstreetmap.org/export/embed.html?bbox=-360.83496093750006%2C33.94335994657882%2C-311.79199218750006%2C53.4357192066942&amp;layer=mapnik"></iframe>
 <div class = "register-panel">
-    <img class="PRT_Logo" src="../res/img/base_logo.png"/>
+    <a href="map.html">
+        <img class="PRT_Logo" src="../res/img/base_logo.png"/>
+    </a>
     <br><br><br><br><br>
 
     <form>
@@ -27,11 +30,11 @@
         <p class="text_intro">Password</p>
         <input type="password" name="password" id="input_form_password" placeholder="Password" required>
         <div class = "btn-go-to-map">
-            <a href = "#">
-                <button class = "title_text_intro">Sign up</button>
-            </a>
+            <input type="button" name="Register" value = "Register" class = "title_text_intro" id = "register-button" />
         </div>
     </form>
 </div>
+
+<script src="../script/register.js"></script>
 </body>
 </html>

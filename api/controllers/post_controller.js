@@ -6,9 +6,9 @@ const {
 const {
     Report
 } = require('./../models/report.js');
-const {
-    Token
-} = require('../models/token');
+
+const {User} = require('./../models/user');
+const {Token} = require('../models/token');
 const {
     Location
 } = require('./../models/location.js');
@@ -34,6 +34,8 @@ module.exports = (() => {
             case "/authenticate":
                 authenticate(req, res);
                 break;
+            case "/register":
+                register(req,res);
         }
     }
 
@@ -181,7 +183,7 @@ module.exports = (() => {
                     });
                     token.save();
                     res.writeHead(200, {
-                        "Content-Type": "text/plain",
+                        "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
                     });
                     let postResponse = {
@@ -192,7 +194,7 @@ module.exports = (() => {
                     res.end();
                 } else {
                     res.writeHead(400, {
-                        "Content-Type": "text/plain",
+                        "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
                     });
                     let postResponse = {
@@ -208,6 +210,48 @@ module.exports = (() => {
 
         });
 
+    }
+
+    function register (req,res) {
+        getBodyFromRequest(req).then((body) =>{
+           console.log(body);
+
+           let user = new User(body);
+
+           user.update({join_date:getNowTime(),avatar_link:""});
+           user.save().then((result) => {
+               console.log('User added: ');
+               console.log(result);
+
+               if(result)
+               {
+                   let token = new Token({id_user:result.id,expire:createExpireTime()});
+                   token.save();
+                   res.writeHead(200, {
+                       "Content-Type": "application/json",
+                       "Access-Control-Allow-Origin": "*"
+                   });
+                   let postResponse = {
+                       "success": true,
+                       "token": token.token
+                   };
+                   res.write(JSON.stringify(postResponse));
+                   res.end();
+               }
+               else {
+                   res.writeHead(400, {
+                       "Content-Type": "application/json",
+                       "Access-Control-Allow-Origin": "*"
+                   });
+                   let postResponse = {
+                       "success": false,
+                       "token": null
+                   }
+                   res.write(JSON.stringify(postResponse));
+                   res.end();
+               }
+           });
+        });
     }
 
     return {
