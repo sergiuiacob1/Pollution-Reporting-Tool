@@ -17,3 +17,8 @@
     background-size: 100%;
     opacity: 1;
 }
+
+#report-container {
+    border-style:dot-dash;
+    border-color: forestgreen;
+}

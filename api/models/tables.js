@@ -4,6 +4,7 @@ module.exports = (() => {
         report : "reports",
         comment : "comments",
         location : "locations",
-        reportpics: "report_pics"
+        reportpics: "report_pics",
+        token: "session_tokens"
     }
 })();

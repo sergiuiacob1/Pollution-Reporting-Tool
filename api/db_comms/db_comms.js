@@ -76,7 +76,7 @@ module.exports = (() => {
                     whereClause = "";
                     conditions = [];
                     if (!tuple) tuple = {};
-                    tuple.title ? conditions.push(" title = " + tuple.title) : null;
+                    tuple.title ? conditions.push(" title = '" + tuple.title + "'") : null;
                     tuple.description ? conditions.push(" description = " + tuple.description) : null;
                     tuple.id_location ? conditions.push(" id_location = " + tuple.id_location) : null;
                     tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
@@ -114,7 +114,7 @@ module.exports = (() => {
                     whereClause = "";
                     conditions = [];
                     if (!tuple) tuple = {};
-                    tuple.comment_text ? conditions.push(" comment_text = " + tuple.comment_text) : null;
+                    tuple.comment_text ? conditions.push(" comment_text = '" + tuple.comment_text + "'") : null;
                     tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
                     tuple.id_report ? conditions.push(" id_report = " + tuple.report) : null;
                     tuple.comment_date ? conditions.push(" comment_date = " + tuple.comment_date) : null;
@@ -183,7 +183,7 @@ module.exports = (() => {
                     conditions = [];
                     if (!tuple) tuple = {};
                     tuple.id_report ? conditions.push(" id_report = " + tuple.id_report) : null;
-                    tuple.pic_link ? conditions.push(" pic_link = " + tuple.pic_link) : null;
+                    tuple.pic_link ? conditions.push(" pic_link = '" + tuple.pic_link + "'") : null;
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
                     conditions.forEach(function (condition) {
@@ -208,6 +208,39 @@ module.exports = (() => {
                                 picList.push(new ReportPic(row));
                             });
                             resolve(picList);
+                        }
+                    });
+                    break;
+                case tables.token:
+                    whereClause = "";
+                    conditions = [];
+                    if (!tuple) tuple = {};
+                    tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
+                    tuple.token ? conditions.push(" token = '" + tuple.token + "'") : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
+
+                    conditions.forEach(function (condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2, whereClause.length);
+                    if (whereClause.length > 3)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
+                    console.log("Querry: select * from " + tables.token + whereClause);
+                    con.query("select * from " + tables.token + whereClause, function (err, result, fields) {
+                        if (err)
+                            reject(err);
+                        console.log('Querry executed successfully.');
+
+                        if (result.size === 1)
+                            resolve(new Token(result));
+                        else {
+                            let tokenList = [];
+                            result.forEach(function (row) {
+                                tokenList.push(new Token(row));
+                            });
+                            resolve(tokenList);
                         }
                     });
             }
