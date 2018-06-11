@@ -41,36 +41,56 @@ function SubmitForm() {
 }
 
 function postReport() {
-  let location = new Object;
-  let report = new Object();
-  location.lat_coord = map.getCenter().lat();
-  location.long_coord = map.getCenter().lng();
 
-  report.title = document.getElementById("stage1-title").value;
-  report.description = document.getElementById("stage1-description").value;
+  buildReport().then((res) => {
+    let report = res[0];
+    let location = res[1];
+    $.post(hostname + '/api/locations', JSON.stringify(location))
+      .done((res, status) => {
+        report.append("id_location", res.id);
 
-  $.post(hostname + '/api/locations', JSON.stringify(location))
-    .done(function (res, status) {
-      report.id_location = res.id;
+        if (res.success !== true) {
+          failAddReport();
+          return;
+        }
 
-      if (res.success !== true) {
-        failAddReport();
-        return;
-      }
+        console.log(report.values());
+        console.log(report.get("title"));
+        $.post(hostname + "/api/reports", JSON.stringify(report))
+          .done(function (res, status) {
+            if (res.success !== true) {
+              failAddReport();
+              return;
+            }
+          })
+          .error(function (err) {
+            failAddReport()
+          });
+      }).error(function (err) {
+        failAddReport()
+      });
+  });
+}
 
-      $.post(hostname + "/api/reports", JSON.stringify(report)).
-      done(function (res, status) {
-          if (res.success !== true) {
-            failAddReport();
-            return;
-          }
-        })
-        .error(function (err) {
-          failAddReport()
-        });
-    }).error(function (err) {
-      failAddReport()
-    });
+function buildReport() {
+  return new Promise((resolve, reject) => {
+    let location = new Object;
+    var images = document.getElementById("stage2-form-add-image-input");
+    var report = new FormData();
+
+    location.lat_coord = map.getCenter().lat();
+    location.long_coord = map.getCenter().lng();
+
+    for (var i = 0; i < images.files.length; i++) {
+      var file = images.files[i];
+      report.append('uploads[]', file, file.name);
+      console.log ('adaugat img');
+    }
+    report.append("title", document.getElementById("stage1-title").value);
+    report.append("description", document.getElementById("stage1-description").value);
+
+    resolve([report, location]);
+  });
 }
 
 function failAddReport() {

@@ -63,7 +63,6 @@ module.exports = (() => {
                     let insertClause = getInsertClause(valueNames, values);
                     console.log('Querry : insert into locations ' + insertClause);
                     if (!this.id) {
-                        console.log('aici');
                         con.query("insert into locations " + insertClause, (err, result, fields) => {
                             if (err) {
                                 console.log(err);
