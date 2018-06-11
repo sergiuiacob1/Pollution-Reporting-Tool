@@ -27,7 +27,6 @@ module.exports = (() => {
     }
 
     function saveLocationToDB(req, res) {
-        console.log('saving location');
         getBodyFromRequest(req).then(function (body) {
             let location = new Location(body);
             location.save().then(function (newLocation) {
@@ -49,7 +48,7 @@ module.exports = (() => {
                 console.log(err);
 
                 res.writeHead(500, {
-                    "Content-Type": "text/plain]",
+                    "Content-Type": "text/plain",
                     "Access-Control-Allow-Origin": "*"
                 });
                 let postResponse = {
@@ -70,11 +69,11 @@ module.exports = (() => {
             console.log(report);
             report.save().then(newReport => {
                 res.writeHead(200, {
-                    "Content-Type": "text/plain",
+                    "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 });
                 let postResponse = {
-                    "success": true,
+                    "success": true
                 }
 
                 res.write(JSON.stringify(postResponse));

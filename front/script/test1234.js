@@ -49,31 +49,32 @@ function postReport() {
   report.title = document.getElementById("stage1-title").value;
   report.description = document.getElementById("stage1-description").value;
 
-  $.ajax({
-    url: hostname + "/api/locations",
-    method: 'POST',
-    contentType: 'text/plain',
-    data: JSON.stringify(location)
-  }).done(function (res) {
-    report.id_location = res.id;
-    console.log(report);
+  $.post(hostname + '/api/locations', JSON.stringify(location))
+    .done(function (res, status) {
+      report.id_location = res.id;
 
-    if (res.status !== 200)
-    alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
+      if (res.success !== true) {
+        failAddReport();
+        return;
+      }
 
-    $.ajax({
-      url: hostname + "/api/reports",
-      method: 'POST',
-      contentType: 'text/plain',
-      data: JSON.stringify(report)
-    }).done(function (res) {
-      console.log (res);
-      if (res.status !== 200)
-        alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
-      else
-        alert('Report adaugat cu succes!');
+      $.post(hostname + "/api/reports", JSON.stringify(report)).
+      done(function (res, status) {
+          if (res.success !== true) {
+            failAddReport();
+            return;
+          }
+        })
+        .error(function (err) {
+          failAddReport()
+        });
+    }).error(function (err) {
+      failAddReport()
     });
-  });
+}
+
+function failAddReport() {
+  alert('Nu s-a putut adauga reportul. Va rugam completati toate campurile!');
 }
 
 function ToggleIssueForm() {

@@ -25,11 +25,11 @@ function initMap() {
 	updateCenterLocation();
 }
 
-function addEventListeners(){
+function addEventListeners() {
 	google.maps.event.addListener(map, 'dragend', updateCenterLocation);
 }
 
-function updateCenterLocation(){
+function updateCenterLocation() {
 	document.getElementById("stage1-location").value = map.getCenter();
 }
 
@@ -56,11 +56,8 @@ function placeMarker(position, map) {
 function getReports() {
 	var getURL = hostname + "/api/reports";
 
-	$.ajax({
-		url: getURL,
-		type: 'GET',
-		dataType: 'json'
-	}).done(function (result) {
+	$.get(getURL)
+	.done(function (result, status) {
 		addReportsToMap(result);
 	}).fail(function () {
 		console.log('GET /api/reports failed');
@@ -74,7 +71,7 @@ function addReportsToMap(result) {
 function addReportToMap(report) {
 	let pos = {
 		lat: report.location.lat_coord,
-		lng: report.location.lat_coord
+		lng: report.location.long_coord
 	};
 	let contentPopup = createPopupContent(report);
 
