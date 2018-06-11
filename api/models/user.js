@@ -79,7 +79,7 @@ module.exports = (() => {
                     }
                     if(this.join_date) {
                         valueNames.push("join_date");
-                        values.push("date_format('" + this.join_date + "','YYYY-MM-DD HH:mm:ss')");
+                        values.push("date_format('" + this.join_date + "','%Y-%m-%d %H:%i:%s')");
                     }
 
                     let insertClause = getInsertClause(valueNames, values);

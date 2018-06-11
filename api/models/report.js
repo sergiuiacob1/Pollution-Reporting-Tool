@@ -81,7 +81,7 @@ module.exports = (() => {
                     }
                     if (this.report_date) {
                         valuetitles.push("report_date");
-                        values.push("date_format('" + this.report_date + "','YYYY-MM-DD HH:mm:ss')");
+                        values.push("date_format('" + this.report_date + "','%Y-%m-%d %H:%i:%s')");
                     }
 
                     let insertClause = getInsertClause(valuetitles, values);

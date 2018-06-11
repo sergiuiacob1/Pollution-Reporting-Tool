@@ -69,7 +69,7 @@ module.exports = (() => {
                         }
                         if (this.expire) {
                             valueNames.push("expire");
-                            values.push("DATE_FORMAT('" + this.expire + "','YYYY-MM-DD HH:mm:ss')");
+                            values.push("DATE_FORMAT('" + this.expire + "','%Y-%m-%d %H:%i:%s')");
                         }
 
                         let insertClause = getInsertClause(valueNames, values);
