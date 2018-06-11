@@ -9,7 +9,7 @@ function register () {
     let email = document.getElementById("input_form_email");
     let name = document.getElementById("input_form_name");
     let surname = document.getElementById("input_form_surname");
-    let password = document.getElGementById("input_form_password");
+    let password = document.getElementById("input_form_password");
 
     let object = {email:email.value,name:name.value,surname:surname.value,password:password.value};
     console.log('Sending request from front : ');
