@@ -3,6 +3,7 @@ module.exports = (() => {
         user : "users",
         report : "reports",
         comment : "comments",
-        location : "locations"
+        location : "locations",
+        reportpics: "report_pics"
     }
 })();

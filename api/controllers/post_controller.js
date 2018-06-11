@@ -6,9 +6,16 @@ const {
 const {
     Report
 } = require('./../models/report.js');
+const {
+    ReportPic
+} = require('./../models/reportpic.js');
 
-const {User} = require('./../models/user');
-const {Token} = require('../models/token');
+const {
+    User
+} = require('./../models/user');
+const {
+    Token
+} = require('../models/token');
 const {
     Location
 } = require('./../models/location.js');
@@ -35,7 +42,7 @@ module.exports = (() => {
                 authenticate(req, res);
                 break;
             case "/register":
-                register(req,res);
+                register(req, res);
         }
     }
 
@@ -138,7 +145,7 @@ module.exports = (() => {
                             resolve(newReport);
                         })
                         .catch((err) => {
-                            console.log (err);
+                            console.log(err);
                             reject(err);
                         });
                 })
@@ -150,29 +157,36 @@ module.exports = (() => {
     }
 
     function saveReportImages(images, newReport) {
-        console.log (images.length + ' poze');
+        console.log(images.length + ' poze');
         let saveDir = './uploads/' + newReport.id + '/';
-        if (!fs.existsSync(saveDir)){
+        if (!fs.existsSync(saveDir)) {
             fs.mkdirSync(saveDir);
         }
-        
-        console.log (saveDir);
+
+        console.log(saveDir);
         return new Promise((resolve, reject) => {
             images.forEach((image, index, array) => {
                 let rd = fs.createReadStream(image.path);
                 let wr = fs.createWriteStream(saveDir + index + '_' + image.name);
                 rd.on('error', () => {
                     //TREBUIE sterse imaginile
-                    console.log ('error');
+                    console.log('error');
                     reject();
                 });
                 wr.on('error', () => {
-                    console.log ('err wr');
+                    console.log('err wr');
                     reject();
                 });
                 rd.pipe(wr);
 
-                let bdImage = new 
+                let picInfo = {
+                    "id_report": newReport.id,
+                    "pic_link": saveDir + index + '_' + image.name
+                };
+                let bdImage = new ReportPic(picInfo);
+                bdImage.save().then((newImage) => {
+                    console.log (bdImage);
+                });
 
                 // rd.destroy();
                 // wr.end();
@@ -249,45 +263,49 @@ module.exports = (() => {
 
     }
 
-    function register (req,res) {
-        getBodyFromRequest(req).then((body) =>{
-           console.log(body);
+    function register(req, res) {
+        getBodyFromRequest(req).then((body) => {
+            console.log(body);
 
-           let user = new User(body);
+            let user = new User(body);
 
-           user.update({join_date:getNowTime(),avatar_link:""});
-           user.save().then((result) => {
-               console.log('User added: ');
-               console.log(result);
+            user.update({
+                join_date: getNowTime(),
+                avatar_link: ""
+            });
+            user.save().then((result) => {
+                console.log('User added: ');
+                console.log(result);
 
-               if(result)
-               {
-                   let token = new Token({id_user:result.id,expire:createExpireTime()});
-                   token.save();
-                   res.writeHead(200, {
-                       "Content-Type": "application/json",
-                       "Access-Control-Allow-Origin": "*"
-                   });
-                   let postResponse = {
-                       "success": true,
-                       "token": token.token
-                   };
-                   res.write(JSON.stringify(postResponse));
-                   res.end();
-               }
-               else {
-                   res.writeHead(400, {
-                       "Content-Type": "application/json",
-                       "Access-Control-Allow-Origin": "*"
-                   });
-                   let postResponse = {
-                       "success": false,
-                       "token": null
-                   }
-                   res.write(JSON.stringify(postResponse));
-                   res.end();
-               }
-           });
+                if (result) {
+                    let token = new Token({
+                        id_user: result.id,
+                        expire: createExpireTime()
+                    });
+                    token.save();
+                    res.writeHead(200, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    });
+                    let postResponse = {
+                        "success": true,
+                        "token": token.token
+                    };
+                    res.write(JSON.stringify(postResponse));
+                    res.end();
+                } else {
+                    res.writeHead(400, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    });
+                    let postResponse = {
+                        "success": false,
+                        "token": null
+                    }
+                    res.write(JSON.stringify(postResponse));
+                    res.end();
+                }
+            });
         });
     }
 

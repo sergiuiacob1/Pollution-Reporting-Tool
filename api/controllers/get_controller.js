@@ -53,8 +53,15 @@ module.exports = (() => {
                     reports[i].location.lat_coord = location[0].lat_coord;
                     reports[i].location.long_coord = location[0].long_coord;
 
+                    db_comms.get(tables.reportpics, {
+                        "id": reports[i].id
+                    }).then( (rows) => {
+                        console.log ('images: ');
+                        console.log (rows);
+                    });
+
                     if (i == rows.length - 1)
-                    resolve (reports);
+                        resolve (reports);
                 });
             }
 
