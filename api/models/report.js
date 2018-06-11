@@ -11,7 +11,6 @@ module.exports = (() => {
     class Report {
 
         constructor(tuple) {
-            console.log('Report');
             this.title = tuple.title ? tuple.title : this.title;
             this.description = tuple.description ? tuple.description : this.description;
             this.id_user = tuple.id_user ? tuple.id_user : this.id_user;

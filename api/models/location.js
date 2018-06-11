@@ -11,7 +11,6 @@ module.exports = (() => {
     class Location {
 
         constructor(tuple) {
-            console.log('Location');
             this.lat_coord = tuple.lat_coord ? tuple.lat_coord : this.lat_coord;
             this.long_coord = tuple.long_coord ? tuple.long_coord : this.long_coord;
             this.id = tuple.id ? tuple.id : this.id;
@@ -61,7 +60,7 @@ module.exports = (() => {
                     }
 
                     let insertClause = getInsertClause(valueNames, values);
-                    console.log('Querry : insert into locations ' + insertClause);
+                    //console.log('Querry : insert into locations ' + insertClause);
                     if (!this.id) {
                         con.query("insert into locations " + insertClause, (err, result, fields) => {
                             if (err) {

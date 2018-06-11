@@ -6,7 +6,6 @@ module.exports = (() => {
     class User {
 
         constructor(tuple) {
-            console.log('User');
             this.name = tuple.name ? tuple.name : this.name;
             this.surname = tuple.surname ? tuple.surname : this.surname;
             this.email = tuple.email ? tuple.email : this.email;

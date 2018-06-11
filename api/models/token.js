@@ -1,6 +1,7 @@
 module.exports = (() => {
     'use strict';
 
+    var rand = require("random-key");
     const {
         con
     } = require('../db_comms/connection');
@@ -11,11 +12,14 @@ module.exports = (() => {
     class Token {
 
         constructor(tuple) {
-            console.log('Token');
             this.id_user = tuple.id_user ? tuple.id_user : this.id_user;
             this.token = tuple.token ? tuple.token : this.token;
             this.expire = tuple.expire ? tuple.expire : this.expire;
             this.id = tuple.id ? tuple.id : this.id;
+
+            if(!this.token){
+                this.token = rand.generate(64);
+            }
 
         }
 
@@ -53,6 +57,7 @@ module.exports = (() => {
 
                     let valueNames = [];
                     let values = [];
+
 
                     if (this.token) {
                         valueNames.push("token");
