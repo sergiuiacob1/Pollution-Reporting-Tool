@@ -159,9 +159,6 @@ module.exports = (() => {
         console.log (saveDir);
         return new Promise((resolve, reject) => {
             images.forEach((image, index, array) => {
-                console.log ('saving image ');
-                console.log (image.name);
-
                 let rd = fs.createReadStream(image.path);
                 let wr = fs.createWriteStream(saveDir + index + '_' + image.name);
                 rd.on('error', () => {
@@ -174,6 +171,8 @@ module.exports = (() => {
                     reject();
                 });
                 rd.pipe(wr);
+
+                let bdImage = new 
 
                 // rd.destroy();
                 // wr.end();

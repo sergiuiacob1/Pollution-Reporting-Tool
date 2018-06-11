@@ -77,7 +77,8 @@ function addReportToMap(report) {
 
 	let infowindow = new google.maps.InfoWindow({
 		content: contentPopup,
-		maxWidth: 350
+		maxWidth: 350,
+		maxHeight: 50
 	});
 
 	let marker = new google.maps.Marker({
@@ -106,15 +107,24 @@ function createPopupContent(report) {
 	let content = document.createElement('div');
 	let pTitle = document.createElement('div');
 	let pDesc = document.createElement('div');
+	let pDivImages = document.createElement('div');
 
 	content.setAttribute("id", "popup-info");
 	pTitle.className = "popup-info-title";
 	pTitle.innerHTML = report.title;
 	pDesc.className = "popup-info-description";
 	pDesc.innerHTML = report.description;
+	pDivImages.className = "popup-info-images";
+
+	for (let i = 0; i < 1; ++i){
+		let img = document.createElement('img');
+		img.setAttribute("src", "https://www.business-achievers.com/wp-content/uploads/2016/12/sbc-blog-img-2-1-300x200.jpg");
+		pDivImages.appendChild(img);
+	}
 
 	content.appendChild(pTitle);
 	content.appendChild(pDesc);
+	content.appendChild(pDivImages);
 
 	return content;
 }
