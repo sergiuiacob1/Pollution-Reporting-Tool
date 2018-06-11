@@ -24,6 +24,7 @@ var formidable = require('formidable');
 var path = require('path');
 var tables = require('../models/tables');
 var fs = require('fs');
+const url = require('url');
 
 module.exports = (() => {
     function handleRequest(req, res) {
@@ -84,41 +85,23 @@ module.exports = (() => {
     function processPostReport(req, res) {
         let images = [];
         let info = new Object();
+        let url_parts = url.parse(req.url, true);
+        let query = url_parts.query;
 
-        new formidable.IncomingForm().parse(req)
-            .on('file', (name, file) => {
-                images.push(file);
-            })
-            .on('field', (name, field) => {
-                info[name] = field;
-            })
-            .on('error', (err) => {
-                res.writeHead(500, {
-                    "Content-Type": "text/plain",
-                    "Access-Control-Allow-Origin": "*"
-                });
-                let postResponse = {
-                    "success": false
-                }
-
-                res.write(JSON.stringify(postResponse));
-                res.end();
-                return;
-            })
-            .on('end', () => {
-                saveReportToDB(images, info).then(() => {
-                        res.writeHead(200, {
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        });
-                        let postResponse = {
-                            "success": true
-                        }
-
-                        res.write(JSON.stringify(postResponse));
-                        res.end();
+        db_comms.get(tables.token, {
+                token: query,
+                token
+            }).then((rows) => {
+                console.log('dupa token am luat:' + rows);
+                info[id_user] = rows[0].id;
+                new formidable.IncomingForm().parse(req)
+                    .on('file', (name, file) => {
+                        images.push(file);
                     })
-                    .catch((err) => {
+                    .on('field', (name, field) => {
+                        info[name] = field;
+                    })
+                    .on('error', (err) => {
                         res.writeHead(500, {
                             "Content-Type": "text/plain",
                             "Access-Control-Allow-Origin": "*"
@@ -129,7 +112,46 @@ module.exports = (() => {
 
                         res.write(JSON.stringify(postResponse));
                         res.end();
+                        return;
+                    })
+                    .on('end', () => {
+                        saveReportToDB(images, info).then(() => {
+                                res.writeHead(200, {
+                                    "Content-Type": "application/json",
+                                    "Access-Control-Allow-Origin": "*"
+                                });
+                                let postResponse = {
+                                    "success": true
+                                }
+
+                                res.write(JSON.stringify(postResponse));
+                                res.end();
+                            })
+                            .catch((err) => {
+                                res.writeHead(500, {
+                                    "Content-Type": "text/plain",
+                                    "Access-Control-Allow-Origin": "*"
+                                });
+                                let postResponse = {
+                                    "success": false
+                                }
+
+                                res.write(JSON.stringify(postResponse));
+                                res.end();
+                            });
                     });
+            })
+            .catch(() => {
+                res.writeHead(500, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                let postResponse = {
+                    "success": false
+                }
+
+                res.write(JSON.stringify(postResponse));
+                res.end();
             });
     }
 
@@ -281,27 +303,40 @@ module.exports = (() => {
                 avatar_link: ""
             });
             user.save().then((result) => {
-                console.log('User added: ');
-                console.log(result);
+                    console.log('User added: ');
+                    console.log(result);
 
-                if (result) {
-                    let token = new Token({
-                        id_user: result.id,
-                        expire: createExpireTime()
-                    });
-                    token.save();
-                    res.writeHead(200, {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
-                    });
-                    let postResponse = {
-                        "success": true,
-                        "token": token.token,
-                        "self": user
-                    };
-                    res.write(JSON.stringify(postResponse));
-                    res.end();
-                } else {
+                    if (result === null) {  
+                        let token = new Token({
+                            id_user: result.id,
+                            expire: createExpireTime()
+                        });
+                        token.save();
+                        res.writeHead(200, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        });
+                        let postResponse = {
+                            "success": true,
+                            "token": token.token,
+                            "self": user
+                        };
+                        res.write(JSON.stringify(postResponse));
+                        res.end();
+                    } else {
+                        res.writeHead(400, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        });
+                        let postResponse = {
+                            "success": false,
+                            "token": null
+                        }
+                        res.write(JSON.stringify(postResponse));
+                        res.end();
+                    }
+                })
+                .catch(() => {
                     res.writeHead(400, {
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
@@ -312,8 +347,7 @@ module.exports = (() => {
                     }
                     res.write(JSON.stringify(postResponse));
                     res.end();
-                }
-            });
+                });
         });
     }
 

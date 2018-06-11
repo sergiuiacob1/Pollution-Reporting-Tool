@@ -52,6 +52,7 @@ module.exports = (() => {
             return new Promise((resolve, reject) => {
                 if (!(this.email && this.name && this.surname && this.password && this.join_date)) {
                     console.log('Object has null fields. Update before storing!');
+                    reject ('Object has null fields. Update before storing!');
                 }
                 else {
 
