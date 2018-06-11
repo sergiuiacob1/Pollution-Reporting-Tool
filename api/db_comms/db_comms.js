@@ -3,6 +3,7 @@ const {User} = require ('../models/user');
 const {Report} = require('../models/report');
 const {Token} = require('../models/token');
 const {Comment} = require('../models/comment');
+const {ReportPic} = require('../models/reportpic');
 const {Location} = require('../models/location');
 const {con} = require('./connection')
 const {getNowTime,createExpireTime} = require ('./db_utils');
@@ -159,6 +160,39 @@ module.exports = (() => {
                                 locationList.push(new Location(row));
                             });
                             resolve(locationList);
+                        }
+                    });
+                    break;
+                case tables.reportpics :
+                    whereClause = "";
+                    conditions = [];
+                    if(!tuple) tuple = {};
+                    tuple.id_report ? conditions.push(" id_report = " + tuple.id_report) : null;
+                    tuple.pic_link ? conditions.push(" pic_link = " + tuple.pic_link) : null;
+                    tuple.id ? conditions.push(" id = " + tuple.id) : null;
+
+                    conditions.forEach(function(condition) {
+                        whereClause += ", " + condition;
+                    });
+
+                    whereClause = whereClause.slice(2,whereClause.length);
+                    if(whereClause.length > 3)
+                        whereClause = " where " + whereClause;
+                    else whereClause = "";
+                    console.log("Querry: select * from " + tables.reportpics + whereClause );
+                    con.query("select * from " + tables.location + whereClause, function (err, result, fields) {
+                        if (err)
+                            reject(err);
+                        console.log('Querry executed successfully.');
+
+                        if(result.size === 1)
+                            resolve(new ReportPic(result));
+                        else {
+                            let picList = [];
+                            result.forEach(function (row) {
+                                picList.push(new ReportPic(row));
+                            });
+                            resolve(picList);
                         }
                     });
             }
