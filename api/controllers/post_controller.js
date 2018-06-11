@@ -226,7 +226,7 @@ module.exports = (() => {
                     let postResponse = {
                         "success": true,
                         "token": token.token
-                    }
+                    };
                     res.write(JSON.stringify(postResponse));
                     res.end();
                 } else {
@@ -237,7 +237,7 @@ module.exports = (() => {
                     let postResponse = {
                         "success": false,
                         "token": null
-                    }
+                    };
                     res.write(JSON.stringify(postResponse));
                     res.end();
                 }
