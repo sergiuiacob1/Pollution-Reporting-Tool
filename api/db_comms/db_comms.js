@@ -154,13 +154,13 @@ module.exports = (() => {
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
                     conditions.forEach(function (condition) {
-                        whereClause += ", " + condition;
+                        whereClause += " AND " + condition;
                     });
 
-                    whereClause = whereClause.slice(2, whereClause.length);
-                    if (whereClause.length > 3)
+                    if (whereClause.length > 5) {
+                        whereClause = whereClause.slice(5, whereClause.length);
                         whereClause = " where " + whereClause;
-                    else whereClause = "";
+                    } else whereClause = "";
                     console.log("Querry: select * from " + tables.location + whereClause);
                     con.query("select * from " + tables.location + whereClause, function (err, result, fields) {
                         if (err)
@@ -187,13 +187,13 @@ module.exports = (() => {
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
 
                     conditions.forEach(function (condition) {
-                        whereClause += ", " + condition;
+                        whereClause += " AND " + condition;
                     });
 
-                    whereClause = whereClause.slice(2, whereClause.length);
-                    if (whereClause.length > 3)
+                    if (whereClause.length > 5) {
+                        whereClause = whereClause.slice(5, whereClause.length);
                         whereClause = " where " + whereClause;
-                    else whereClause = "";
+                    } else whereClause = "";
                     console.log("Querry: select * from " + tables.reportpics + whereClause);
                     con.query("select * from " + tables.reportpics + whereClause, function (err, result, fields) {
                         if (err)
@@ -218,15 +218,14 @@ module.exports = (() => {
                     tuple.id_user ? conditions.push(" id_user = " + tuple.id_user) : null;
                     tuple.token ? conditions.push(" token = '" + tuple.token + "'") : null;
                     tuple.id ? conditions.push(" id = " + tuple.id) : null;
-
                     conditions.forEach(function (condition) {
-                        whereClause += ", " + condition;
+                        whereClause += " AND " + condition;
                     });
 
-                    whereClause = whereClause.slice(2, whereClause.length);
-                    if (whereClause.length > 3)
+                    if (whereClause.length > 5) {
+                        whereClause = whereClause.slice(5, whereClause.length);
                         whereClause = " where " + whereClause;
-                    else whereClause = "";
+                    } else whereClause = "";
                     console.log("Querry: select * from " + tables.token + whereClause);
                     con.query("select * from " + tables.token + whereClause, function (err, result, fields) {
                         if (err)

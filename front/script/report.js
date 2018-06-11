@@ -11,6 +11,10 @@ $(document).ready(function () {
             reports.forEach((report) => {
                 let reportContainer = document.createElement("div");
                 reportContainer.classList.add("report-container");
+                let title = document.createElement("p");
+                title.id = "text-intro"
+                let node = document.createTextNode("Title: " + report.title);
+                title.appendChild(node);
             })
 
         }).fail(function () {
