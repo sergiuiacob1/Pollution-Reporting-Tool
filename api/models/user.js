@@ -11,6 +11,7 @@ module.exports = (() => {
             this.email = tuple.email ? tuple.email : this.email;
             this.password = tuple.password ? tuple.password : this.password;
             this.avatar_link = tuple.avatar_link ? tuple.avatar_link : this.avatar_link;
+            this.join_date = tuple.join_date ? tuple.join_date : this.join_date;
             this.id = tuple.id ? tuple.id : this.id ;
 
         }
@@ -21,6 +22,7 @@ module.exports = (() => {
             this.surname = tuple.surname ? tuple.surname : this.surname;
             this.email = tuple.email ? tuple.email : this.email;
             this.password = tuple.password ? tuple.password : this.password;
+            this.join_date = tuple.join_date ? tuple.join_date : this.join_date;
             this.avatar_link = tuple.avatar_link ? tuple.avatar_link : this.avatar_link;
 
             this.assertUser();
@@ -48,7 +50,7 @@ module.exports = (() => {
 
         save() {
             return new Promise((resolve, reject) => {
-                if (!(this.email && this.name && this.surname && this.password)) {
+                if (!(this.email && this.name && this.surname && this.password && this.join_date)) {
                     console.log('Object has null fields. Update before storing!');
                 }
                 else {
@@ -77,11 +79,16 @@ module.exports = (() => {
                         values.push("'" + this.email + "'"
                         );
                     }
+                    if(this.join_date) {
+                        valueNames.push("join_date");
+                        values.push("date_format('" + this.join_date + "','YYYY-MM-DD HH:mm:ss')");
+                    }
 
-                    let insertClause = getUpdateClause(valueNames, values);
+                    let insertClause = getInsertClause(valueNames, values);
 
+                    console.log('insert into users ' + insertClause);
                     if (!this.id) {
-                        con.query("insert into users " + insertClause, function (err, result, fields) {
+                        con.query("insert into users " + insertClause,(err, result, fields)  => {
                             if (err) {
                                 reject(err);
                             }
@@ -94,7 +101,7 @@ module.exports = (() => {
                         });
                     }
                     else {
-                        let updateClause = getInsertClause(valueNames, values);
+                        let updateClause = getUpdateClause(valueNames, values);
 
                         con.query("update users set " + updateClause + "where id = " + this.id,(err, result, fields) => {
                             if (err) {
