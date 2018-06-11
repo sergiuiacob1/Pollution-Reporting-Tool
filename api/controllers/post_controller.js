@@ -83,8 +83,18 @@ module.exports = (() => {
             .on('field', (name, field) => {
                 info[name] = field;
             })
-            .on('error', function (err) {
-                next(err);
+            .on('error', (err) => {
+                res.writeHead(500, {
+                    "Content-Type": "text/plain",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                let postResponse = {
+                    "success": false
+                }
+
+                res.write(JSON.stringify(postResponse));
+                res.end();
+                return;
             })
             .on('end', () => {
                 saveReportToDB(images, info).then(() => {
@@ -126,21 +136,49 @@ module.exports = (() => {
                             resolve(newReport);
                         })
                         .catch((err) => {
+                            console.log (err);
                             reject(err);
                         });
                 })
                 .catch((err) => {
                     console.log(err);
+                    reject();
                 });
         });
     }
 
     function saveReportImages(images, newReport) {
-        let saveDir = './uploads/' + newReport.id;
+        console.log (images.length + ' poze');
+        let saveDir = './uploads/' + newReport.id + '/';
+        if (!fs.existsSync(saveDir)){
+            fs.mkdirSync(saveDir);
+        }
+        
+        console.log (saveDir);
         return new Promise((resolve, reject) => {
-            for (let i = 0; i < images.length; ++i) {
-                fs.createReadStream(images[i].path).pipe(fs.createWriteStream(saveDir + images[i].name));
-            }
+            images.forEach((image, index, array) => {
+                console.log ('saving image ');
+                console.log (image.name);
+
+                let rd = fs.createReadStream(image.path);
+                let wr = fs.createWriteStream(saveDir + index + '_' + image.name);
+                rd.on('error', () => {
+                    //TREBUIE sterse imaginile
+                    console.log ('error');
+                    reject();
+                });
+                wr.on('error', () => {
+                    console.log ('err wr');
+                    reject();
+                });
+                rd.pipe(wr);
+
+                // rd.destroy();
+                // wr.end();
+
+                if (index == array.length - 1)
+                    resolve();
+            });
         });
     }
 

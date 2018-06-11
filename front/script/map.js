@@ -1,5 +1,5 @@
-var hostname = "http://91.92.128.27:3000";
-// var hostname = "http://localhost:3000";
+// var hostname = "http://91.92.128.27:3000";
+var hostname = "http://localhost:3000";
 
 var map;
 
