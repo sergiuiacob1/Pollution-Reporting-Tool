@@ -60,7 +60,7 @@ module.exports = (() => {
                         console.log(result);
 
                         if (result)
-                            if (result.size === 1)
+                            if (result.length === 1)
                                 resolve(new User(result));
                             else {
                                 let userList = [];
@@ -98,7 +98,7 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.size == 1)
+                        if (result.length == 1)
                             resolve(new Report(result));
                         else {
                             let reportList = [];
@@ -134,7 +134,7 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.size == 1)
+                        if (result.length == 1)
                             resolve(new Comment(result));
                         else {
                             let commentList = [];
@@ -167,7 +167,7 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.size == 1)
+                        if (result.length == 1)
                             resolve(new Location(result));
                         else {
                             let locationList = [];
@@ -200,7 +200,7 @@ module.exports = (() => {
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.size === 1)
+                        if (result.length == 1)
                             resolve(new ReportPic(result));
                         else {
                             let picList = [];
@@ -227,14 +227,16 @@ module.exports = (() => {
                         whereClause = " where " + whereClause;
                     } else whereClause = "";
                     console.log("Querry: select * from " + tables.token + whereClause);
-                    con.query("select * from " + tables.token + whereClause, function (err, result, fields) {
+                    con.query("select * from " + tables.token + whereClause, (err, result, fields) => {
                         if (err)
                             reject(err);
                         console.log('Querry executed successfully.');
 
-                        if (result.size === 1)
+                        console.log(result);
+
+                        if (result.length === 1) {
                             resolve(new Token(result));
-                        else {
+                        } else {
                             let tokenList = [];
                             result.forEach(function (row) {
                                 tokenList.push(new Token(row));
@@ -243,7 +245,7 @@ module.exports = (() => {
                         }
                     });
             }
-        })
+        });
     };
 
     return {

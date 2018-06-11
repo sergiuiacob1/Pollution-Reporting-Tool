@@ -65,7 +65,8 @@ function getReports() {
 }
 
 function addReportsToMap(result) {
-	result.reports.forEach(report => addReportToMap(report));
+	if (result.reports != null)
+		result.reports.forEach(report => addReportToMap(report));
 }
 
 function addReportToMap(report) {
@@ -124,6 +125,10 @@ function createPopupContent(report) {
 				let img = document.createElement('img');
 				img.src = 'data:image/jpeg;base64,' + result;
 				pDivImages.append(img);
+			})
+			.fail(() => {
+				console.log('buba');
+				console.log(errorThrown);
 			});
 		// $.ajax({
 		// 	url: getURL,

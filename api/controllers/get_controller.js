@@ -37,8 +37,7 @@ module.exports = (() => {
                     "Content-Type": "image/jpeg",
                     "Access-Control-Allow-Origin": "*"
                 });
-                res.write (new Buffer(img, 'binary').toString('base64'));
-                //res.write(img, 'binary');
+                res.write(new Buffer(img, 'binary').toString('base64'));
                 res.end();
             } else {
                 res.writeHead(404, {
@@ -52,35 +51,43 @@ module.exports = (() => {
     }
 
     function getReportsFromDB(res) {
-        console.log('GET reports request');
-        // let report1 = {
-        //     title: 'Zgomot de la muncitori',
-        //     description: 'Dau nebunii aia cu picamaru de-mi sparg urechile boss',
-        //     id_user: "1",
-        //     id_location: "1",
-        //     report_type: "5",
-        //     report_date: '2018-06-15'
-        // };
-        db_comms.get(tables.report).then(rows => {
-            buildReportsResponse(rows).then((reports) => {
-                let getResponse = new Object();
-                getResponse.success = "true";
-                getResponse.reports = reports;
+        console.log('GEEEEEEEEEEEETTTTTTTTTTING');
 
-                res.writeHead(200, {
+        db_comms.get(tables.report).then(rows => {
+                buildReportsResponse(rows).then((reports) => {
+                    console.log('built: ' + reports);
+                    let getResponse = new Object();
+                    getResponse.success = "true";
+                    getResponse.reports = reports;
+
+                    res.writeHead(200, {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    });
+                    res.write(JSON.stringify(getResponse));
+                    res.end();
+                    console.log('ended res at GET reports');
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.writeHead(500, {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 });
-                res.write(JSON.stringify(getResponse));
+                res.write(err);
                 res.end();
-                console.log('ended res at GET reports');
             });
-        });
     }
 
     function buildReportsResponse(rows) {
         let reports = [];
         return new Promise((resolve, reject) => {
+            if (rows.length === 0 || (typeof rows === "undefined"))
+                resolve();
+
+            console.log (rows);
+
             for (let i = 0; i < rows.length; ++i) {
                 reports.push(rows[i]);
                 db_comms.get(tables.location, {
@@ -103,8 +110,6 @@ module.exports = (() => {
                     });
                 });
             }
-
-            //resolve(reports);
         }).catch((err) => {
             reject(err)
         });

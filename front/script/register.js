@@ -20,7 +20,6 @@ function register() {
     console.log('Sending request from front : ');
     console.log(object);
 
-
     $.post(hostname + '/register', JSON.stringify(object))
         .done(function (res, status) {
             console.log(res);
@@ -33,5 +32,4 @@ function register() {
                 alert("Error signing up!");
             }
         });
-
 }
