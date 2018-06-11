@@ -179,6 +179,15 @@ function downloadCSV() {
   $.get(hostname + "/api/csvreports")
     .done(function (result, status) {
       console.log(result);
+      let path = window.location.pathname.replace("front/pages/map.html","api/") + "/report.csv";
+      console.log(path);
+
+      let anchor = document.createElement('a');
+        anchor.download = "report.csv";
+        anchor.href = path;
+        anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+        anchor.click();
+
     }).fail(function () {
       console.log('GET /api/csvreports failed');
     });

@@ -147,8 +147,8 @@ module.exports = (() => {
             }
             writer.end();
 
-            let path = {path:"./reports.csv"};
-            res.write(JSON.stringify(path));
+            let retVal = {success:true};
+            res.write(JSON.stringify(retVal));
             res.end();
 
         });
