@@ -10,6 +10,8 @@ $(document).ready(function () {
   btnAddReport.onclick = SubmitForm;
   let btnLogIn = document.getElementById("log-in-button");
   btnLogIn.onclick = LogIn;
+  let btnLogOut = document.getElementById("log-out-button");
+  btnLogOut.onclick = LogOut;
 
 });
 
@@ -154,5 +156,10 @@ function LogIn() {
         alert("Username/password combination not found");
       }
     });
+}
 
+function LogOut() {
+  localStorage.removeItem("self");
+  localStorage.removeItem("token");
+  location.reload();
 }
