@@ -165,6 +165,8 @@ module.exports = (() => {
 
         console.log(saveDir);
         return new Promise((resolve, reject) => {
+            let solved = 0;
+
             images.forEach((image, index, array) => {
                 let rd = fs.createReadStream(image.path);
                 let wr = fs.createWriteStream(saveDir + index + '_' + image.name);
@@ -191,7 +193,8 @@ module.exports = (() => {
                 // rd.destroy();
                 // wr.end();
 
-                if (index == array.length - 1)
+                solved++;
+                if (solved == array.length)
                     resolve();
             });
         });

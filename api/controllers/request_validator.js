@@ -1,6 +1,6 @@
 module.exports = (() => {
 
-    const allowedUrl = ["/api/reports", "/api/users", "/api/locations","/authenticate","/register"];
+    const allowedUrl = ["/api/reports", "/api/users", "/api/locations", "/authenticate", "/register", "/api/image"];
 
     function validate(req) {
         switch (req.method) {
