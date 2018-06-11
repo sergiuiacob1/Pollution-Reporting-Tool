@@ -43,7 +43,6 @@ function SubmitForm() {
 }
 
 function postReport() {
-
   buildReport().then((res) => {
     let report = res[0];
     let location = res[1];
@@ -56,18 +55,23 @@ function postReport() {
           return;
         }
 
-        console.log(report.values());
-        console.log(report.get("title"));
-        $.post(hostname + "/api/reports", JSON.stringify(report))
-          .done(function (res, status) {
+        $.ajax({
+          url: hostname + '/api/reports',
+          data: report,
+          processData: false,
+          contentType: false,
+          type: 'POST',
+          success: function (res) {
+            console.log(res);
             if (res.success !== true) {
               failAddReport();
               return;
             }
-          })
-          .error(function (err) {
+          },
+          error: function (err) {
             failAddReport()
-          });
+          }
+        });
       }).error(function (err) {
         failAddReport()
       });
@@ -86,7 +90,7 @@ function buildReport() {
     for (var i = 0; i < images.files.length; i++) {
       var file = images.files[i];
       report.append('uploads[]', file, file.name);
-      console.log ('adaugat img');
+      console.log('adaugat img ' + file.name);
     }
     report.append("title", document.getElementById("stage1-title").value);
     report.append("description", document.getElementById("stage1-description").value);
@@ -128,14 +132,17 @@ function LogIn() {
   let email = document.getElementById("input_form_email");
   let password = document.getElementById("input_form_password");
 
-  let object = {"email": email.value,"password":password.value};
+  let object = {
+    "email": email.value,
+    "password": password.value
+  };
   console.log('Sending request from front : ');
   console.log(object);
 
 
-    $.post(hostname + '/authenticate', JSON.stringify(object))
-        .done(function (res,status) {
-          console.log(res);
-        });
+  $.post(hostname + '/authenticate', JSON.stringify(object))
+    .done(function (res, status) {
+      console.log(res);
+    });
 
 }

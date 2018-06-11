@@ -6,7 +6,9 @@ const {
 const {
     Report
 } = require('./../models/report.js');
-const {Token} = require('../models/token');
+const {
+    Token
+} = require('../models/token');
 const {
     Location
 } = require('./../models/location.js');
@@ -14,13 +16,14 @@ var bodyParser = require('body-parser');
 var formidable = require('formidable');
 var path = require('path');
 var tables = require('../models/tables');
+var fs = require('fs');
 
 module.exports = (() => {
     function handleRequest(req, res) {
         console.log('POST at url: ' + req.url);
         switch (String(req.url).split('?')[0]) {
             case "/api/reports":
-                saveReportToDB(req, res);
+                processPostReport(req, res);
                 break;
             case "/api/users":
                 saveUserToDB(req, res);
@@ -29,7 +32,7 @@ module.exports = (() => {
                 saveLocationToDB(req, res);
                 break;
             case "/authenticate":
-                authenticate(req,res);
+                authenticate(req, res);
                 break;
         }
     }
@@ -69,94 +72,75 @@ module.exports = (() => {
         });
     }
 
-    function saveReportToDB(req, res) {
-        console.log('saving report');
-        var form = new formidable.IncomingForm();
-        form.parse(req, function(err, fields, files) {
-            res.writeHead(200, {'content-type': 'text/plain'});
-            res.write('received upload:\n\n');
-            console.log (fields);
-            console.log (files);
-            res.end();
-          });
+    function processPostReport(req, res) {
+        let images = [];
+        let info = new Object();
 
-        // // specify that we want to allow the user to upload multiple files in a single request
-        // form.multiples = true;
+        new formidable.IncomingForm().parse(req)
+            .on('file', (name, file) => {
+                images.push(file);
+            })
+            .on('field', (name, field) => {
+                info[name] = field;
+            })
+            .on('error', function (err) {
+                next(err);
+            })
+            .on('end', () => {
+                saveReportToDB(images, info).then(() => {
+                        res.writeHead(200, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        });
+                        let postResponse = {
+                            "success": true
+                        }
 
-        // // store all uploads in the /uploads directory
-        // form.uploadDir = path.join(__dirname, '/uploads');
+                        res.write(JSON.stringify(postResponse));
+                        res.end();
+                    })
+                    .catch((err) => {
+                        res.writeHead(500, {
+                            "Content-Type": "text/plain",
+                            "Access-Control-Allow-Origin": "*"
+                        });
+                        let postResponse = {
+                            "success": false
+                        }
 
-        // // every time a file has been uploaded successfully,
-        // // rename it to it's orignal name
-        // form.on('file', function (field, file) {
-        //     console.log('file');
-        //     console.log(file);
-        //     fs.rename(file.path, path.join(form.uploadDir, file.name));
-        // });
+                        res.write(JSON.stringify(postResponse));
+                        res.end();
+                    });
+            });
+    }
 
-        // form.on('data', function (chunk){
-        //     console.log (chunk.toString());
-        // });
-
-        // // log any errors that occur
-        // form.on('error', function (err) {
-        //     console.log('An error has occured: \n' + err);
-        // });
-
-        // // once all the files have been uploaded, send a response to the client
-        // form.on('end', function () {
-        //     console.log('gata');
-        //     res.end('success');
-        // });
-
-        // // parse the incoming request containing the form data
-        // form.parse(req);
-
-        return;
-
-
-
-        getBodyFromRequest(req).then(function (body) {
-            let report = new Report(body);
+    function saveReportToDB(images, info) {
+        return new Promise((resolve, reject) => {
+            let report = new Report(info);
             report.report_date = getNowTime();
             report.id_user = 1;
-            console.log(report.images);
-            report.save().then(newReport => {
-                res.writeHead(200, {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                });
-                let postResponse = {
-                    "success": true
-                }
 
-                res.write(JSON.stringify(postResponse));
-                res.end();
-            }).catch(err => {
-                console.log(err);
-                res.writeHead(400, {
-                    "Content-Type": "text/plain",
-                    "Access-Control-Allow-Origin": "*"
+            report.save().then((newReport) => {
+                    console.log(newReport);
+                    saveReportImages(images, newReport).then(() => {
+                            resolve(newReport);
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
-                let postResponse = {
-                    "success": false
-                }
+        });
+    }
 
-                res.write(JSON.stringify(postResponse));
-                res.end();
-            });
-        }).catch(function (err) {
-            console.log(err);
-            res.writeHead(500, {
-                "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "*"
-            });
-            let postResponse = {
-                "success": false
+    function saveReportImages(images, newReport) {
+        let saveDir = './uploads/' + newReport.id;
+        return new Promise((resolve, reject) => {
+            for (let i = 0; i < images.length; ++i) {
+                fs.createReadStream(images[i].path).pipe(fs.createWriteStream(saveDir + images[i].name));
             }
-
-            res.write(JSON.stringify(postResponse));
-            res.end();
         });
     }
 
@@ -181,15 +165,20 @@ module.exports = (() => {
 
     }
 
-    function authenticate (req,res) {
+    function authenticate(req, res) {
         console.log('Trying to authenticate :');
         getBodyFromRequest(req).then((body) => {
             console.log(body);
-            db_comms.get(tables.user,{email:body.email,password:body.password}).then((result) => {
+            db_comms.get(tables.user, {
+                email: body.email,
+                password: body.password
+            }).then((result) => {
                 console.log('User:' + result);
-                if (result[0] != null)
-                {
-                    let token = new Token({id_user:result[0].id,expire:createExpireTime()});
+                if (result[0] != null) {
+                    let token = new Token({
+                        id_user: result[0].id,
+                        expire: createExpireTime()
+                    });
                     token.save();
                     res.writeHead(200, {
                         "Content-Type": "text/plain",
@@ -201,8 +190,7 @@ module.exports = (() => {
                     }
                     res.write(JSON.stringify(postResponse));
                     res.end();
-                }
-                else {
+                } else {
                     res.writeHead(400, {
                         "Content-Type": "text/plain",
                         "Access-Control-Allow-Origin": "*"
