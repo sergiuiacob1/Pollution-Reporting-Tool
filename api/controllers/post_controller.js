@@ -306,7 +306,7 @@ module.exports = (() => {
                     console.log('User added: ');
                     console.log(result);
 
-                    if (result === null) {  
+                    if (result) {
                         let token = new Token({
                             id_user: result.id,
                             expire: createExpireTime()

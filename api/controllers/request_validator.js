@@ -50,8 +50,10 @@ module.exports = (() => {
 
     function validatePostRequest(req) {
         return new Promise((resolve, reject) => {
-            if (String(req.url).split('?')[0] === "/register")
+            if (String(req.url).split('?')[0] === "/register") {
                 resolve();
+                console.log('am register, trec mai departe');
+            }
             let i;
             for (i = 0; i < allowedUrl.length; ++i)
                 if (allowedUrl[i] === String(req.url).split('?')[0])

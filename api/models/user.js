@@ -43,9 +43,6 @@ module.exports = (() => {
             {
                 console.log('User doesn\'t have id set. This instance has been created, not requested. It needs to be stored before it can be deleted.');
             }
-
-
-
         }
 
         save() {
