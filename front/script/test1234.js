@@ -39,8 +39,9 @@ function SubmitForm() {
         forms[i + 1].style.display = "block";
       } else {
         //modal.style.display = "block";
-        resetForm();
         postReport();
+        resetForm();
+        ToggleIssueForm();
       }
       break;
     }
@@ -48,11 +49,20 @@ function SubmitForm() {
 }
 
 function resetForm() {
-  var formDiv = document.getElementsByClassName("add-issue-form")[0];
-  var forms = formDiv.getElementsByTagName("form");
+  let formDiv = document.getElementsByClassName("add-issue-form")[0];
+  let forms = formDiv.getElementsByTagName("form");
   forms[0].style.display = "block";
   for (let i = 1; i < forms.length; ++i) {
     forms[i].style.display = "none";
+  }
+  document.getElementById("stage1-title").value = "";
+  document.getElementById("stage1-description").value = "";
+  
+  let element = document.getElementsByClassName("stage2-form-image"),
+    index;
+
+  for (index = element.length - 1; index >= 0; index--) {
+    element[index].parentNode.removeChild(element[index]);
   }
 }
 
@@ -178,14 +188,14 @@ function downloadCSV() {
   $.get(hostname + "/api/csvreports")
     .done(function (result, status) {
       console.log(result);
-      let path = window.location.pathname.replace("front/pages/map.html","api/") + "/report.csv";
+      let path = window.location.pathname.replace("front/pages/map.html", "api/") + "/report.csv";
       console.log(path);
 
       let anchor = document.createElement('a');
-        anchor.download = "report.csv";
-        anchor.href = path;
-        anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
-        anchor.click();
+      anchor.download = "report.csv";
+      anchor.href = path;
+      anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+      anchor.click();
 
     }).fail(function () {
       console.log('GET /api/csvreports failed');
