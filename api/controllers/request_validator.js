@@ -70,6 +70,7 @@ module.exports = (() => {
             db_comms.get(tables.token, {
                 token: query.token
             }).then((rows) => {
+                console.log (rows[0]);
                 if (rows.length === 0)
                     reject(['Please log in!', 403]);
                 else

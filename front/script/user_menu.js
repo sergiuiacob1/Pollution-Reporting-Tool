@@ -2,16 +2,34 @@ var isOpen = false;
 
 
 $(document).ready(function () {
-  if(localStorage.getItem("token") === null){
-    console.log(localStorage.getItem("token"));
-      document.getElementById("user_slider_logged").style.display = "none";
-      document.getElementById("user_slider").style.display = "block";
-  }
-  else
-  {
-      document.getElementById("user_slider").style.display = "none";
-      document.getElementById("user_slider_logged").style.display = "block";
-      document.getElementById("welcome-message").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("self")).name;
+  if (localStorage.getItem("self") === null) {
+    document.getElementById("user_slider_logged").style.display = "none";
+    document.getElementById("user_slider").style.display = "block";
+  } else {
+    let object = {
+      "email": localStorage.getItem("self").email,
+      "password": localStorage.getItem("self").password
+    };
+
+    $.post(hostname + '/authenticate', JSON.stringify(object))
+      .done((res, status) => {
+        console.log(res);
+        if (res.success === true) {
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("self", JSON.stringify(res.self));
+          document.getElementById("user_slider").style.display = "none";
+          document.getElementById("user_slider_logged").style.display = "block";
+          document.getElementById("welcome-message").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("self")).name;
+          //location.reload();
+        } else {
+          document.getElementById("user_slider_logged").style.display = "none";
+          document.getElementById("user_slider").style.display = "block";
+        }
+      })
+      .fail(() => {
+        document.getElementById("user_slider_logged").style.display = "none";
+        document.getElementById("user_slider").style.display = "block"
+      });
   }
 
   let slider = document.getElementById("icon_slider");
