@@ -9,6 +9,10 @@ $(document).ready(function () {
         .done(function (result, status) {
             let reports = result.reports;
 
+
+            let titleHeader = document.getElementById("title-message");
+            titleHeader.appendChild(document.createTextNode("GreenIO reports: " + reports.length));
+
             reports.forEach((report) => {
                 var reportContainer = document.createElement("div");
                 reportContainer.className = "report-container-inset";

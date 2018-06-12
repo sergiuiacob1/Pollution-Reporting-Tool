@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     let container = document.getElementById("report-container");
     $('#report-container').empty();
-
     $.get(hostname + '/api/reports')
         .done(function (result, status) {
             let reports = result.reports;
@@ -14,9 +13,13 @@ $(document).ready(function () {
                 if(reports[i].id_user === JSON.parse(localStorage.getItem("self")).id)
                    myreports.push(reports[i]);
             }
+            console.log('MY REPORTS :');
+            console.log(myreports);
+
+            let titleHeader = document.getElementById("title-message");
+            titleHeader.appendChild(document.createTextNode("My GreenIO reports: " + myreports.length));
 
             reports = myreports;
-
             reports.forEach((report) => {
                 var reportContainer = document.createElement("div");
                 reportContainer.className = "report-container-inset";
