@@ -24,7 +24,7 @@ function filterRequest(req, res) {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*"
             });
-            res.write(validateRes[0]);
+            res.write(validateRes[0] + '\nCould not validate request');
             res.end();
             return;
         });

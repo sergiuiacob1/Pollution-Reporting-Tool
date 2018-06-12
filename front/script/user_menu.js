@@ -7,8 +7,8 @@ $(document).ready(function () {
     document.getElementById("user_slider").style.display = "block";
   } else {
     let object = {
-      "email": localStorage.getItem("self").email,
-      "password": localStorage.getItem("self").password
+      "email": JSON.parse(localStorage.getItem('self')).email,
+      "password": JSON.parse(localStorage.getItem("self")).password
     };
 
     $.post(hostname + '/authenticate', JSON.stringify(object))
