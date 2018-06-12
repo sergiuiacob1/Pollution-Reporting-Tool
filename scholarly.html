@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html property="http://scholarly-html.org/schtml">
+
+<body>
+    <span property="http://purl.org/dc/terms/title">
+        <h1>Pollution Reporting Tool</h1>
+        <br>
+    </span>
+    <span property="http://purl.org/dc/terms/creator">
+        <p>
+            <strong>Authors: Cojocaru Dragos, Iacob Sergiu</strong>
+        </p>
+    </span>
+    <span type=xsd:date>2018-06-12</span>
+
+
+    <div id="biblography" property="http://purl.org/spar/biro/ReferenceList">
+        <span name="citation" property="http://purl.org/spar/biro/BibliographicRecord" about="http://dx.doi.org/10.1039/B411699M">
+            <p>Aplicatia este menita sa incurajeze simtul civic al utilizatorilor, de oriunde din lume sunt ei.</p>
+            <p>Aceasta consta dintr-un website de inalta calitate, construita astfel incat sa poata face fata in mod concurent
+                la cererile mai multor utilizatori. Un utilizator poate viziona, intr-un mod atractiv, toate problemele publicate
+                de ceilalti pe harta. Mai mult, acesta se poate inregistra pe platforma pentru a raporta el insusi o astfel
+                de problema, introducand un titlu, o descriere si niste poze pentru a prezenta cat mai bine acea problema.</p>
+            <p>Administratia locala poate evalua aceste probleme pentru a le prioritiza, apoi pentru a lua actiuni in privinta
+                rezolvarii lor.</p>
+        </span>
+    </div>
+
+    <div style="top: 50px">
+        <h2>Evolutia proiectului</h2>
+        <h3>Propunere</h3>
+        <p>Sa se implementeze un sistem Web de raportare a problemelor referitoare la mediul inconjurator din cadrul unei zone
+            turistice/citadine. Aspectele cele mai importante vizeaza poluarea (de diverse tipuri -- e.g., noxe, nivel de
+            decibeli, scurgeri de substante nocive etc.), existenta gunoaielor si/sau deseurilor, comportament anti-civic,
+            orice alte evenimente/accidente cu impact asupra mediului si altele. Problemele raportate vor putea fi clasificate
+            si reprezentate vizual intr-o maniera judicioasa, ca ulterior sa poata fi verificate si, eventual, rezolvate
+            de inspectorii de mediu. Aplicatia va pune la dispozitie rapoarte in formatele HTML, CSV si PDF, iar noile probleme
+            survenite vor fi accesate si via un flux de stiri RSS. Lista celor mai importante probleme vizand impactul asupra
+            mediului va putea fi partajata la nivelul retelelor sociale. Bonus: utilizarea unor servicii cartografice precum
+            OpenStreetMap.
+        </p>
+        <h3>Front-end</h3>
+        <p>Am inceput prin a crea o interfata responsive si eficienta, intr-o maniera atractiva.</p>
+        <p>Design-ul website-ului are la baza interactiunea cu harta, in care se poate de asemenea cauta cu rapiditate o locatie
+            anume. Toate functiile aplicatiei sunt accesibile cu usurinta din pagina principala de lucru, un utilizator putand
+            sa se logheze si sa adauge un report cu cea mai mare usurinta.</p>
+        <h3>
+            Arhitectura
+        </h3>
+        <p>
+            Am pornit de la design pattern-ul MVC. Am structurat aplicatia astfel incat sa respectam cat mai bine principiile SOLID,
+            iar fiecare componenta a aplicatiei sa reprezinte o singura functionalitate pe care o trateaza intr-un mod cat
+            mai eficient.
+        </p>
+    </div>
+</body>
+
+</html>
