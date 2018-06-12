@@ -56,7 +56,7 @@ function createSearchBox() {
 }
 
 function addEventListeners() {
-	google.maps.event.addListener(map, 'dragend', updateCenterLocation);
+	google.maps.event.addListener(map, 'center_changed', updateCenterLocation);
 }
 
 function updateCenterLocation() {

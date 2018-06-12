@@ -52,6 +52,7 @@ module.exports = (() => {
         getBodyFromRequest(req).then(function (body) {
             let location = new Location(body);
             location.save().then(function (newLocation) {
+
                 res.writeHead(200, {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*"
