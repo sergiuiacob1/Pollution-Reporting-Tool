@@ -253,6 +253,19 @@ module.exports = (() => {
         console.log('Trying to authenticate :');
         getBodyFromRequest(req).then((body) => {
             console.log(body);
+            if(!body.email || !body.password){
+                res.writeHead(200, {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                });
+                let postResponse = {
+                    "success": false,
+                    "token": null
+                };
+                res.write(JSON.stringify(postResponse));
+                res.end();
+                return;
+            }
             db_comms.get(tables.user, {
                 email: body.email,
                 password: body.password
@@ -276,7 +289,7 @@ module.exports = (() => {
                     res.write(JSON.stringify(postResponse));
                     res.end();
                 } else {
-                    res.writeHead(400, {
+                    res.writeHead(200, {
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
                     });
