@@ -50,7 +50,20 @@
         <p>
             Am pornit de la design pattern-ul MVC. Am structurat aplicatia astfel incat sa respectam cat mai bine principiile SOLID,
             iar fiecare componenta a aplicatiei sa reprezinte o singura functionalitate pe care o trateaza intr-un mod cat
-            mai eficient.
+            mai eficient. Pentru fiecare request venit din partea unui client, acesta este filtrat in partea de back-end,
+            pentru a da mai departe spre procesare doar request-urile valide. Acest mod de lucru asigura o modularitate ridicata
+            si o coeziune mare a modulelor aplicatiei, ceea ce va insemna posibilitatea scalarii aplicatiei. Datele preluate
+            de la clienti sunt salvate intr-o baza de date, pentru ca apoi sa fie gestionate cu usurinta.
+        </p>
+        <h3>Implementare</h3>
+        <p>Avand o arhitectura bine pusa la punct, crearea modulelor si intelegerea comunicarii dintre ele a fost usor de facut.
+            A urmat o perioada constanta de invatare, in care ne-am familiarizat cu limbaje de programare noi: JavaScript,
+            NodeJS, SQL etc. Am implementat fiecare lucru asincron, astfel incat serverul sa poata raspunde cu usurinta la
+            toti utilizatorii in acelasi timp. Acest lucru se vede in rapiditatea aplicatiei. De asemenea, securitatea aplicatiei
+            este si ea bine pusa la punct. La implementarea request-urilor "sensibile" (insemnand cele care necesitau adaugarea
+            de informatii in baza de date), ne-am asigurat ca doar request-urile de la utilizatorii cu suficiente privilegii
+            vor fi indeplinite. Am folosit Github pentru a ne usura munca si colaborarea, iar pentru diverse prototipuri
+            am creat cate un branch pentru a nu crea dezechilibru in stabilitatea aplicatiei.
         </p>
     </div>
 </body>
