@@ -1,6 +1,7 @@
 const db_comms = require('./../db_comms/db_comms.js');
 const tables = require('../models/tables');
 var csvWriter = require('csv-write-stream');
+const jsreport = require('jsreport');
 const {
     ReportPic
 } = require('./../models/reportpic.js');
@@ -23,6 +24,10 @@ module.exports = (() => {
                 break;
             case "/api/csvreports":
                 getCSVReports(req, res);
+                break;
+            case "/api/pdfreports":
+                getPDFReports(req,res);
+
         }
     }
 
@@ -151,6 +156,51 @@ module.exports = (() => {
             res.write(JSON.stringify(retVal));
             res.end();
 
+        });
+    }
+
+    function getPDFReports (req,res) {
+
+
+            db_comms.get(tables.report).then((reports) => {
+
+                let object = "";
+                for(let i=0;i<reports.length;i++){
+                    let item = "<h1>" + reports[i].title + "</h1>";
+                    item += "<h2>" + reports[i].report_date + "</h2>";
+                    item += "<p>" + reports[i].description + "</p>";
+                    item += "<hr><br>"
+                    object += item;``
+                }
+                console.log(object);
+
+                jsreport.render({
+                    template: {
+                        //content: '<h1>GreenIO Reports</h1>',
+                        content: object,
+                        engine: 'handlebars',
+                        recipe: 'chrome-pdf'
+                    },
+                    data: {
+                        name: "jsreport"
+                    }
+                }).then((resp) => {
+                    // prints pdf with headline Hello world
+                    console.log('Report generated PDF');
+                    resp.stream.pipe(fs.createWriteStream('report.pdf'));
+
+                        res.writeHead(200, {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        });
+                        let retVal = {success:true};
+                        res.write(JSON.stringify(retVal));
+                        res.end();
+
+
+                });
+        }).catch((e) => {
+            console.error(e)
         });
     }
 

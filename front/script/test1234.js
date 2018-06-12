@@ -14,6 +14,8 @@ $(document).ready(function () {
   btnLogOut.onclick = LogOut;
   let btnDownloadCSV = document.getElementById("csv-download-button");
   btnDownloadCSV.onclick = downloadCSV;
+  let btnDownloadPDF = document.getElementById("pdf-download-button");
+  btnDownloadPDF.onclick = downloadPDF;
 });
 
 window.onclick = function (event) {
@@ -190,4 +192,24 @@ function downloadCSV() {
     }).fail(function () {
       console.log('GET /api/csvreports failed');
     });
+}
+
+function downloadPDF() {
+
+    $.get(hostname + "/api/pdfreports")
+        .done(function (result, status) {
+            console.log(result);
+            let path = window.location.pathname.replace("front/pages/map.html","api/") + "/report.pdf";
+            console.log(path);
+
+            let anchor = document.createElement('a');
+            anchor.download = "report.pdf";
+            anchor.href = path;
+            anchor.dataset.downloadurl = ['text/plain', anchor.download, anchor.href].join(':');
+            anchor.click();
+
+        }).fail(function () {
+        console.log('GET /api/pdfreports failed');
+    });
+
 }
