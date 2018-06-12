@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>My Reports</title>
-    <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/intro_texts.css" />
-    <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/text_standards.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/intro_texts.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/text_standards.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/general.css" />
-    <link rel = "stylesheet" type = "text/css" media="screen" href="../styles/register.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/general.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/register.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
+
 <body>
-<div class = "register-panel">
-    <iframe class = "map_background" src="https://www.openstreetmap.org/export/embed.html?bbox=-360.83496093750006%2C33.94335994657882%2C-311.79199218750006%2C53.4357192066942&amp;layer=mapnik"></iframe>
-    <a href="map.html">
-        <img class="PRT_Logo" src="../res/img/base_logo.png"/>
-    </a>
-    <br><br><br><br><br>
-    <p class = "text_intro" id = "title-message"></p>
-
-    <div class = "btn-go-to-map">
-        <a href = "./map.html">
-            <button class = "title_text_intro">Go back</button>
+    <div class="register-panel">
+        <iframe class="map_background" src="https://www.openstreetmap.org/export/embed.html?bbox=-360.83496093750006%2C33.94335994657882%2C-311.79199218750006%2C53.4357192066942&amp;layer=mapnik"></iframe>
+        <a href="map.html">
+            <img class="PRT_Logo" src="../res/img/base_logo.png" />
         </a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p class="text_intro" id="title-message"></p>
+
+        <div class="large-container">
+
+            <div class="btn-go-to-map">
+                <a href="./map.html">
+                    <button class="title_text_intro">Go back</button>
+                </a>
+            </div>
+
+            <br>
+
+            <div id="report-container">
+
+            </div>
+
+            <br>
+
+
+            <div class="btn-go-to-map">
+                <a href="./map.html">
+                    <button class="title_text_intro">Go back</button>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <br>
-
-    <div id = "report-container">
-
-    </div>
-
-    <br>
-
-
-    <div class = "btn-go-to-map">
-        <a href = "./map.html">
-            <button class = "title_text_intro">Go back</button>
-        </a>
-    </div>
-</div>
-<script type="text/javascript" src="../script/myreports.js"></script>
+    <script type="text/javascript" src="../script/myreports.js"></script>
 </body>
+
 </html>

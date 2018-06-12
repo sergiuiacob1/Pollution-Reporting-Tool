@@ -27,3 +27,21 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+form, button{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+form .text_intro{
+    text-align: center;
+}
+
+form input{
+    margin-left: 0px;
+}
+
+.large-container{
+    width: 50%;
+}
